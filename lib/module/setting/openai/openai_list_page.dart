@@ -318,7 +318,7 @@ class OpenAIListItem extends ConsumerWidget {
       functions.add("可对话");
     }
     if (item.getDallModels.isNotEmpty) {
-      functions.add("可绘画");
+      functions.add("可作画");
     }
 
     List<Widget> result = functions
