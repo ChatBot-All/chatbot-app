@@ -1,16 +1,6 @@
-# chatbot
+# ChatBot
 
-A new Flutter project.
+免费的私人 ChatGPT 应用, 支持 GPT3, GPT4 & Gemini Pro 模型。
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+>* Telegram频道: [ChatBot](https://t.me/chatbot_all)
+>* >* 下载地址: [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
