@@ -731,9 +731,9 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
         width: 30,
         height: 30,
         child: Icon(
-          inputMode
-              ? Icons.circle_notifications_outlined
-              : Icons.circle_outlined,
+          !inputMode
+              ? CupertinoIcons.pencil_circle
+              : CupertinoIcons.mic_circle,
           color: Theme.of(context).textTheme.titleMedium?.color,
           size: 30,
         ),
