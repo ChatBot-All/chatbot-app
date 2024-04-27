@@ -20,19 +20,16 @@ flutter run
 
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.jpg" width="200" height="400" /></center></td>
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.jpg" width="200" height="400" /></center></td>
-
-</tr>
-
-<tr>
-
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.jpg" width="200" height="400" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.jpg" width="200" height="400" /></center></td>
 
 </tr>
+
 <tr>
 
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.jpg" width="200" height="400" /></center></td>
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.jpg" width="200" height="400" /></center></td>
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.jpg" width="200" height="400" /></center></td>
 
 </tr>
+
 </table>
