@@ -6,9 +6,9 @@
 >* Android端下载地址: [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS端需自行编译
 ```shell
-$: flutter pub get
-$: cd ios
-$: pod install
-$: cd ..
-$: flutter run
+flutter pub get
+cd ios
+pod install
+cd ..
+flutter run
 ```
