@@ -1,0 +1,15 @@
+{
+  "@@locale": "en",
+  "app_name": "AChatBot",
+  "home_chat": "聊天",
+  "home_factory": "工坊",
+  "home_setting": "设置",
+  "openai_setting": "ChatGPT 服务商",
+  "openai_setting_desc": "设置 ChatGPT 的API key 和 API Server",
+  "gemini_setting": "Gemini 服务商",
+  "gemini_setting_desc": "设置 Gemini 的API key 和 API Server",
+  "official": "官方",
+  "third_party": "第三方",
+  "btn_add": "添加",
+  "hint_addServerDesc": "请输入服务器地址"
+}

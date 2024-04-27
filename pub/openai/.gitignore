@@ -1,0 +1,13 @@
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+build/
+example/.env
+
+*.jsonl
+env.g.dart
+.env
+*.mp3
+*.png
+.idea/

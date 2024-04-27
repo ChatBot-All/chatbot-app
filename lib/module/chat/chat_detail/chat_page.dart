@@ -1,0 +1,1193 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
+import 'package:ChatBot/base/components/chat_markdown.dart';
+import 'package:ChatBot/base/components/send_button.dart';
+import 'package:ChatBot/base/theme.dart';
+import 'package:ChatBot/hive_bean/generate_content.dart';
+import 'package:ChatBot/module/chat/chat_detail/chat_setting_page.dart';
+import 'package:ChatBot/utils/hive_box.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pull_down_button/pull_down_button.dart';
+import 'package:record/record.dart';
+import 'package:share_plus/share_plus.dart';
+
+import 'package:ChatBot/base.dart';
+import 'package:ChatBot/base/components/components.dart';
+import 'package:ChatBot/hive_bean/local_chat_history.dart';
+import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
+import 'package:ChatBot/module/chat/chat_list_view_model.dart';
+import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:popover/popover.dart';
+
+import '../../../base/api.dart';
+import '../../../base/components/autio_popover.dart';
+import '../../../base/db/chat_item.dart';
+import '../../../base/providers.dart';
+import '../../../const.dart';
+import '../../../hive_bean/openai_bean.dart';
+
+class ChatPage extends ConsumerStatefulWidget {
+  final ChatParentItem localChatHistory;
+
+  const ChatPage({super.key, required this.localChatHistory});
+
+  @override
+  ConsumerState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends ConsumerState<ChatPage> {
+  final ScrollController _scrollController = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
+  bool isScrollManual = false;
+
+  bool requestTitled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Permission.microphone.request();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        _scrollController.animateTo(0,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.easeInOut);
+        if (ref.watch(sendButtonVisibleProvider.notifier).state == false) {
+          ref.watch(sendButtonVisibleProvider.notifier).state = true;
+        }
+      } else {
+        if (ref.watch(sendButtonVisibleProvider.notifier).state == true) {
+          ref.watch(sendButtonVisibleProvider.notifier).state = false;
+        }
+      }
+    });
+
+    _scrollController.addListener(() {
+      if (ref.watch(isGeneratingContentProvider) == false && isScrollManual) {
+        if (_scrollController.position.pixels > 0 && _focusNode.hasFocus) {
+          _focusNode.unfocus();
+        }
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        ref
+            .watch(currentChatParentItemProvider.notifier)
+            .update((state) => widget.localChatHistory);
+      });
+    });
+  }
+
+  String? getRealModel(List<SupportedModels> state, String? model) {
+    if (state.isEmpty) {
+      return model;
+    }
+    var result = state.where((element) => element.id == model);
+    if (result.isNotEmpty) {
+      return result.first.id;
+    }
+    return state.first.id;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(currentChatParentItemProvider, (pre, next) {
+      if (next != null) {
+        ref.watch(chatParentListProvider.notifier).update(next.copyWith());
+      }
+    });
+    return Consumer(builder: (context, ref, _) {
+      var result = ref.watch(currentChatParentItemProvider);
+      var supportedModel = getModelByApiKey(result?.apiKey ?? "").getTextModels;
+      var realModel = getRealModel(supportedModel, result?.moduleType);
+      if (realModel != result?.moduleType) {
+        WidgetsBinding.instance.endOfFrame.then((value) {
+          result?.moduleType = realModel;
+
+          var copyData = result?.copyWith(moduleType: realModel);
+
+          ref
+              .watch(currentChatParentItemProvider.notifier)
+              .update((state) => copyData);
+        });
+      }
+
+      if (result == null) {
+        return Scaffold(
+          appBar: AppBar(),
+        );
+      }
+      return Scaffold(
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Icon(
+                CupertinoIcons.ellipsis,
+                color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
+              ),
+            ).click(() {
+              F.push(const ChatSettingPage());
+            }),
+          ],
+          title: Builder(builder: (context) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: F.width * 0.5,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        result.title ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).appBarTheme.titleTextStyle,
+                      ),
+                      Text(
+                        "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Builder(builder: (context) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                    child: Transform.rotate(
+                      angle: pi / 2,
+                      child: Icon(
+                        CupertinoIcons.right_chevron,
+                        color: Theme.of(context).textTheme.titleMedium?.color,
+                        size: 16,
+                      ),
+                    ),
+                  ).click(() {
+                    showPopover(
+                      context: context,
+                      backgroundColor: Theme.of(context).cardColor,
+                      bodyBuilder: (context) => SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            ...supportedModel
+                                .where((element) =>
+                                    element.id != null &&
+                                    element.id!.isNotEmpty)
+                                .map((e) {
+                              return ListTile(
+                                title: Text(
+                                    e.id?.replaceFirst("models/", "") ?? ""),
+                                trailing: e.id == result.moduleType
+                                    ? Icon(
+                                        CupertinoIcons.checkmark,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 16,
+                                      )
+                                    : null,
+                                onTap: () {
+                                  result.moduleType = e.id;
+                                  ref
+                                      .watch(currentChatParentItemProvider
+                                          .notifier)
+                                      .update((state) => result.copyWith(
+                                            moduleType: e.id,
+                                          ));
+
+                                  Navigator.of(context).pop();
+                                },
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                      onPop: () {},
+                      direction: PopoverDirection.top,
+                      constraints: BoxConstraints(
+                        maxWidth: 220,
+                        maxHeight:
+                            min(supportedModel.length * 50, F.height / 2),
+                      ),
+                      arrowHeight: 8,
+                      arrowWidth: 15,
+                    );
+                  });
+                }),
+              ],
+            );
+          }),
+        ),
+        body: Consumer(builder: (context, ref, _) {
+          var chat = ref.watch(chatProvider(result.id ?? 0));
+          return MultiStateWidget(
+              value: chat,
+              data: (list) {
+                if (requestTitled == false &&
+                    list.length >= 2 &&
+                    result.title == "随便聊聊" &&
+                    result.id != specialGenerateTextChatParentItemTime &&
+                    ref.watch(isGeneratingContentProvider) == false &&
+                    ref.watch(autoGenerateTitleProvider.notifier).value ==
+                        true) {
+                  //list里的前2条状态必须是成功
+
+                  requestTitled = true;
+                  API()
+                      .generateChatTitle(
+                          result,
+                          getModelByApiKey(result.apiKey ?? ""),
+                          result.moduleType!,
+                          list)
+                      .then((value) {
+                    ref
+                        .watch(currentChatParentItemProvider.notifier)
+                        .update((state) => result.copyWith(title: value));
+                  }).catchError((e) {
+                    e.toString().fail();
+                  });
+                }
+                return Column(
+                  children: [
+                    Expanded(
+                      child: Listener(
+                        behavior: HitTestBehavior.opaque,
+                        onPointerDown: (event) {
+                          isScrollManual = false;
+                        },
+                        onPointerMove: (event) {
+                          isScrollManual = true;
+                        },
+                        onPointerCancel: (event) {
+                          isScrollManual = false;
+                        },
+                        onPointerUp: (event) {
+                          isScrollManual = false;
+                        },
+                        child: ListView.builder(
+                          reverse: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: _scrollController,
+                          itemBuilder: (context, index) {
+                            var item = list[list.length - 1 - index];
+
+                            Widget resultWidget;
+                            if (item.type == ChatType.user.index) {
+                              resultWidget = UserMessage(
+                                chatItem: item,
+                                resendMessage: (content) {
+                                  sendMessage(result.id, content, item.images);
+                                },
+                                sendMessageAgain: (content) {
+                                  sendMessage(result.id, content, item.images);
+                                },
+                              );
+                            } else if (item.type == ChatType.bot.index) {
+                              resultWidget = BotMessage(
+                                chatItem: item,
+                              );
+                            } else {
+                              resultWidget = AssistMessage(chatItem: item);
+                            }
+                            return resultWidget;
+                          },
+                          itemCount: list.length,
+                        ),
+                      ),
+                    ),
+                    ChatPanel(
+                      focusNode: _focusNode,
+                      supportImage: true,
+                      supportAudio: getModelByApiKey(result.apiKey ?? "")
+                          .getWhisperModels
+                          .isNotEmpty,
+                      scrollToTop: () {
+                        _scrollController.animateTo(0,
+                            duration: const Duration(milliseconds: 100),
+                            curve: Curves.easeInOut);
+                      },
+                      sendMessage: (content, images) async {
+                        await sendMessage(result.id, content, images);
+                      },
+                      cancelSend: () {
+                        _streamSubscription?.cancel();
+                        ref
+                            .watch(imagesProvider.notifier)
+                            .update((state) => []);
+                        ChatItem lastOne = ref
+                            .watch(chatProvider(result.id ?? 0).notifier)
+                            .chats
+                            .last;
+                        lastOne.status = MessageStatus.canceled.index;
+                        ref
+                            .watch(chatProvider(result.id ?? 0).notifier)
+                            .update(lastOne);
+                        ref.watch(isGeneratingContentProvider.notifier).state =
+                            false;
+                      },
+                    ),
+                  ],
+                );
+              });
+        }),
+      );
+    });
+  }
+
+  StreamSubscription<GenerateContentBean>? _streamSubscription;
+
+  Future<void> sendMessage(
+      int? id, String? text, List<String>? sendImages) async {
+    ref.watch(isGeneratingContentProvider.notifier).state = true;
+    var userChatItem = ChatItem(
+      type: ChatType.user.index,
+      content: text,
+      status: MessageStatus.success.index,
+      parentID: id,
+      images: sendImages,
+      moduleName:
+          ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
+      messageType: MessageType.common.index,
+      moduleType:
+          ref.watch(currentChatParentItemProvider.notifier).state?.moduleType ??
+              "",
+      time: DateTime.now().millisecondsSinceEpoch,
+    );
+    await Future.delayed(const Duration(milliseconds: 50));
+    ref.read(chatProvider(id!).notifier).add(userChatItem);
+
+    String result = "";
+    var chatItem = ChatItem(
+      type: ChatType.bot.index,
+      messageType: MessageType.common.index,
+      content: result,
+      status: MessageStatus.loading.index,
+      parentID: id,
+      requestID: userChatItem.time,
+      moduleName:
+          ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
+      moduleType:
+          ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
+      time: DateTime.now().millisecondsSinceEpoch,
+    );
+    ref.read(chatProvider(id).notifier).add(chatItem);
+    await Future.delayed(const Duration(milliseconds: 50));
+    ref.watch(imagesProvider.notifier).update((state) => []);
+
+    var chatParentItem =
+        ref.watch(currentChatParentItemProvider.notifier).state!;
+    _streamSubscription = (await API().createTextChat(
+      chatParentItem.moduleName!,
+      chatParentItem.historyMessageCount ?? 4,
+      double.parse(chatParentItem.temperature ?? "1.0"),
+      getModelByApiKey(
+          ref.watch(currentChatParentItemProvider.notifier).state!.apiKey!),
+      ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
+      ref.watch(chatProvider(id).notifier).chats,
+      id == specialGenerateTextChatParentItemTime,
+    ))
+        .listen((event) {
+      result += event.content ?? "";
+      result.i();
+      chatItem.content = result;
+      chatItem.status = MessageStatus.success.index;
+      ref.read(chatProvider(id).notifier).update(chatItem);
+    }, onDone: () {
+      ref.watch(isGeneratingContentProvider.notifier).state = false;
+      _streamSubscription?.cancel();
+      ref.watch(imagesProvider.notifier).update((state) => []);
+    }, onError: (e) {
+      String errorContent = "";
+      if (e is RequestFailedException) {
+        errorContent = """
+requestFailedException:\n
+  message:${e.message}
+  statusCode:${e.statusCode}""";
+      } else {
+        errorContent = e.toString();
+      }
+      userChatItem.status = MessageStatus.failed.index;
+      ref.read(chatProvider(id).notifier).update(userChatItem);
+      chatItem.content = errorContent;
+      chatItem.status = MessageStatus.failed.index;
+      ref.read(chatProvider(id).notifier).update(chatItem);
+      ref.watch(isGeneratingContentProvider.notifier).state = false;
+      _streamSubscription?.cancel();
+      ref.watch(imagesProvider.notifier).update((state) => []);
+      e.toString().fail();
+    }, cancelOnError: true);
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
+  }
+}
+
+typedef SendMessageCall = Future<void> Function(
+    String content, List<String> images);
+typedef CancelSendCall = void Function();
+
+class ChatPanel extends ConsumerStatefulWidget {
+  final FocusNode focusNode;
+  final VoidCallback scrollToTop;
+  final bool supportAudio;
+  final bool supportImage;
+  final SendMessageCall sendMessage;
+  final CancelSendCall cancelSend;
+
+  const ChatPanel({
+    super.key,
+    required this.focusNode,
+    required this.supportAudio,
+    required this.supportImage,
+    required this.scrollToTop,
+    required this.sendMessage,
+    required this.cancelSend,
+  });
+
+  @override
+  ConsumerState<ChatPanel> createState() => _ChatPanelState();
+}
+
+class _ChatPanelState extends ConsumerState<ChatPanel> {
+  final TextEditingController _controller = TextEditingController();
+  final AudioOverlay audioOverlay = AudioOverlay();
+
+  final record = AudioRecorder();
+  String? audioPath;
+
+  void startRecord() async {
+    if (await record.hasPermission()) {
+      audioPath =
+          "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
+      await record.start(const RecordConfig(), path: audioPath!);
+    } else {
+      await Permission.microphone.request();
+      "请打开录音权限".toString();
+      audioOverlay.removeAudio();
+    }
+  }
+
+  void cancel() {
+    try {
+      record.cancel();
+      if (audioPath != null && audioPath!.isNotEmpty) {
+        if (File(audioPath!).existsSync()) {
+          File(audioPath!).deleteSync();
+        }
+      }
+    } catch (e) {
+      e.toString().fail();
+    }
+  }
+
+  void stopRecord() async {
+    var path = await record.stop();
+
+    if (path == null || path.isEmpty) {
+      "无法获取到语音文件".fail();
+      return;
+    }
+    if (!File(path).existsSync()) {
+      return;
+    }
+    ref.watch(isGeneratingContentProvider.notifier).state = true;
+
+    try {
+      AllModelBean bean = getModelByApiKey(
+          ref.watch(currentChatParentItemProvider.notifier).state?.apiKey ??
+              "");
+      var content = await API().audio2OpenAIText(bean, path);
+      if (content.isNotEmpty) {
+        _controller.text = content;
+        sendMessage();
+      }
+    } catch (e) {
+      ref.watch(isGeneratingContentProvider.notifier).state = false;
+      e.toString().fail();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, bottom: 15, right: 15),
+      decoration: BoxDecoration(
+        color: ref.watch(themeProvider).xffF6F6F6(),
+      ),
+      child: SafeArea(
+        bottom: true,
+        top: false,
+        child: Column(
+          children: [
+            Consumer(builder: (context, ref, _) {
+              var images = ref.watch(imagesProvider);
+              if (images.isEmpty) {
+                return const SizedBox();
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GridView.builder(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: images.length,
+                    itemBuilder: (context, index) {
+                      return LayoutBuilder(builder: (context, c) {
+                        return Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.memory(
+                                  base64Decode(images[index]),
+                                  width: c.maxWidth - 10,
+                                  height: c.maxHeight - 10,
+                                  fit: BoxFit.cover,
+                                  gaplessPlayback: true,
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              right: 0,
+                              top: 0,
+                              child: const Icon(
+                                CupertinoIcons.xmark_circle_fill,
+                                size: 20,
+                                color: Color(0xffD0D0D0),
+                              ).click(() {
+                                ref
+                                    .read(imagesProvider.notifier)
+                                    .update((state) {
+                                  return [...state..removeAt(index)];
+                                });
+                              }),
+                            ),
+                          ],
+                        );
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              );
+            }),
+            SizedBox(
+              height: kBottomNavigationBarHeight,
+              child: Consumer(builder: (context, ref, _) {
+                var inputMode = ref.watch(inputModeProvider);
+                var disableMode = ref.watch(isGeneratingContentProvider);
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //选择图片
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    // addImage(),
+                    if (widget.supportAudio) audioButton(inputMode),
+                    if (widget.supportAudio)
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    Expanded(
+                      child: AnimatedCrossFade(
+                        duration: const Duration(milliseconds: 100),
+                        firstChild: IgnorePointer(
+                          ignoring: disableMode,
+                          child: Listener(
+                            onPointerDown: (event) async {
+                              ref
+                                  .watch(audioRecordingStateProvider.notifier)
+                                  .state = AudioRecordingState.recording;
+                              audioOverlay.showAudio(context);
+                              startRecord();
+                            },
+                            onPointerUp: (event) {
+                              audioOverlay.removeAudio();
+                              if (ref
+                                      .watch(
+                                          audioRecordingStateProvider.notifier)
+                                      .state ==
+                                  AudioRecordingState.canceling) {
+                                cancel();
+                              } else {
+                                stopRecord();
+                              }
+                            },
+                            onPointerMove: (event) {
+                              //获取他相对于整个屏幕左上角的偏移
+                              var offset = event.position;
+
+                              double paddingBottom =
+                                  MediaQuery.of(context).size.height -
+                                      offset.dy;
+
+                              if (paddingBottom < 200) {
+                                ref
+                                    .watch(audioRecordingStateProvider.notifier)
+                                    .state = AudioRecordingState.recording;
+                              } else {
+                                ref
+                                    .watch(audioRecordingStateProvider.notifier)
+                                    .state = AudioRecordingState.canceling;
+                              }
+                              audioOverlay.update();
+                            },
+                            onPointerCancel: (event) {
+                              audioOverlay.removeAudio();
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color: ref.watch(themeProvider).inputPanelBg(),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "按住说话",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.color,
+                                    fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ),
+                        secondChild: CupertinoTextField(
+                          focusNode: widget.focusNode,
+                          enabled: !disableMode,
+                          placeholder: "请输入内容",
+                          controller: _controller,
+                          maxLines: 5,
+                          minLines: 1,
+                          cursorColor: Theme.of(context).primaryColor,
+                          style: Theme.of(context).textTheme.titleMedium,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: ref.watch(themeProvider).inputPanelBg(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        crossFadeState: !inputMode
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    // if (false)
+                    //   AnimatedCrossFade(
+                    //     duration: const Duration(milliseconds: 100),
+                    //     firstChild: sendButton(disableMode),
+                    //     secondChild: addImage(),
+                    //     crossFadeState: (ref.watch(sendButtonVisibleProvider) == true || disableMode == true)
+                    //         ? CrossFadeState.showFirst
+                    //         : CrossFadeState.showSecond,
+                    //   )
+                    // else
+                    sendButton(disableMode),
+                  ],
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget audioButton(bool inputMode) {
+    return Builder(builder: (context) {
+      return SizedBox(
+        width: 30,
+        height: 30,
+        child: Icon(
+          inputMode
+              ? Icons.circle_notifications_outlined
+              : Icons.circle_outlined,
+          color: Theme.of(context).textTheme.titleMedium?.color,
+          size: 30,
+        ),
+      ).click(() {
+        ref.watch(inputModeProvider.notifier).state =
+            !ref.watch(inputModeProvider.notifier).state;
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (inputMode == false) {
+            widget.focusNode.requestFocus();
+          }
+        });
+      });
+    });
+  }
+
+  Widget sendButton(bool isGenerateContent) {
+    return SizedBox(
+      width: 60,
+      height: 30,
+      child: Builder(builder: (context) {
+        if (isGenerateContent) {
+          return Center(
+            child: SizedBox(
+              width: 30,
+              height: 30,
+              child: WaitingSendButton(onPressed: () {
+                widget.cancelSend();
+              }),
+            ),
+          );
+        }
+
+        return SendButton(onPressed: () {
+          sendMessage();
+        });
+      }),
+    );
+  }
+
+  Widget addImage() {
+    return Builder(builder: (context) {
+      return SizedBox(
+        width: 30,
+        height: 30,
+        child: Icon(
+          Icons.add_circle_outline,
+          color: Theme.of(context).textTheme.titleMedium?.color,
+          size: 30,
+        ),
+      ).click(() {
+        if (ref.watch(isGeneratingContentProvider.notifier).state == true)
+          return;
+
+        ImagePicker images = ImagePicker();
+        images.pickMultiImage().then(
+          (value) async {
+            //压缩图片，然后把图片转换成base64
+
+            List<Uint8List> images = [];
+
+            for (int i = 0; i < value.length; i++) {
+              var result = await FlutterImageCompress.compressWithFile(
+                value[i].path,
+                minWidth: 200,
+                minHeight: 200,
+                quality: 94,
+              );
+              images.add(result ?? Uint8List.fromList([]));
+            }
+
+            ref.read(imagesProvider.notifier).update((state) {
+              return [
+                ...state,
+                ...images.map((e) => base64Encode(e)).toList(),
+              ];
+            });
+          },
+        );
+      });
+    });
+  }
+
+  StreamSubscription<GenerateContentBean>? _streamSubscription;
+
+  void sendMessage({String? text, List<String>? images}) async {
+    if (_controller.text.isEmpty && text != null) {
+      _controller.text = text;
+    }
+    List<String>? sendImages;
+    if (images != null) {
+      sendImages = images;
+    } else {
+      sendImages = ref.watch(imagesProvider.notifier).state;
+    }
+
+    if (_controller.text.isEmpty) {
+      "请输入内容".toast();
+      return;
+    }
+    if (_controller.text.endsWith("\n")) {
+      _controller.text =
+          _controller.text.substring(0, _controller.text.length - 1);
+    }
+    await widget.sendMessage(_controller.text, sendImages);
+    _controller.text = "";
+  }
+
+  @override
+  void dispose() {
+    record.dispose();
+    _streamSubscription?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+List<PullDownMenuEntry> getMessageActions2(
+    BuildContext context,
+    WidgetRef ref,
+    ChatItem chatItem,
+    ResendMessage? resendMessage,
+    SendMessageAgain? sendMessageAgain) {
+  return [
+    if (resendMessage != null)
+      PullDownMenuItem(
+        icon: CupertinoIcons.arrow_counterclockwise,
+        title: "重新发送",
+        onTap: () {
+          resendMessage(chatItem.content ?? "");
+        },
+      ),
+    if (sendMessageAgain != null)
+      PullDownMenuItem(
+        icon: CupertinoIcons.arrow_2_circlepath,
+        title: "再次发送",
+        onTap: () {
+          sendMessageAgain(chatItem.content ?? "");
+        },
+      ),
+
+    PullDownMenuItem(
+      icon: CupertinoIcons.doc_on_doc,
+      title: "复制",
+      onTap: () {
+        Clipboard.setData(ClipboardData(text: chatItem.content ?? ""));
+        "复制成功".success();
+      },
+    ),
+    //分享
+    PullDownMenuItem(
+      icon: CupertinoIcons.arrowshape_turn_up_right,
+      title: "分享",
+      onTap: () {
+        Share.share(chatItem.content ?? "");
+      },
+    ),
+    PullDownMenuItem(
+      icon: CupertinoIcons.delete,
+      isDestructive: true,
+      title: "删除",
+      onTap: () {
+        Future.delayed(const Duration(milliseconds: 100), () {
+          showCommonDialog(
+            context,
+            content: '确定删除这条消息吗？',
+            title: '温馨提示',
+            confirmText: '删除',
+            confirmCallback: () {
+              ref
+                  .read(chatProvider(chatItem.parentID ?? 0).notifier)
+                  .remove(chatItem);
+            },
+          );
+        });
+      },
+    ),
+  ];
+}
+
+typedef ResendMessage = void Function(String content);
+typedef SendMessageAgain = void Function(String content);
+
+class UserMessage extends ConsumerStatefulWidget {
+  final ChatItem chatItem;
+  final ResendMessage resendMessage;
+  final SendMessageAgain sendMessageAgain;
+  final bool hideResend;
+
+  const UserMessage(
+      {super.key,
+      required this.chatItem,
+      required this.resendMessage,
+      required this.sendMessageAgain,
+      this.hideResend = false});
+
+  @override
+  ConsumerState<UserMessage> createState() => _UserMessageState();
+}
+
+class _UserMessageState extends ConsumerState<UserMessage> {
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        color: Colors.transparent,
+        margin: const EdgeInsets.only(right: 15, top: 10, bottom: 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //重试
+            if (widget.chatItem.status == MessageStatus.failed.index)
+              Consumer(builder: (context, ref, _) {
+                return const Icon(CupertinoIcons.exclamationmark_circle_fill,
+                        color: Colors.red, size: 20)
+                    .click(() {
+                  showCommonDialog(
+                    context,
+                    title: "温馨提示",
+                    confirmCallback: () {
+                      ref
+                          .watch(chatProvider(widget.chatItem.parentID ?? 0)
+                              .notifier)
+                          .remove(widget.chatItem, connectOtherTimeID: true);
+                      widget.resendMessage(widget.chatItem.content ?? "");
+                    },
+                    content: "确定重新发送消息吗?",
+                    confirmText: "确定",
+                  );
+                }, enable: ref.watch(isGeneratingContentProvider) == false);
+              }),
+            const SizedBox(width: 10),
+            PullDownButton(
+              itemBuilder: (context) => getMessageActions2(
+                  context,
+                  ref,
+                  widget.chatItem,
+                  widget.hideResend
+                      ? null
+                      : (content) {
+                          ref
+                              .watch(chatProvider(widget.chatItem.parentID ?? 0)
+                                  .notifier)
+                              .remove(widget.chatItem,
+                                  connectOtherTimeID: true);
+                          widget.resendMessage(content);
+                        }, (content) {
+                widget.sendMessageAgain(content);
+              }),
+              buttonBuilder: (context, showMenu) => Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.8,
+                  minWidth: 10,
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.chatItem.images != null &&
+                        widget.chatItem.images!.isNotEmpty &&
+                        (widget.chatItem.images!
+                                .where((element) => element.isEmpty)
+                                .length !=
+                            widget.chatItem.images!.length))
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Wrap(
+                          spacing: 10,
+                          runSpacing: 10,
+                          runAlignment: WrapAlignment.end,
+                          direction: Axis.horizontal,
+                          children: [
+                            ...widget.chatItem.images!
+                                .where((element) => element.isNotEmpty)
+                                .map((e) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.memory(
+                                  base64Decode(e),
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
+                                  gaplessPlayback: true,
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
+                      ),
+                    if (widget.chatItem.images != null &&
+                        widget.chatItem.images!.isNotEmpty &&
+                        (widget.chatItem.images!
+                                .where((element) => element.isEmpty)
+                                .length !=
+                            widget.chatItem.images!.length))
+                      const SizedBox(height: 10),
+                    Text(
+                      widget.chatItem.content ?? "",
+                      style: const TextStyle(
+                        color: Color(0xff091807),
+                      ),
+                    ),
+                  ],
+                ),
+              ).click(() {
+                showMenu();
+              }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BotMessage extends ConsumerWidget {
+  final ChatItem chatItem;
+
+  const BotMessage({super.key, required this.chatItem});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return Container(
+      padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            chatItem.moduleType?.replaceFirst("models/", "") ?? "",
+            style:
+                TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
+          ),
+          const SizedBox(height: 5),
+          PullDownButton(
+            itemBuilder: (context) =>
+                getMessageActions2(context, ref, chatItem, null, null),
+            buttonBuilder: (context, showMenu) => Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.7,
+                minWidth: 10,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              child: getMessage(ref, context),
+            ).click(() {
+              showMenu();
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getMessage(WidgetRef ref, BuildContext context) {
+    if (chatItem.status == MessageStatus.loading.index) {
+      return Container(
+        width: MediaQuery.of(context).size.width * 0.2,
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: 40,
+          child: LoadingAnimationWidget.prograssiveDots(
+            color: Theme.of(context).primaryColor,
+            size: 40,
+          ),
+        ),
+      );
+    } else if (chatItem.status == MessageStatus.success.index) {
+      //Markdown 适配暗黑主题
+      return ChatMarkDown(content: chatItem.content ?? "");
+    } else if (chatItem.status == MessageStatus.failed.index) {
+      return ChatMarkDown(content: chatItem.content ?? "");
+    } else {
+      return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Text(
+          chatItem.content ?? "canceled by user",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      );
+    }
+  }
+
+  bool isMarkdown(String text) {
+    // 定义一系列Markdown的正则表达式模式
+    final List<RegExp> markdownPatterns = [
+      RegExp(r'^\s*#', multiLine: true), // 标题
+      RegExp(r'\*\*(.*?)\*\*'), // 加粗
+      RegExp(r'\*(.*?)\*'), // 斜体
+      RegExp(r'!\[.*?\]\(.*?\)'), // 图片
+      RegExp(r'\[.*?\]\(.*?\)'), // 链接
+      RegExp(r'^```(.*?)```', multiLine: true), // 代码块
+      RegExp(r'^\s*-\s', multiLine: true), // 无序列表
+      RegExp(r'^\s*\d+\.\s', multiLine: true), // 有序列表
+    ];
+
+    // 检查文本是否匹配Markdown的任何特征
+    for (var pattern in markdownPatterns) {
+      if (pattern.hasMatch(text)) {
+        return true; // 如果找到匹配项，则假定文本是Markdown格式
+      }
+    }
+
+    return false; // 如果没有找到任何匹配项，则假定文本不是Markdown格式
+  }
+}
+
+class AssistMessage extends StatelessWidget {
+  final ChatItem chatItem;
+
+  const AssistMessage({super.key, required this.chatItem});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+      alignment: Alignment.center,
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.9,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+        child: Text(
+          chatItem.content ?? "",
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ),
+    );
+  }
+}
