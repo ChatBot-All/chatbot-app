@@ -602,6 +602,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               audioOverlay.update();
                             },
                             onPointerCancel: (event) {
+                              ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
                               audioOverlay.removeAudio();
                             },
                             child: Container(

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/utils/hive_box.dart';
+import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
@@ -41,11 +42,9 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       supportedModels = HiveBox()
           .openAIConfig
           .values
-          .where((element) => (element.getWhisperModels.isNotEmpty &&
-              element.getTTSModels.isNotEmpty))
+          .where((element) => (element.getWhisperModels.isNotEmpty && element.getTTSModels.isNotEmpty))
           .toList();
-      ref.watch(currentGenerateAudioChatModelProvider.notifier).state =
-          supportedModels.first;
+      ref.watch(currentGenerateAudioChatModelProvider.notifier).state = supportedModels.first;
     });
   }
 
@@ -56,8 +55,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
   void startRecord() async {
     if (await record.hasPermission()) {
-      audioPath =
-          "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
+      audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
     } else {
       "请打开录音权限".fail();
@@ -76,6 +74,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     } catch (e) {
       e.toString().fail();
     }
+    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
   }
 
   void stopRecord() async {
@@ -88,11 +87,11 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     if (!File(path).existsSync()) {
       return;
     }
+    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
     ref.watch(isGeneratingContentProvider.notifier).state = true;
 
     try {
-      var model =
-          ref.watch(currentGenerateAudioChatModelProvider.notifier).state;
+      var model = ref.watch(currentGenerateAudioChatModelProvider.notifier).state;
 
       if (model == null) {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
@@ -152,8 +151,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
               ),
               Builder(builder: (context) {
                 return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
                     child: Transform.rotate(
                       angle: pi / 2,
                       child: Icon(
@@ -179,10 +177,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
                                     )
                                   : null,
                               onTap: () {
-                                ref
-                                    .watch(currentGenerateAudioChatModelProvider
-                                        .notifier)
-                                    .state = e;
+                                ref.watch(currentGenerateAudioChatModelProvider.notifier).state = e;
                                 Navigator.of(context).pop();
                               },
                             );
@@ -205,80 +200,102 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
           ),
         ),
         body: Consumer(builder: (context, ref, _) {
-          var chat =
-              ref.watch(chatProvider(specialGenerateAudioChatParentItemTime));
-          return SizedBox();
+          var talker = ref.watch(talkerProvider);
+          var status = ref.watch(audioRecordingStateProvider);
+          return Column(
+            children: [
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Wrap(
+                  runAlignment: WrapAlignment.center,
+                  alignment: WrapAlignment.center,
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: talkers
+                      .map((e) => Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                              color: talker == e
+                                  ? Theme.of(context).primaryColor
+                                  : ref.watch(themeProvider).inputPanelBg(),
+                              borderRadius: BorderRadius.circular(1000),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              e,
+                              style: TextStyle(
+                                color: talker == e ? Colors.white : Theme.of(context).textTheme.titleMedium?.color,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ).click(() {
+                            ref.watch(talkerProvider.notifier).state = e;
+                          }))
+                      .toList(),
+                ),
+              ),
+              Expanded(child: Center(child: getLottie(status))),
+            ],
+          );
         }),
-        bottomNavigationBar: SizedBox(
+        bottomNavigationBar: Container(
+          alignment: Alignment.bottomCenter,
           width: F.width,
-          height:
-              kBottomNavigationBarHeight + MediaQuery.paddingOf(context).bottom,
-          child: SafeArea(
-            bottom: true,
-            top: false,
-            child: Consumer(builder: (context, ref, _) {
-              var state = ref.watch(audioChatStatusProvider);
+          padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+          height: kBottomNavigationBarHeight + MediaQuery.paddingOf(context).bottom,
+          child: Consumer(builder: (context, ref, _) {
+            var state = ref.watch(audioRecordingStateProvider);
 
-              return IgnorePointer(
-                ignoring: state == AudioChatStatus.sending,
-                child: Opacity(
-                  opacity: state == AudioChatStatus.sending ? 0.5 : 1,
-                  child: Listener(
-                    onPointerDown: (event) async {
-                      ref.watch(audioChatStatusProvider.notifier).state =
-                          AudioChatStatus.recording;
-                      audioOverlay.showAudio(context);
-                      startRecord();
-                    },
-                    onPointerUp: (event) {
-                      audioOverlay.removeAudio();
-                      if (ref.watch(audioChatStatusProvider.notifier).state ==
-                          AudioChatStatus.canceling) {
-                        cancel();
-                      } else {
-                        stopRecord();
-                      }
-                    },
-                    onPointerMove: (event) {
-                      //获取他相对于整个屏幕左上角的偏移
-                      var offset = event.position;
+            return IgnorePointer(
+              ignoring: state != AudioRecordingState.normal,
+              child: Opacity(
+                opacity: state != AudioRecordingState.normal ? 0.5 : 1,
+                child: Listener(
+                  onPointerDown: (event) async {
+                    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
+                    audioOverlay.showAudio(context);
+                    startRecord();
+                  },
+                  onPointerUp: (event) {
+                    audioOverlay.removeAudio();
+                    if (ref.watch(audioRecordingStateProvider.notifier).state == AudioRecordingState.canceling) {
+                      cancel();
+                    } else {
+                      stopRecord();
+                    }
+                  },
+                  onPointerMove: (event) {
+                    //获取他相对于整个屏幕左上角的偏移
+                    var offset = event.position;
 
-                      double paddingBottom =
-                          MediaQuery.of(context).size.height - offset.dy;
+                    double paddingBottom = MediaQuery.of(context).size.height - offset.dy;
 
-                      if (paddingBottom < 200) {
-                        ref.watch(audioChatStatusProvider.notifier).state =
-                            AudioChatStatus.recording;
-                      } else {
-                        ref.watch(audioChatStatusProvider.notifier).state =
-                            AudioChatStatus.canceling;
-                      }
-                      audioOverlay.update();
-                    },
-                    onPointerCancel: (event) {
-                      audioOverlay.removeAudio();
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 30),
-                      decoration: BoxDecoration(
-                        color: ref.watch(themeProvider).inputPanelBg(),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "按住说话",
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.titleMedium?.color,
-                            fontSize: 16),
-                      ),
+                    if (paddingBottom < 200) {
+                      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
+                    } else {
+                      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.canceling;
+                    }
+                    audioOverlay.update();
+                  },
+                  onPointerCancel: (event) {
+                    audioOverlay.removeAudio();
+                    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
+                  },
+                  child: Transform.translate(
+                    offset: const Offset(0, -20),
+                    child: Lottie.asset(
+                      "assets/lottie/audio.json",
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-              );
-            }),
-          ),
+              ),
+            );
+          }),
         ),
       );
     });
@@ -287,25 +304,20 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
   final player = AudioPlayer();
 
   Future<void> sendMessage(AllModelBean model, String? text) async {
-    ref.watch(audioChatStatusProvider.notifier).state = AudioChatStatus.sending;
+    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
     var userChatItem = ChatItem(
       type: ChatType.user.index,
       content: text,
       status: MessageStatus.success.index,
       parentID: specialGenerateAudioChatParentItemTime,
       images: [],
-      moduleName: ref
-          .watch(currentGenerateAudioChatModelProvider.notifier)
-          .state
-          ?.model,
+      moduleName: ref.watch(currentGenerateAudioChatModelProvider.notifier).state?.model,
       messageType: MessageType.common.index,
-      moduleType: model?.getDefaultModelType.id ?? "gpt-4",
+      moduleType: model.getDefaultModelType.id ?? "gpt-4",
       time: DateTime.now().millisecondsSinceEpoch,
     );
     await Future.delayed(const Duration(milliseconds: 50));
-    ref
-        .read(chatProvider(specialGenerateAudioChatParentItemTime).notifier)
-        .add(userChatItem);
+    ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).add(userChatItem);
 
     String result = "";
     var chatItem = ChatItem(
@@ -315,36 +327,29 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       status: MessageStatus.loading.index,
       parentID: specialGenerateAudioChatParentItemTime,
       requestID: userChatItem.time,
-      moduleName: model?.model ?? 0,
-      moduleType: model?.defaultModelType?.id ?? "",
+      moduleName: model.model ?? 0,
+      moduleType: model.defaultModelType?.id ?? "",
       time: DateTime.now().millisecondsSinceEpoch,
     );
-    ref
-        .read(chatProvider(specialGenerateAudioChatParentItemTime).notifier)
-        .add(chatItem);
+    var allChats = ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).add(chatItem);
     await Future.delayed(const Duration(milliseconds: 50));
     try {
       var data = await API().createTextChatDirectly(
         double.parse("1.0"),
-        model!,
+        model,
         model.getDefaultModelType.id ?? "gpt-4",
-        ref
-            .watch(
-                chatProvider(specialGenerateAudioChatParentItemTime).notifier)
-            .chats,
+        allChats,
       );
 
-      chatItem.content = result;
+      chatItem.content = data.content;
       chatItem.status = MessageStatus.success.index;
-      ref
-          .read(chatProvider(specialGenerateAudioChatParentItemTime).notifier)
-          .update(chatItem);
+      ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).update(chatItem);
 
       if (data.content == null || data.content!.isEmpty) {
-        "生成内容为空".fail();
-        return;
+        throw Exception("生成内容为空");
       }
-      var tts = await API().text2TTS(data.content!, "");
+      var tts = await API().text2TTS(data.content!, ref.watch(talkerProvider.notifier).state);
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.speaking;
 
       if (player.playing) {
         player.stop();
@@ -352,18 +357,32 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
       await player.setAudioSource(MyCustomSource(tts.readAsBytesSync()));
       await player.play();
-      ref.watch(audioChatStatusProvider.notifier).state =
-          AudioChatStatus.normal;
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
     } catch (e) {
-      ref.watch(audioChatStatusProvider.notifier).state =
-          AudioChatStatus.normal;
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
       e.toString().fail();
-      chatItem.content = result;
-      chatItem.status = MessageStatus.success.index;
-      ref
-          .read(chatProvider(specialGenerateAudioChatParentItemTime).notifier)
-          .update(chatItem);
+      chatItem.content = "";
+      chatItem.status = MessageStatus.failed.index;
+      userChatItem.status = MessageStatus.failed.index;
+      ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).update(chatItem);
+      ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).update(userChatItem);
     }
+  }
+
+  Widget getLottie(AudioRecordingState status) {
+    if (status == AudioRecordingState.recording) {
+      return Text("正在录音...", style: Theme.of(context).textTheme.bodyMedium);
+    }
+    if (status == AudioRecordingState.canceling) {
+      return Text("正在取消...", style: Theme.of(context).textTheme.bodyMedium);
+    }
+    if (status == AudioRecordingState.sending) {
+      return Text("正在发送到服务器...", style: Theme.of(context).textTheme.bodyMedium);
+    }
+    if (status == AudioRecordingState.speaking) {
+      return Text("服务器正在回应...", style: Theme.of(context).textTheme.bodyMedium);
+    }
+    return Text("按住底部麦克风，开始聊天吧", style: Theme.of(context).textTheme.bodyMedium);
   }
 }
 
@@ -387,15 +406,14 @@ class MyCustomSource extends StreamAudioSource {
   }
 }
 
-final audioChatStatusProvider =
-    StateProvider.autoDispose<AudioChatStatus>((ref) {
-  return AudioChatStatus.normal;
+final talkerProvider = StateProvider<String>((ref) {
+  return talkers.first;
 });
-
-enum AudioChatStatus {
-  normal,
-  recording,
-  canceling,
-  sending,
-  speaking,
-}
+var talkers = [
+  "Alloy",
+  "Echo",
+  "Fable",
+  "Onyx",
+  "Nova",
+  "Shimmer",
+];

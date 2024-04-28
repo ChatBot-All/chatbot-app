@@ -215,13 +215,16 @@ class AudioAnimationBgPainter extends CustomPainter {
   }
 }
 
-final audioRecordingStateProvider = StateProvider<AudioRecordingState>((ref) {
-  return AudioRecordingState.recording;
+final audioRecordingStateProvider = StateProvider.autoDispose<AudioRecordingState>((ref) {
+  return AudioRecordingState.normal;
 });
 
 enum AudioRecordingState {
+  normal,
   recording,
   canceling,
+  sending,
+  speaking,
 }
 
 class AudioOverlay {

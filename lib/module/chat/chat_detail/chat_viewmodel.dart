@@ -48,29 +48,30 @@ class ChatNotify extends StateNotifier<AsyncValue<List<ChatItem>>> {
     loadData();
   }
 
-  void add(ChatItem chatItem) {
-    state = AsyncValue.data([...state.value!, chatItem]);
+  List<ChatItem> add(ChatItem chatItem) {
+    state = AsyncValue.data([...state.value ?? [], chatItem]);
     ChatItemProvider().insert(chatItem);
+    return state.value ?? [];
   }
 
-  List<ChatItem> get chats => state.value!;
+  List<ChatItem> get chats => state.value ?? [];
 
   void remove(ChatItem chatItem, {bool connectOtherTimeID = false}) async {
     state.value?.removeWhere((element) => element.time == chatItem.time);
 
-    state = AsyncValue.data(state.value!);
+    state = AsyncValue.data(state.value ?? []);
     await ChatItemProvider().delete(chatItem.time ?? 0);
     if (connectOtherTimeID) {
       state.value?.removeWhere((element) => element.requestID == chatItem.time);
 
-      state = AsyncValue.data(state.value!);
+      state = AsyncValue.data(state.value ?? []);
       await ChatItemProvider().deleteRequestIDByTime(chatItem.time ?? 0);
     }
   }
 
   void update(ChatItem chatItem) async {
     state.value?.removeWhere((element) => element.time == chatItem.time);
-    state = AsyncValue.data([...state.value!, chatItem]);
+    state = AsyncValue.data([...state.value ?? [], chatItem]);
     await ChatItemProvider().update(chatItem);
   }
 

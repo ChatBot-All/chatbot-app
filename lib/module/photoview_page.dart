@@ -23,7 +23,14 @@ class _SlidePageState extends State<SlidePage> {
         slideAxis: SlideAxis.both,
         slideType: SlideType.onlyImage,
         slidePageBackgroundHandler: (Offset offset, Size pageSize) {
-          return Colors.black.withOpacity((1-offset.distance / pageSize.shortestSide));
+          double opacity = (1 - offset.distance / pageSize.shortestSide);
+          if (opacity < 0) {
+            opacity = 0;
+          }
+          if (opacity > 1) {
+            opacity = 1;
+          }
+          return Colors.black.withOpacity(opacity);
         },
         child: GestureDetector(
           child: widget.url == 'This is an video'
