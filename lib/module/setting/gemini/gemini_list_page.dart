@@ -133,7 +133,7 @@ class GeminiListItem extends ConsumerWidget {
                         ref.watch(geminiListProvider.notifier).remove(item);
                       },
                       content: '确定删除当前配置吗？',
-                      title: '温馨提示',
+                      title: 'S.current.reminder',
                       autoPop: true,
                       hideCancelBtn: false,
                     );

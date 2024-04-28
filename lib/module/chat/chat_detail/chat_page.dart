@@ -438,7 +438,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
       await record.start(const RecordConfig(), path: audioPath!);
     } else {
       await Permission.microphone.request();
-      "请打开录音权限".toString();
+      S.current.open_micro_permission.toString();
       audioOverlay.removeAudio();
     }
   }
@@ -460,7 +460,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
     var path = await record.stop();
 
     if (path == null || path.isEmpty) {
-      "无法获取到语音文件".fail();
+      S.current.no_audio_file.fail();
       return;
     }
     if (!File(path).existsSync()) {
@@ -613,7 +613,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                "按住说话",
+                                S.current.hold_talk,
                                 style: TextStyle(color: Theme.of(context).textTheme.titleMedium?.color, fontSize: 16),
                               ),
                             ),
@@ -622,7 +622,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                         secondChild: CupertinoTextField(
                           focusNode: widget.focusNode,
                           enabled: !disableMode,
-                          placeholder: "请输入内容",
+                          placeholder: S.current.input_text,
                           controller: _controller,
                           maxLines: 5,
                           minLines: 1,
@@ -754,7 +754,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
     }
 
     if (_controller.text.isEmpty) {
-      "请输入内容".toast();
+      S.current.input_text.toast();
       return;
     }
     if (_controller.text.endsWith("\n")) {
@@ -779,7 +779,7 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
     if (resendMessage != null)
       PullDownMenuItem(
         icon: CupertinoIcons.arrow_counterclockwise,
-        title: "重新发送",
+        title: S.current.resend,
         onTap: () {
           resendMessage(chatItem.content ?? "");
         },
@@ -787,7 +787,7 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
     if (sendMessageAgain != null)
       PullDownMenuItem(
         icon: CupertinoIcons.arrow_2_circlepath,
-        title: "再次发送",
+        title: S.current.send_again,
         onTap: () {
           sendMessageAgain(chatItem.content ?? "");
         },
@@ -795,16 +795,16 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
 
     PullDownMenuItem(
       icon: CupertinoIcons.doc_on_doc,
-      title: "复制",
+      title: S.current.copy,
       onTap: () {
         Clipboard.setData(ClipboardData(text: chatItem.content ?? ""));
-        "复制成功".success();
+        S.current.copy_success.success();
       },
     ),
     //分享
     PullDownMenuItem(
       icon: CupertinoIcons.arrowshape_turn_up_right,
-      title: "分享",
+      title: S.current.share,
       onTap: () {
         Share.share(chatItem.content ?? "");
       },
@@ -812,14 +812,14 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
     PullDownMenuItem(
       icon: CupertinoIcons.delete,
       isDestructive: true,
-      title: "删除",
+      title: S.current.delete,
       onTap: () {
         Future.delayed(const Duration(milliseconds: 100), () {
           showCommonDialog(
             context,
-            content: '确定删除这条消息吗？',
-            title: '温馨提示',
-            confirmText: '删除',
+            content: S.current.delete_config_reminder,
+            title: S.current.reminder,
+            confirmText: S.current.delete,
             confirmCallback: () {
               ref.read(chatProvider(chatItem.parentID ?? 0).notifier).remove(chatItem);
             },
@@ -867,15 +867,15 @@ class _UserMessageState extends ConsumerState<UserMessage> {
                 return const Icon(CupertinoIcons.exclamationmark_circle_fill, color: Colors.red, size: 20).click(() {
                   showCommonDialog(
                     context,
-                    title: "温馨提示",
+                    title: S.current.reminder,
                     confirmCallback: () {
                       ref
                           .watch(chatProvider(widget.chatItem.parentID ?? 0).notifier)
                           .remove(widget.chatItem, connectOtherTimeID: true);
                       widget.resendMessage(widget.chatItem.content ?? "");
                     },
-                    content: "确定重新发送消息吗?",
-                    confirmText: "确定",
+                    content: S.current.conform_resend,
+                    confirmText: S.current.confirm,
                   );
                 }, enable: ref.watch(isGeneratingContentProvider) == false);
               }),

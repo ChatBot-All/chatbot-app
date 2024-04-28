@@ -24,7 +24,7 @@ class VersionCheck {
           if (context.mounted) {
             showCommonDialog(
               context,
-              title: "温馨提示",
+              title: "S.current.reminder",
               content: "发现新版本，请前往更新",
               confirmText: "去更新",
               confirmCallback: () {

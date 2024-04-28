@@ -45,8 +45,8 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                 if (!isExistModels()) {
                   showCommonDialog(
                     context,
-                    title: '温馨提示',
-                    content: "请先进入设置并配置服务商",
+                    title: S.current.reminder,
+                    content: S.current.enter_setting_init_server,
                     hideCancelBtn: true,
                     autoPop: true,
                     confirmText: "知道了",
@@ -61,7 +61,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                   id: DateTime.now().millisecondsSinceEpoch,
                   moduleName: getModelByApiKey("").model,
                   moduleType: getSupportedModelByApiKey(""),
-                  title: '随便聊聊',
+                  title: S.current.new_chat,
                 )))
                     .then((value) {
                   ref.read(chatParentListProvider.notifier).load();
@@ -71,11 +71,11 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                 if (!isExistModels()) {
                   showCommonDialog(
                     context,
-                    title: '温馨提示',
-                    content: "请先进入设置并配置服务商",
+                    title: S.current.reminder,
+                    content: S.current.enter_setting_init_server,
                     hideCancelBtn: true,
                     autoPop: true,
-                    confirmText: "知道了",
+                    confirmText: S.current.yes_know,
                     confirmCallback: () {},
                   );
                   return;
@@ -101,7 +101,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                                 id: DateTime.now().millisecondsSinceEpoch,
                                 moduleName: e.model,
                                 moduleType: e.defaultModelType?.id ?? "gpt-4",
-                                title: '随便聊聊',
+                                title: S.current.new_chat,
                               )))
                                   .then((value) {
                                 ref
@@ -236,7 +236,7 @@ class ChatImageListItem extends ConsumerWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    '生成图片',
+                    S.current.generate_image,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -250,11 +250,11 @@ class ChatImageListItem extends ConsumerWidget {
             if (!isExistModels()) {
               showCommonDialog(
                 context,
-                title: '温馨提示',
-                content: "请先进入设置并配置服务商",
+                title: S.current.reminder,
+                content: S.current.enter_setting_init_server,
                 hideCancelBtn: true,
                 autoPop: true,
-                confirmText: "知道了",
+                confirmText: S.current.yes_know,
                 confirmCallback: () {},
               );
               return;
@@ -262,11 +262,11 @@ class ChatImageListItem extends ConsumerWidget {
             if (!isExistDallE3Models()) {
               showCommonDialog(
                 context,
-                title: '温馨提示',
-                content: "目前生成图片仅支持 dall-e-3 模型,您所添加的服务商均不支持该模型",
+                title: S.current.reminder,
+                content: S.current.only_support_dalle3,
                 hideCancelBtn: true,
                 autoPop: true,
-                confirmText: "知道了",
+                confirmText: S.current.yes_know,
                 confirmCallback: () {},
               );
               return;
@@ -315,7 +315,7 @@ class ChatAudioChatListItem extends ConsumerWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    '语音聊天',
+                    S.current.voiceChat,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -329,11 +329,11 @@ class ChatAudioChatListItem extends ConsumerWidget {
             if (!isExistModels()) {
               showCommonDialog(
                 context,
-                title: '温馨提示',
-                content: "请先进入设置并配置服务商",
+                title: S.current.reminder,
+                content: S.current.enter_setting_init_server,
                 hideCancelBtn: true,
                 autoPop: true,
-                confirmText: "知道了",
+                confirmText: S.current.yes_know,
                 confirmCallback: () {},
               );
               return;
@@ -341,11 +341,11 @@ class ChatAudioChatListItem extends ConsumerWidget {
             if (!isExistTTSAndWhisperModels()) {
               showCommonDialog(
                 context,
-                title: '温馨提示',
-                content: "您所添加的服务商不支持语音聊天",
+                title: S.current.reminder,
+                content: S.current.not_support_tts,
                 hideCancelBtn: true,
                 autoPop: true,
-                confirmText: "知道了",
+                confirmText: S.current.yes_know,
                 confirmCallback: () {},
               );
               return;
@@ -397,7 +397,7 @@ class ChatSpecialTextListItem extends ConsumerWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    '随便聊聊',
+                    S.current.new_chat,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -411,11 +411,11 @@ class ChatSpecialTextListItem extends ConsumerWidget {
             if (!isExistModels()) {
               showCommonDialog(
                 context,
-                title: '温馨提示',
-                content: "请先进入设置并配置服务商",
+                title: S.current.reminder,
+                content: S.current.enter_setting_init_server,
                 hideCancelBtn: true,
                 autoPop: true,
-                confirmText: "知道了",
+                confirmText: S.current.yes_know,
                 confirmCallback: () {},
               );
               return;
@@ -430,7 +430,7 @@ class ChatSpecialTextListItem extends ConsumerWidget {
                 id: specialGenerateTextChatParentItemTime,
                 moduleName: getModelByApiKey("").model,
                 moduleType: getSupportedModelByApiKey(""),
-                title: '随便聊聊',
+                title: S.current.new_chat,
               );
               HiveBox().chatHistory.put(
                   specialGenerateTextChatParentItemTime.toString(), chatItem);
@@ -602,11 +602,11 @@ class ChatListItem extends ConsumerWidget {
               if (!isExistModels()) {
                 showCommonDialog(
                   context,
-                  title: '温馨提示',
-                  content: "请先进入设置并配置服务商",
+                  title: S.current.reminder,
+                  content: S.current.enter_setting_init_server,
                   hideCancelBtn: true,
                   autoPop: true,
-                  confirmText: "知道了",
+                  confirmText: S.current.yes_know,
                   confirmCallback: () {},
                 );
                 return;

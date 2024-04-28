@@ -73,7 +73,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
         temperature = double.parse(currentLocalChatHistory?.temperature ?? "1.0");
         return Scaffold(
           appBar: AppBar(
-            title: const Text("聊天设置"),
+            title:  Text(S.current.chat_setting),
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -81,14 +81,14 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
               child: Column(
                 children: [
                   SettingWithTitle(
-                    label: "名称",
+                    label: S.current.name,
                     widget: IgnorePointer(
                       ignoring: currentLocalChatHistory?.id == specialGenerateTextChatParentItemTime,
                       child: CommonTextField(
                         focusNode: focusNode,
                         color: Theme.of(context).canvasColor,
                         controller: nameController,
-                        hintText: "请输入名称",
+                        hintText: S.current.input_name,
                       ),
                     ),
                   ),
@@ -98,7 +98,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Text(
-                          "温度参数",
+                          S.current.tempture,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
@@ -144,7 +144,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 15),
                         child: Text(
-                          "服务商",
+                          S.current.servers,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
@@ -159,7 +159,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                                 isDense: true,
                                 isExpanded: true,
                                 hint: Text(
-                                  '请选择',
+                                  S.current.select,
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Theme.of(context).hintColor,
@@ -206,7 +206,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        "模型",
+                        S.current.models,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(width: 10),
@@ -225,7 +225,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                               isDense: true,
                               isExpanded: true,
                               hint: Text(
-                                '请选择',
+                                S.current.select,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).hintColor,

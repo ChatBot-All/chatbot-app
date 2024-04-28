@@ -1,13 +1,8 @@
-import 'dart:ui';
-
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/version_check.dart';
 import 'package:ChatBot/module/chat/chat_audio/chat_audio_page.dart';
 import 'package:ChatBot/module/chat/chat_list_page.dart';
 import 'package:ChatBot/module/home/home_viewmodel.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../base/components/common_dialog.dart';
@@ -86,13 +81,13 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                 children: [
                   Expanded(
                       child: BottomNavItem(
-                    label: "聊天",
+                    label: S.current.home_chat,
                     index: 0,
                     checked: currentIndex == 0,
                   )),
                   Expanded(
                       child: BottomNavItem(
-                    label: "工坊",
+                    label: S.current.home_factory,
                     index: 1,
                     checked: currentIndex == 1,
                   )),
@@ -101,11 +96,11 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                       if (!isExistModels()) {
                         showCommonDialog(
                           context,
-                          title: '温馨提示',
-                          content: "请先进入设置并配置服务商",
+                          title: S.current.reminder,
+                          content: S.current.enter_setting_init_server,
                           hideCancelBtn: true,
                           autoPop: true,
-                          confirmText: "知道了",
+                          confirmText: S.current.yes_know,
                           confirmCallback: () {},
                         );
                         return;
@@ -113,11 +108,11 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                       if (!isExistTTSAndWhisperModels()) {
                         showCommonDialog(
                           context,
-                          title: '温馨提示',
-                          content: "您所添加的服务商不支持语音聊天",
+                          title: S.current.reminder,
+                          content: S.current.not_support_tts,
                           hideCancelBtn: true,
                           autoPop: true,
-                          confirmText: "知道了",
+                          confirmText: S.current.yes_know,
                           confirmCallback: () {},
                         );
                         return;
@@ -139,13 +134,13 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                   ),
                   Expanded(
                       child: BottomNavItem(
-                    label: "服务",
+                    label: S.current.home_server,
                     index: 2,
                     checked: currentIndex == 2,
                   )),
                   Expanded(
                       child: BottomNavItem(
-                    label: "设置",
+                    label: S.current.home_setting,
                     index: 3,
                     checked: currentIndex == 3,
                   )),

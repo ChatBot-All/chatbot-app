@@ -84,9 +84,9 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
   String valueStrByOpenAIImageStyle(OpenAIImageStyle item) {
     switch (item) {
       case OpenAIImageStyle.vivid:
-        return "超现实";
+        return S.current.vivid;
       case OpenAIImageStyle.natural:
-        return "现实的";
+        return S.current.natural;
     }
   }
 
@@ -117,7 +117,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                         Padding(
                           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 15),
                           child: Text(
-                            "尺寸",
+                            S.current.size,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -144,7 +144,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                         Padding(
                           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 5),
                           child: Text(
-                            "风格",
+                            S.current.style,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
@@ -194,7 +194,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "生成图片",
+                      S.current.generate_image,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).appBarTheme.titleTextStyle,
@@ -392,7 +392,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         botChatItem.status = MessageStatus.success.index;
       } else {
         botChatItem.status = MessageStatus.failed.index;
-        botChatItem.content = "生成图片失败";
+        botChatItem.content = S.current.generate_image_fail;
       }
       ref.read(isGeneratingContentProvider.notifier).state = false;
       ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).update(botChatItem);
@@ -413,7 +413,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
     if (resendMessage != null)
       PullDownMenuItem(
         icon: CupertinoIcons.doc_on_doc,
-        title: "重新发送",
+        title: S.current.resend,
         onTap: () {
           resendMessage(chatItem.content ?? "");
         },
@@ -421,7 +421,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
     if (sendMessageAgain != null)
       PullDownMenuItem(
         icon: CupertinoIcons.doc_on_doc,
-        title: "再次发送",
+        title: S.current.send_again,
         onTap: () {
           sendMessageAgain(chatItem.content ?? "");
         },
@@ -430,7 +430,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
     if (chatItem.images?.isNotEmpty ?? false)
       PullDownMenuItem(
         icon: CupertinoIcons.arrow_down_circle,
-        title: "保存到相册",
+        title: S.current.save_gallary,
         onTap: () async {
           "下载中...".loading();
           try {
@@ -438,10 +438,10 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
                 '${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.png';
             await Dio().download(chatItem.images!.first, imagePath);
             await Gal.putImage(imagePath);
-            "保存成功".success();
+            S.current.save_success.success();
           } catch (e) {
             print(e);
-            "保存失败:${e.toString()}".fail();
+            S.current.save_fail.fail();
           }
         },
       ),
@@ -449,7 +449,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
     if (chatItem.images?.isNotEmpty ?? false)
       PullDownMenuItem(
         icon: CupertinoIcons.arrowshape_turn_up_right,
-        title: "分享",
+        title: S.current.share,
         onTap: () {
           Share.share(chatItem.images!.first);
         },
@@ -457,14 +457,14 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
     PullDownMenuItem(
       icon: CupertinoIcons.delete,
       isDestructive: true,
-      title: "删除",
+      title: S.current.delete,
       onTap: () {
         Future.delayed(const Duration(milliseconds: 100), () {
           showCommonDialog(
             context,
-            content: '确定删除这条消息吗？',
-            title: '温馨提示',
-            confirmText: '删除',
+            content: S.current.delete_config_reminder,
+            title: S.current.reminder,
+            confirmText: S.current.delete,
             confirmCallback: () {
               ref.read(chatProvider(chatItem.parentID ?? 0).notifier).remove(chatItem);
             },

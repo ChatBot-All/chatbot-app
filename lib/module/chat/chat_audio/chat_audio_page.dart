@@ -58,7 +58,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
     } else {
-      "请打开录音权限".fail();
+      S.current.open_micro_permission.fail();
       audioOverlay.removeAudio();
     }
   }
@@ -81,7 +81,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     var path = await record.stop();
 
     if (path == null || path.isEmpty) {
-      "无法获取到语音文件".fail();
+      S.current.no_audio_file.fail();
       return;
     }
     if (!File(path).existsSync()) {
@@ -95,7 +95,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
       if (model == null) {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
-        "没有模型可用的模型".fail();
+        S.current.no_module_use.fail();
         return;
       }
       var content = await API().audio2OpenAIText(model, path);
@@ -103,7 +103,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
         sendMessage(model, content);
       } else {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
-        "没有识别到语音内容".fail();
+        S.current.can_not_get_voice_content.fail();
       }
     } catch (e) {
       ref.watch(isGeneratingContentProvider.notifier).state = false;
@@ -130,7 +130,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "语音聊天",
+                      S.current.voiceChat,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).appBarTheme.titleTextStyle,
@@ -346,7 +346,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).update(chatItem);
 
       if (data.content == null || data.content!.isEmpty) {
-        throw Exception("生成内容为空");
+        throw Exception(S.current.generate_content_is_empty);
       }
       var tts = await API().text2TTS(data.content!, ref.watch(talkerProvider.notifier).state);
       ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.speaking;
@@ -371,18 +371,18 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
   Widget getLottie(AudioRecordingState status) {
     if (status == AudioRecordingState.recording) {
-      return Text("正在录音...", style: Theme.of(context).textTheme.bodyMedium);
+      return Text(S.current.recording, style: Theme.of(context).textTheme.bodyMedium);
     }
     if (status == AudioRecordingState.canceling) {
-      return Text("正在取消...", style: Theme.of(context).textTheme.bodyMedium);
+      return Text(S.current.canceling, style: Theme.of(context).textTheme.bodyMedium);
     }
     if (status == AudioRecordingState.sending) {
-      return Text("正在发送到服务器...", style: Theme.of(context).textTheme.bodyMedium);
+      return Text(S.current.sending_server, style: Theme.of(context).textTheme.bodyMedium);
     }
     if (status == AudioRecordingState.speaking) {
-      return Text("服务器正在回应...", style: Theme.of(context).textTheme.bodyMedium);
+      return Text(S.current.is_responsing, style: Theme.of(context).textTheme.bodyMedium);
     }
-    return Text("按住底部麦克风，开始聊天吧", style: Theme.of(context).textTheme.bodyMedium);
+    return Text(S.current.hold_micro_phone_talk, style: Theme.of(context).textTheme.bodyMedium);
   }
 }
 

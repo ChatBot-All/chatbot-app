@@ -3,12 +3,10 @@ import 'dart:convert';
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/db/chat_item.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../base/components/common_dialog.dart';
 import '../../hive_bean/local_chat_history.dart';
 import '../../hive_bean/openai_bean.dart';
-import '../../utils/hive_box.dart';
 import '../chat/chat_detail/chat_page.dart';
 import '../chat/chat_list_view_model.dart';
 
@@ -32,10 +30,10 @@ class _CommandPageState extends ConsumerState<CommandPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("工坊"),
+        title: Text(S.current.library),
       ),
       body: ListView.separated(
-          padding:  EdgeInsets.only(top: 15, bottom: MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight),
+          padding: EdgeInsets.only(top: 15, bottom: MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight),
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -145,11 +143,11 @@ class _CommandPageState extends ConsumerState<CommandPage> {
                                             if (!isExistModels()) {
                                               showCommonDialog(
                                                 context,
-                                                title: '温馨提示',
-                                                content: "请先进入设置并配置服务商",
+                                                title: S.current.reminder,
+                                                content: S.current.enter_setting_init_server,
                                                 hideCancelBtn: true,
                                                 autoPop: true,
-                                                confirmText: "知道了",
+                                                confirmText: S.current.yes_know,
                                                 confirmCallback: () {},
                                               );
                                               return;
