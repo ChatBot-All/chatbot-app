@@ -1,10 +1,36 @@
-# ChatBot
+<div align="center">
+
+<h1 align="center">ChatBot</h1>
+
+Free and open source mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models.
 
 免费开源的移动端私人 ChatGPT 应用, 支持 GPT3, GPT4 & Gemini Pro 模型。
 
-> * Telegram频道: [ChatBot](https://t.me/chatbot_all)
->* Android端下载地址: [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS端需自行编译
+</div>
+
+## Feature
+>* Support GPT3, GPT4 & Gemini Pro models
+>* Privacy first, all data is stored locally
+>* Responsive design, dark mode
+>* Support voice conversation
+>* Support generating pictures
+>* support long conversations
+>* I18n: English, 简体中文, 日本語, 한국어
+
+## 主要功能
+>* 支持 GPT3, GPT4 & Gemini Pro 模型
+>* 隐私优先, 所有数据都存储在本地
+>* 响应式设计, 暗黑模式
+>* 支持语音对话
+>* 支持生成图片
+>* 支持长时间对话
+>* I18n: English, 简体中文, 日本語, 한국어
+
+
+## Download
+>* Telegram : [ChatBot](https://t.me/chatbot_all)
+>* Android Url: [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
+>* iOS Compile yourself:
 
 ```shell
 flutter pub get
