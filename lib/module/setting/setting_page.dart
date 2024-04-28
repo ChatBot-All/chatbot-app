@@ -49,38 +49,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
               const SizedBox(
                 height: 15,
               ),
-              Consumer(builder: (context, ref, _) {
-                return SettingWithTitle(
-                  label: S.current.openai_setting,
-                  widget: SettingItem(
-                    iconUrl: 'assets/images/openai.png',
-                    title: S.current.openai_setting,
-                    count: ref.watch(openAICountProvider),
-                    subTitle: S.current.openai_setting_desc,
-                  ).click(() {
-                    F.push(const OpenAIListPage());
-                  }),
-                );
-              }),
-              const SizedBox(
-                height: 15,
-              ),
-              Consumer(builder: (context, ref, _) {
-                return SettingWithTitle(
-                  label: S.current.gemini_setting,
-                  widget: SettingItem(
-                    iconUrl: 'assets/images/gemini.png',
-                    title: S.current.gemini_setting,
-                    count: ref.watch(geminiCountProvider),
-                    subTitle: S.current.gemini_setting_desc,
-                  ).click(() {
-                    F.push(const GeminiListPage());
-                  }),
-                );
-              }),
-              const SizedBox(
-                height: 25,
-              ),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16,

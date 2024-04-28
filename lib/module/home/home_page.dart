@@ -1,12 +1,22 @@
 import 'dart:ui';
 
 import 'package:ChatBot/base.dart';
+import 'package:ChatBot/base/version_check.dart';
+import 'package:ChatBot/module/chat/chat_audio/chat_audio_page.dart';
 import 'package:ChatBot/module/chat/chat_list_page.dart';
 import 'package:ChatBot/module/home/home_viewmodel.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../base/components/common_dialog.dart';
+import '../../base/db/chat_item.dart';
 import '../../base/theme.dart';
+import '../../hive_bean/openai_bean.dart';
+import '../chat/chat_list_view_model.dart';
 import '../command/command_page.dart';
+import '../services/services_page.dart';
 import '../setting/setting_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -21,10 +31,9 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    Connectivity().checkConnectivity().then((value) {
-      if (value.contains(ConnectivityResult.none)) {
-        "请检查网络连接".toast();
-      }
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      VersionCheck().checkLastedVersion(context);
     });
   }
 
@@ -49,7 +58,6 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-    var navList = ref.watch(homeNavigationProvider);
     var currentIndex = ref.watch(homeIndexProvider);
 
     return Scaffold(
@@ -59,32 +67,153 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         children: const [
           ChatListPage(),
           CommandPage(),
+          ServicesPage(),
           SettingPage(),
         ],
       ),
-      bottomNavigationBar: ClipRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: BottomNavigationBar(
-            backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor?.withOpacity(0.9),
-            type: BottomNavigationBarType.fixed,
-            elevation: 0,
-            items: navList.map((e) {
-              int index = navList.indexOf(e);
-              bool checked = currentIndex == index;
-              return BottomNavigationBarItem(
-                icon: Icon(checked ? e.first : e.second),
-                label: e.last,
-                backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor?.withOpacity(0.9),
-              );
-            }).toList(),
-            currentIndex: currentIndex,
-            onTap: (int index) {
-              ref.read(homeIndexProvider.notifier).update((state) => index);
-            },
+      bottomNavigationBar: Container(
+        color: Colors.transparent,
+        child: SizedBox(
+          height: kBottomNavigationBarHeight + MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight / 2,
+          child: CustomPaint(
+            painter: BottomNavPainter(
+              bgColor: Theme.of(context).cardColor,
+            ),
+            child: Padding(
+              padding:
+                  EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom, top: kBottomNavigationBarHeight / 2),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: BottomNavItem(
+                    label: "聊天",
+                    index: 0,
+                    checked: currentIndex == 0,
+                  )),
+                  Expanded(
+                      child: BottomNavItem(
+                    label: "工坊",
+                    index: 1,
+                    checked: currentIndex == 1,
+                  )),
+                  GestureDetector(
+                    onTap: () {
+                      if (!isExistModels()) {
+                        showCommonDialog(
+                          context,
+                          title: '温馨提示',
+                          content: "请先进入设置并配置服务商",
+                          hideCancelBtn: true,
+                          autoPop: true,
+                          confirmText: "知道了",
+                          confirmCallback: () {},
+                        );
+                        return;
+                      }
+                      if (!isExistTTSAndWhisperModels()) {
+                        showCommonDialog(
+                          context,
+                          title: '温馨提示',
+                          content: "您所添加的服务商不支持语音聊天",
+                          hideCancelBtn: true,
+                          autoPop: true,
+                          confirmText: "知道了",
+                          confirmCallback: () {},
+                        );
+                        return;
+                      }
+                      F.push(const ChatAudioPage()).then((value) {
+                        ChatItemProvider()
+                            .deleteAll(specialGenerateAudioChatParentItemTime);
+                      });
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Transform.scale(
+                      scale: 2.4,
+                      transformHitTests: false,
+                      child: Lottie.asset(
+                        "assets/lottie/audio.json",
+                        width: 80,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                      child: BottomNavItem(
+                    label: "服务",
+                    index: 2,
+                    checked: currentIndex == 2,
+                  )),
+                  Expanded(
+                      child: BottomNavItem(
+                    label: "设置",
+                    index: 3,
+                    checked: currentIndex == 3,
+                  )),
+                ],
+              ),
+            ),
           ),
         ),
       ),
     );
+  }
+}
+
+class BottomNavItem extends ConsumerWidget {
+  final bool checked;
+  final int index;
+  final String label;
+
+  const BottomNavItem({super.key, required this.checked, required this.index, required this.label});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return GestureDetector(
+      onTap: () {
+        ref.read(homeIndexProvider.notifier).update((state) => index);
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(label,
+                style: checked ? Theme.of(context).textTheme.titleMedium : Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 5),
+            Container(
+              decoration: BoxDecoration(
+                color: checked ? Theme.of(context).primaryColor : Colors.transparent,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              height: 3,
+              width: 30,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BottomNavPainter extends CustomPainter {
+  final Color bgColor;
+
+  BottomNavPainter({this.bgColor = Colors.white});
+  @override
+  void paint(Canvas canvas, Size size) {
+    //绘制矩形，然后顶部中间是个半圆
+    Paint paint = Paint()
+      ..color = bgColor
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(Rect.fromLTRB(0, kBottomNavigationBarHeight / 2, size.width, size.height), paint);
+
+    canvas.drawCircle(Offset(size.width / 2, kBottomNavigationBarHeight), kBottomNavigationBarHeight / 1.35, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

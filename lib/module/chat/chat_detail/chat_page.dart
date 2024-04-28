@@ -669,11 +669,6 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
         ),
       ).click(() {
         ref.watch(inputModeProvider.notifier).state = !ref.watch(inputModeProvider.notifier).state;
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (inputMode == false) {
-            widget.focusNode.requestFocus();
-          }
-        });
       });
     });
   }
