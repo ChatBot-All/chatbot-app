@@ -18,7 +18,7 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("服务商"),
+        title: Text(S.current.servers),
       ),
       body:  SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),

@@ -432,7 +432,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
         icon: CupertinoIcons.arrow_down_circle,
         title: S.current.save_gallary,
         onTap: () async {
-          "下载中...".loading();
+          S.current.downloading.loading();
           try {
             final imagePath =
                 '${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.png';

@@ -67,7 +67,7 @@ class _AudioPopOverState extends State<AudioPopOver> with SingleTickerProviderSt
               ),
               const SizedBox(height: 40),
               Text(
-                state == AudioRecordingState.canceling ? "松开 取消" : "",
+                state == AudioRecordingState.canceling ? S.current.leave_cancel : "",
                 style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14,
@@ -107,7 +107,7 @@ class _AudioPopOverState extends State<AudioPopOver> with SingleTickerProviderSt
               Transform.translate(
                 offset: const Offset(0, 30),
                 child: Text(
-                  state == AudioRecordingState.recording ? "松开 发送" : "",
+                  state == AudioRecordingState.recording ? S.current.leave_send : "",
                   style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 14,

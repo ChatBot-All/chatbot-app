@@ -1,8 +1,6 @@
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
 import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base.dart';
@@ -57,7 +55,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.openAi?.time != null ? "编辑 ChatGPT 服务商" : "新增 ChatGPT 服务商"),
+          title: Text(widget.openAi?.time != null ? "${S.current.edit} ChatGPT ${S.current.servers}" : "${S.current.btn_add} ChatGPT ${S.current.servers}"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -65,19 +63,19 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
             children: [
               const SizedBox(height: 15),
               SettingWithTitle(
-                label: "别名(必填)",
+                label: S.current.alias_required,
                 widget: CommonTextField(
                     maxLength: 10,
                     color: Theme.of(context).canvasColor,
                     controller: aliasController,
-                    hintText: "请输入别名"),
+                    hintText: S.current.input_text),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                 ),
                 child: Text(
-                  "仅用于多个相同的服务商之间区分",
+                  S.current.alias_desc,
                   style: TextStyle(
                     color: ref.watch(themeProvider).timeColor(),
                     fontSize: 12,
@@ -86,15 +84,15 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
               ),
               const SizedBox(height: 15),
               SettingWithTitle(
-                label: "组织(选填)",
+                label: S.current.org_notrequired,
                 widget: CommonTextField(
-                    color: Theme.of(context).canvasColor, controller: orgController, hintText: "请输入组织名称"),
+                    color: Theme.of(context).canvasColor, controller: orgController, hintText: S.current.input_text),
               ),
               const SizedBox(height: 15),
               SettingWithTitle(
                 label: "API Key",
                 widget: CommonTextField(
-                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: "请输入API Key"),
+                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: S.current.input_text),
               ),
               const SizedBox(height: 15),
               Container(
@@ -144,7 +142,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                                         Padding(
                                           padding: const EdgeInsets.only(left: 10),
                                           child: Text(
-                                            "添加API Server",
+                                            "API Server",
                                             style: Theme.of(context).textTheme.titleMedium,
                                           ),
                                         ),
@@ -253,9 +251,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: const Text(
-                  "验证",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                child:  Text(
+                  S.current.validate,
+                  style:const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 AllModelBean openAi = AllModelBean();
@@ -266,9 +264,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 openAi.alias = aliasController.text;
                 var result = await API().validateApiKey(openAi);
                 if (result) {
-                  "验证成功".success();
+                  S.current.validate_success.success();
                 } else {
-                  "验证失败".fail();
+                  S.current.validate_fail.fail();
                 }
               }),
               const SizedBox(height: 15),
@@ -280,42 +278,34 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: const Text(
-                  "保存",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                child:  Text(
+                  S.current.save,
+                  style:const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 try {
                   if (aliasController.text.isEmpty) {
-                    "别名不能为空".toast();
+                    S.current.alias_empty.toast();
                     return;
                   }
 
                   //别名最大10个字符
                   if (aliasController.text.length > 10) {
-                    "别名最大10个字符".toast();
+                    S.current.alias_maxlength.toast();
                     return;
                   }
 
                   if (controller.text.isEmpty) {
-                    "API Key不能为空".toast();
+                    "API Key${S.current.cannot_empty}".toast();
                     return;
                   }
 
                   if (ref.watch(apiServerAddressProvider).isEmpty) {
-                    "API Server不能为空".toast();
+                    "API Server${S.current.cannot_empty}".toast();
                     return;
                   }
 
-                  final List<ConnectivityResult> connectivityResult = await (Connectivity().checkConnectivity());
-
-                  //如果没有联网
-                  if (connectivityResult.contains(ConnectivityResult.none)) {
-                    "请检查网络连接".toast();
-                    return;
-                  }
-
-                  "正在获取模型...".loading();
+                  S.current.is_getting_modules.loading();
 
                   var supportedModels = <SupportedModels>[];
 
@@ -331,7 +321,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                   supportedModels = apiResult.map((e) => SupportedModels(id: e.id, ownedBy: e.ownedBy)).toList();
                   eDismiss();
                   if (supportedModels.isEmpty) {
-                    "获取模型失败,请检查API Key".fail();
+                    S.current.getmodules_fail.fail();
                     return;
                   }
                   openAi.supportedModels = supportedModels;
@@ -348,7 +338,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                     result = ref.read(openAiListProvider.notifier).add(openAi);
                   }
                   if (result) {
-                    "保存成功".success();
+                    S.current.save_success.success();
                     F.pop();
                   }
                 } catch (e) {

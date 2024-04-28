@@ -106,7 +106,7 @@ class API {
 
         list.add(RequestParams(
           role: 0,
-          content: ["使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”"],
+          content: [S.current.title_promot],
           images: [],
         ));
 
@@ -146,7 +146,7 @@ class API {
         role: OpenAIChatMessageRole.user,
         content: [
           OpenAIChatCompletionChoiceMessageContentItemModel.text(
-            "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”",
+            S.current.title_promot,
           )
         ],
       ));
@@ -162,7 +162,7 @@ class API {
       return result.choices.first.message.content?.first.text?.trim() ?? "";
     } on RequestFailedException catch (e) {
       print(e);
-      return "随便聊聊";
+      return S.current.new_chat;
     } catch (e) {
       print(e);
       return chatItems.first.content ?? "";
@@ -378,7 +378,7 @@ class API {
     //整合chatItems
 
     var requestParams = generateChatHistory(chatItems, 10, false);
-    return _createOpenAIChatDirectly( temperature, bean, modelType, requestParams);
+    return _createOpenAIChatDirectly(temperature, bean, modelType, requestParams);
   }
 
   Stream<GenerateContentBean> _createGeminiChat(

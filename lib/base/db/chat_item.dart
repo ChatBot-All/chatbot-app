@@ -158,7 +158,7 @@ create table $tableChatItem (
 ''');
       });
     } catch (e) {
-      "数据库打开失败:${e.toString()}".toast();
+      "Open DataBase failed:${e.toString()}".toast();
     }
   }
 

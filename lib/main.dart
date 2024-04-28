@@ -5,13 +5,12 @@ import 'package:intl/intl.dart';
 import 'base.dart';
 import 'base/riverpod/provider_log.dart';
 import 'base/theme.dart';
-import 'generated/l10n.dart';
 import 'initial.dart';
 
 void main() async {
   await Initial.init();
-  S.load(Locale(Intl.getCurrentLocale()));
 
+  S.load(Locale(Intl.getCurrentLocale()));
   runApp(
     ProviderScope(
       observers: [
@@ -35,11 +34,10 @@ class MyApp extends ConsumerWidget {
       navigatorKey: F.navigatorKey,
       title: S.current.app_name,
       localeResolutionCallback: (Locale? locale, Iterable<Locale> supportedLocales) {
-        var result = supportedLocales.where((element) => element.languageCode == locale?.languageCode);
-        if (result.isNotEmpty) {
-          return result.first;
+        if (locale != null) {
+          return locale;
         }
-        return const Locale('zh');
+        return supportedLocales.first;
       },
       debugShowCheckedModeBanner: false,
       theme: ref.watch(themeProvider).theme(),

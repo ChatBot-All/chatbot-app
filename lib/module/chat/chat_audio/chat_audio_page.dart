@@ -236,7 +236,12 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
                       .toList(),
                 ),
               ),
-              Expanded(child: Center(child: getLottie(status))),
+              Expanded(
+                  child: Center(
+                      child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: getLottie(status),
+              ))),
             ],
           );
         }),

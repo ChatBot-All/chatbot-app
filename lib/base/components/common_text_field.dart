@@ -17,7 +17,7 @@ class CommonTextField extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return CupertinoTextField(
       focusNode: focusNode,
-      placeholder: "请输入内容",
+      placeholder: S.current.input_text,
       controller: controller,
       maxLines: 1,
       minLines: 1,

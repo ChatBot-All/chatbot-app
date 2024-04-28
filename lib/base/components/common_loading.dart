@@ -37,7 +37,7 @@ class EmptyData extends StatelessWidget {
           Image.asset("assets/images/empty.png", width: 96, height: 130, fit: BoxFit.cover),
           Transform.translate(
               offset: const Offset(0, -10),
-              child: Text("您还没有内容，快点击右上角添加吧", style: Theme.of(context).textTheme.bodySmall)),
+              child: Text(S.current.empty_content_need_add, style: Theme.of(context).textTheme.bodySmall)),
         ],
       ),
     );

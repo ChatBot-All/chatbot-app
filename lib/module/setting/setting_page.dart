@@ -1,15 +1,10 @@
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/providers.dart';
 import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/module/setting/gemini/gemini_list_page.dart';
-import 'package:ChatBot/module/setting/gemini/gemini_viewmodel.dart';
-import 'package:ChatBot/module/setting/openai/openai_list_page.dart';
-import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
@@ -55,7 +50,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   right: 16,
                 ),
                 child: Text(
-                  "其他设置",
+                  S.current.other_set,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -74,7 +69,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       children: [
                         Expanded(
                           child: Text(
-                            "自动生成标题",
+                            S.current.auto_title,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
@@ -90,20 +85,6 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  bottom: 4,
-                ),
-                child: Text(
-                  "开启后会有部分损耗",
-                  style: TextStyle(
-                    color: ref.watch(themeProvider).timeColor(),
-                    fontSize: 12,
-                  ),
-                ),
-              ),
               const SizedBox(
                 height: 15,
               ),
@@ -113,7 +94,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   right: 16,
                 ),
                 child: Text(
-                  "主题设置",
+                  S.current.theme_setting,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -131,7 +112,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       children: [
                         Expanded(
                           child: Text(
-                            "主题",
+                            S.current.theme,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
@@ -148,7 +129,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                 ),
                               ),
                               hint: Text(
-                                '请选择',
+                                S.current.select,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).hintColor,
@@ -194,6 +175,9 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 15,
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 16,
@@ -201,7 +185,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   top: 15,
                 ),
                 child: Text(
-                  "反馈",
+                  S.current.feedback,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -222,7 +206,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                           children: [
                             Expanded(
                               child: Text(
-                                "问题反馈",
+                                S.current.feedback_question,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
@@ -272,7 +256,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 child: Center(
                   child: Consumer(builder: (context, ref, _) {
                     return Text(
-                      "版本: ${ref.watch(versionProvider)}",
+                      "${S.current.version}: ${ref.watch(versionProvider)}",
                       style: Theme.of(context).textTheme.bodySmall,
                     );
                   }),
@@ -288,11 +272,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
   String getNameByThemeType(int item) {
     switch (item) {
       case 0:
-        return '普通模式';
+        return S.current.theme_normal;
       case 1:
-        return '深色模式';
+        return S.current.theme_dark;
       case 2:
-        return '跟随系统';
+        return S.current.theme_auto;
       default:
         return '';
     }

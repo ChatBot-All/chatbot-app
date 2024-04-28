@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../base.dart';
-import '../theme.dart';
 
 class SendButton extends ConsumerWidget {
   final VoidCallback onPressed;
@@ -15,9 +14,9 @@ class SendButton extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
       color: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(5),
-      child: const Text(
-        "发送",
-        style: TextStyle(
+      child:  Text(
+        S.current.send,
+        style:const TextStyle(
             color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
       ),
       onPressed: () {

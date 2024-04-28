@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../base.dart';
 import 'util.dart';
 
 extension ExtensionInt on int? {
@@ -25,7 +26,7 @@ extension ExtensionInt on int? {
       } else if (now.month == date.month &&
           now.day - date.day == 1 &&
           now.year == date.year) {
-        return "昨天 ${DateUtil.formatDateMs(toInt(), format: DateFormats.h_m)}";
+        return "${S.current.yesterday} ${DateUtil.formatDateMs(toInt(), format: DateFormats.h_m)}";
       } else {
         return DateUtil.formatDateMs(toInt(), format: DateFormats.mo_d_h_m);
       }

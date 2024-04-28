@@ -226,7 +226,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               data: (list) {
                 if (requestTitled == false &&
                     list.length >= 2 &&
-                    result.title == "随便聊聊" &&
+                    result.title == S.current.new_chat &&
                     result.id != specialGenerateTextChatParentItemTime &&
                     ref.watch(isGeneratingContentProvider) == false &&
                     ref.watch(autoGenerateTitleProvider.notifier).value == true) {

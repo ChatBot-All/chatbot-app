@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../generated/l10n.dart';
+
 class CommonDialog extends StatelessWidget {
   final String? title;
   final String? content;
@@ -39,7 +41,7 @@ class CommonDialog extends StatelessWidget {
                   confirmCallback();
                 },
                 child: Text(
-                  confirmText ?? "确定",
+                  confirmText ?? S.current.confirm,
                 ),
               ),
             ]
@@ -48,9 +50,9 @@ class CommonDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text(
-                  "取消",
-                  style: TextStyle(
+                child:  Text(
+                  S.current.cancel,
+                  style:const TextStyle(
                     color: Colors.grey,
                   ),
                 ),
@@ -61,7 +63,7 @@ class CommonDialog extends StatelessWidget {
                   confirmCallback();
                 },
                 child: Text(
-                  confirmText ?? "确定",
+                  confirmText ?? S.current.confirm,
                 ),
               ),
             ],

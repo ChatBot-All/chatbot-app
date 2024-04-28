@@ -60,651 +60,991 @@ class S {
     );
   }
 
-  /// `聊天`
+  /// `Chat`
   String get home_chat {
     return Intl.message(
-      '聊天',
+      'Chat',
       name: 'home_chat',
       desc: '',
       args: [],
     );
   }
 
-  /// `语音聊天`
+  /// `Voice Chat`
   String get voiceChat {
     return Intl.message(
-      '语音聊天',
+      'Voice Chat',
       name: 'voiceChat',
       desc: '',
       args: [],
     );
   }
 
-  /// `随便聊聊`
+  /// `New Chat`
   String get new_chat {
     return Intl.message(
-      '随便聊聊',
+      'New Chat',
       name: 'new_chat',
       desc: '',
       args: [],
     );
   }
 
-  /// `工坊`
+  /// `Library`
   String get home_factory {
     return Intl.message(
-      '工坊',
+      'Library',
       name: 'home_factory',
       desc: '',
       args: [],
     );
   }
 
-  /// `服务`
+  /// `Server`
   String get home_server {
     return Intl.message(
-      '服务',
+      'Server',
       name: 'home_server',
       desc: '',
       args: [],
     );
   }
 
-  /// `设置`
+  /// `Setting`
   String get home_setting {
     return Intl.message(
-      '设置',
+      'Setting',
       name: 'home_setting',
       desc: '',
       args: [],
     );
   }
 
-  /// `ChatGPT 服务商`
+  /// `ChatGPT Server`
   String get openai_setting {
     return Intl.message(
-      'ChatGPT 服务商',
+      'ChatGPT Server',
       name: 'openai_setting',
       desc: '',
       args: [],
     );
   }
 
-  /// `设置 ChatGPT 的 API key 和 API Server`
+  /// `Set the API key and API Server of ChatGPT`
   String get openai_setting_desc {
     return Intl.message(
-      '设置 ChatGPT 的 API key 和 API Server',
+      'Set the API key and API Server of ChatGPT',
       name: 'openai_setting_desc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Gemini 服务商`
+  /// `Gemini Server`
   String get gemini_setting {
     return Intl.message(
-      'Gemini 服务商',
+      'Gemini Server',
       name: 'gemini_setting',
       desc: '',
       args: [],
     );
   }
 
-  /// `设置 Gemini 的 API key 和 API Server`
+  /// `Set the API key and API Server of Gemini`
   String get gemini_setting_desc {
     return Intl.message(
-      '设置 Gemini 的 API key 和 API Server',
+      'Set the API key and API Server of Gemini',
       name: 'gemini_setting_desc',
       desc: '',
       args: [],
     );
   }
 
-  /// `官方`
+  /// `Official`
   String get official {
     return Intl.message(
-      '官方',
+      'Official',
       name: 'official',
       desc: '',
       args: [],
     );
   }
 
-  /// `第三方`
+  /// `Third`
   String get third_party {
     return Intl.message(
-      '第三方',
+      'Third',
       name: 'third_party',
       desc: '',
       args: [],
     );
   }
 
-  /// `添加`
+  /// `Add`
   String get btn_add {
     return Intl.message(
-      '添加',
+      'Add',
       name: 'btn_add',
       desc: '',
       args: [],
     );
   }
 
-  /// `请输入服务器地址`
+  /// `Type server address`
   String get hint_addServerDesc {
     return Intl.message(
-      '请输入服务器地址',
+      'Type server address',
       name: 'hint_addServerDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `正在录音...`
+  /// `recording...`
   String get recording {
     return Intl.message(
-      '正在录音...',
+      'recording...',
       name: 'recording',
       desc: '',
       args: [],
     );
   }
 
-  /// `正在取消...`
+  /// `canceling...`
   String get canceling {
     return Intl.message(
-      '正在取消...',
+      'canceling...',
       name: 'canceling',
       desc: '',
       args: [],
     );
   }
 
-  /// `正在发送到服务器...`
+  /// `Sending to server...`
   String get sending_server {
     return Intl.message(
-      '正在发送到服务器...',
+      'Sending to server...',
       name: 'sending_server',
       desc: '',
       args: [],
     );
   }
 
-  /// `服务器正在回应...`
+  /// `The server is responding...`
   String get is_responsing {
     return Intl.message(
-      '服务器正在回应...',
+      'The server is responding...',
       name: 'is_responsing',
       desc: '',
       args: [],
     );
   }
 
-  /// `按住底部麦克风，开始聊天吧`
+  /// `Hold the bottom microphone to talk`
   String get hold_micro_phone_talk {
     return Intl.message(
-      '按住底部麦克风，开始聊天吧',
+      'Hold the bottom microphone to talk',
       name: 'hold_micro_phone_talk',
       desc: '',
       args: [],
     );
   }
 
-  /// `生成内容为空`
+  /// `The generated content is empty`
   String get generate_content_is_empty {
     return Intl.message(
-      '生成内容为空',
+      'The generated content is empty',
       name: 'generate_content_is_empty',
       desc: '',
       args: [],
     );
   }
 
-  /// `没有识别到语音内容`
+  /// `No voice content recognized`
   String get can_not_get_voice_content {
     return Intl.message(
-      '没有识别到语音内容',
+      'No voice content recognized',
       name: 'can_not_get_voice_content',
       desc: '',
       args: [],
     );
   }
 
-  /// `没有模型可用的模型`
+  /// `No model available`
   String get no_module_use {
     return Intl.message(
-      '没有模型可用的模型',
+      'No model available',
       name: 'no_module_use',
       desc: '',
       args: [],
     );
   }
 
-  /// `请打开录音权限`
+  /// `Please enable recording permission`
   String get open_micro_permission {
     return Intl.message(
-      '请打开录音权限',
+      'Please enable recording permission',
       name: 'open_micro_permission',
       desc: '',
       args: [],
     );
   }
 
-  /// `无法获取到语音文件`
+  /// `Unable to obtain voice file`
   String get no_audio_file {
     return Intl.message(
-      '无法获取到语音文件',
+      'Unable to obtain voice file',
       name: 'no_audio_file',
       desc: '',
       args: [],
     );
   }
 
-  /// `按住说话`
+  /// `Hold to speak`
   String get hold_talk {
     return Intl.message(
-      '按住说话',
+      'Hold to speak',
       name: 'hold_talk',
       desc: '',
       args: [],
     );
   }
 
-  /// `请输入内容`
+  /// `Type text here`
   String get input_text {
     return Intl.message(
-      '请输入内容',
+      'Type text here',
       name: 'input_text',
       desc: '',
       args: [],
     );
   }
 
-  /// `重新发送`
+  /// `Resend`
   String get resend {
     return Intl.message(
-      '重新发送',
+      'Resend',
       name: 'resend',
       desc: '',
       args: [],
     );
   }
 
-  /// `再次发送`
+  /// `Send again`
   String get send_again {
     return Intl.message(
-      '再次发送',
+      'Send again',
       name: 'send_again',
       desc: '',
       args: [],
     );
   }
 
-  /// `复制`
+  /// `Copy`
   String get copy {
     return Intl.message(
-      '复制',
+      'Copy',
       name: 'copy',
       desc: '',
       args: [],
     );
   }
 
-  /// `复制成功`
+  /// `Copy success`
   String get copy_success {
     return Intl.message(
-      '复制成功',
+      'Copy success',
       name: 'copy_success',
       desc: '',
       args: [],
     );
   }
 
-  /// `分享`
+  /// `Share`
   String get share {
     return Intl.message(
-      '分享',
+      'Share',
       name: 'share',
       desc: '',
       args: [],
     );
   }
 
-  /// `删除`
+  /// `Delete`
   String get delete {
     return Intl.message(
-      '删除',
+      'Delete',
       name: 'delete',
       desc: '',
       args: [],
     );
   }
 
-  /// `确定删除这条消息吗？`
+  /// `Are you sure you want to delete this message?`
   String get delete_reminder {
     return Intl.message(
-      '确定删除这条消息吗？',
+      'Are you sure you want to delete this message?',
       name: 'delete_reminder',
       desc: '',
       args: [],
     );
   }
 
-  /// `温馨提示`
+  /// `Reminder`
   String get reminder {
     return Intl.message(
-      '温馨提示',
+      'Reminder',
       name: 'reminder',
       desc: '',
       args: [],
     );
   }
 
-  /// `确定重新发送消息吗`
+  /// `Are you sure you want to resend this message?`
   String get conform_resend {
     return Intl.message(
-      '确定重新发送消息吗',
+      'Are you sure you want to resend this message?',
       name: 'conform_resend',
       desc: '',
       args: [],
     );
   }
 
-  /// `确定`
+  /// `Confirm`
   String get confirm {
     return Intl.message(
-      '确定',
+      'Confirm',
       name: 'confirm',
       desc: '',
       args: [],
     );
   }
 
-  /// `聊天设置`
+  /// `Chat Setting`
   String get chat_setting {
     return Intl.message(
-      '聊天设置',
+      'Chat Setting',
       name: 'chat_setting',
       desc: '',
       args: [],
     );
   }
 
-  /// `名称`
+  /// `Name`
   String get name {
     return Intl.message(
-      '名称',
+      'Name',
       name: 'name',
       desc: '',
       args: [],
     );
   }
 
-  /// `请输入名称`
+  /// `Please enter a name`
   String get input_name {
     return Intl.message(
-      '请输入名称',
+      'Please enter a name',
       name: 'input_name',
       desc: '',
       args: [],
     );
   }
 
-  /// `温度参数`
+  /// `Temperature`
   String get tempture {
     return Intl.message(
-      '温度参数',
+      'Temperature',
       name: 'tempture',
       desc: '',
       args: [],
     );
   }
 
-  /// `服务商`
+  /// `Server`
   String get servers {
     return Intl.message(
-      '服务商',
+      'Server',
       name: 'servers',
       desc: '',
       args: [],
     );
   }
 
-  /// `请选择`
+  /// `Select`
   String get select {
     return Intl.message(
-      '请选择',
+      'Select',
       name: 'select',
       desc: '',
       args: [],
     );
   }
 
-  /// `模型`
+  /// `Model`
   String get models {
     return Intl.message(
-      '模型',
+      'Model',
       name: 'models',
       desc: '',
       args: [],
     );
   }
 
-  /// `别名不可以重复`
+  /// `Alias cannot be repeated`
   String get alias_repeat {
     return Intl.message(
-      '别名不可以重复',
+      'Alias cannot be repeated',
       name: 'alias_repeat',
       desc: '',
       args: [],
     );
   }
 
-  /// `ApiKey不可以重复`
+  /// `API Key cannot be repeated`
   String get apikey_repeat {
     return Intl.message(
-      'ApiKey不可以重复',
+      'API Key cannot be repeated',
       name: 'apikey_repeat',
       desc: '',
       args: [],
     );
   }
 
-  /// `超现实`
+  /// `Vivid`
   String get vivid {
     return Intl.message(
-      '超现实',
+      'Vivid',
       name: 'vivid',
       desc: '',
       args: [],
     );
   }
 
-  /// `现实的`
+  /// `Natural`
   String get natural {
     return Intl.message(
-      '现实的',
+      'Natural',
       name: 'natural',
       desc: '',
       args: [],
     );
   }
 
-  /// `尺寸`
+  /// `Size`
   String get size {
     return Intl.message(
-      '尺寸',
+      'Size',
       name: 'size',
       desc: '',
       args: [],
     );
   }
 
-  /// `风格`
+  /// `Style`
   String get style {
     return Intl.message(
-      '风格',
+      'Style',
       name: 'style',
       desc: '',
       args: [],
     );
   }
 
-  /// `生成图片`
+  /// `Generate Image`
   String get generate_image {
     return Intl.message(
-      '生成图片',
+      'Generate Image',
       name: 'generate_image',
       desc: '',
       args: [],
     );
   }
 
-  /// `保存到相册`
+  /// `Save to Gallery`
   String get save_gallary {
     return Intl.message(
-      '保存到相册',
+      'Save to Gallery',
       name: 'save_gallary',
       desc: '',
       args: [],
     );
   }
 
-  /// `保存成功`
+  /// `Save success`
   String get save_success {
     return Intl.message(
-      '保存成功',
+      'Save success',
       name: 'save_success',
       desc: '',
       args: [],
     );
   }
 
-  /// `保存失败`
+  /// `Save fail`
   String get save_fail {
     return Intl.message(
-      '保存失败',
+      'Save fail',
       name: 'save_fail',
       desc: '',
       args: [],
     );
   }
 
-  /// `图片生成失败`
+  /// `Generate image fail`
   String get generate_image_fail {
     return Intl.message(
-      '图片生成失败',
+      'Generate image fail',
       name: 'generate_image_fail',
       desc: '',
       args: [],
     );
   }
 
-  /// `请先进入设置并配置服务商`
+  /// `Please enter the server address`
   String get enter_setting_init_server {
     return Intl.message(
-      '请先进入设置并配置服务商',
+      'Please enter the server address',
       name: 'enter_setting_init_server',
       desc: '',
       args: [],
     );
   }
 
-  /// `知道了`
+  /// `Got it`
   String get yes_know {
     return Intl.message(
-      '知道了',
+      'Got it',
       name: 'yes_know',
       desc: '',
       args: [],
     );
   }
 
-  /// `目前生成图片仅支持 dall-e-3 模型,您所添加的服务商均不支持该模型`
+  /// `Only support DALL-E 3`
   String get only_support_dalle3 {
     return Intl.message(
-      '目前生成图片仅支持 dall-e-3 模型,您所添加的服务商均不支持该模型',
+      'Only support DALL-E 3',
       name: 'only_support_dalle3',
       desc: '',
       args: [],
     );
   }
 
-  /// `您所添加的服务商不支持语音聊天`
+  /// `The current model does not support TTS`
   String get not_support_tts {
     return Intl.message(
-      '您所添加的服务商不支持语音聊天',
+      'The current model does not support TTS',
       name: 'not_support_tts',
       desc: '',
       args: [],
     );
   }
 
-  /// `工坊`
+  /// `Library`
   String get library {
     return Intl.message(
-      '工坊',
+      'Library',
       name: 'library',
       desc: '',
       args: [],
     );
   }
 
-  /// `编辑`
+  /// `Edit`
   String get edit {
     return Intl.message(
-      '编辑',
+      'Edit',
       name: 'edit',
       desc: '',
       args: [],
     );
   }
 
-  /// `别名(必填)`
-  String get alice_required {
+  /// `Alias(required)`
+  String get alias_required {
     return Intl.message(
-      '别名(必填)',
-      name: 'alice_required',
+      'Alias(required)',
+      name: 'alias_required',
       desc: '',
       args: [],
     );
   }
 
-  /// `仅用于多个相同的服务商之间区分`
-  String get alice_desc {
+  /// `Please enter an alias`
+  String get alias_input {
     return Intl.message(
-      '仅用于多个相同的服务商之间区分',
-      name: 'alice_desc',
+      'Please enter an alias',
+      name: 'alias_input',
       desc: '',
       args: [],
     );
   }
 
-  /// `验证成功`
+  /// `Alias is used to distinguish different models`
+  String get alias_desc {
+    return Intl.message(
+      'Alias is used to distinguish different models',
+      name: 'alias_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation success`
   String get validate_success {
     return Intl.message(
-      '验证成功',
+      'Validation success',
       name: 'validate_success',
       desc: '',
       args: [],
     );
   }
 
-  /// `验证失败`
+  /// `Validation fail`
   String get validate_fail {
     return Intl.message(
-      '验证失败',
+      'Validation fail',
       name: 'validate_fail',
       desc: '',
       args: [],
     );
   }
 
-  /// `确定删除当前配置吗`
+  /// `Are you sure you want to delete this configuration?`
   String get delete_config_reminder {
     return Intl.message(
-      '确定删除当前配置吗',
+      'Are you sure you want to delete this configuration?',
       name: 'delete_config_reminder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validate`
+  String get validate {
+    return Intl.message(
+      'Validate',
+      name: 'validate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alias cannot be empty`
+  String get alias_empty {
+    return Intl.message(
+      'Alias cannot be empty',
+      name: 'alias_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alias cannot exceed 10 characters`
+  String get alias_maxlength {
+    return Intl.message(
+      'Alias cannot exceed 10 characters',
+      name: 'alias_maxlength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot be empty`
+  String get cannot_empty {
+    return Intl.message(
+      'Cannot be empty',
+      name: 'cannot_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Getting models...`
+  String get is_getting_modules {
+    return Intl.message(
+      'Getting models...',
+      name: 'is_getting_modules',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to get models`
+  String get getmodules_fail {
+    return Intl.message(
+      'Failed to get models',
+      name: 'getmodules_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Organization(optional)`
+  String get org_notrequired {
+    return Intl.message(
+      'Organization(optional)',
+      name: 'org_notrequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `voice`
+  String get canVoice {
+    return Intl.message(
+      'voice',
+      name: 'canVoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `talk`
+  String get canTalk {
+    return Intl.message(
+      'talk',
+      name: 'canTalk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `paint`
+  String get canPaint {
+    return Intl.message(
+      'paint',
+      name: 'canPaint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other Settings`
+  String get other_set {
+    return Intl.message(
+      'Other Settings',
+      name: 'other_set',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Default`
+  String get default1 {
+    return Intl.message(
+      'Default',
+      name: 'default1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto Generate Title`
+  String get auto_title {
+    return Intl.message(
+      'Auto Generate Title',
+      name: 'auto_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has been reduced`
+  String get has_reduce {
+    return Intl.message(
+      'Has been reduced',
+      name: 'has_reduce',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get theme {
+    return Intl.message(
+      'Theme',
+      name: 'theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feedback`
+  String get feedback {
+    return Intl.message(
+      'Feedback',
+      name: 'feedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What do you think of ChatBot?`
+  String get feedback_question {
+    return Intl.message(
+      'What do you think of ChatBot?',
+      name: 'feedback_question',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme Setting`
+  String get theme_setting {
+    return Intl.message(
+      'Theme Setting',
+      name: 'theme_setting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Version`
+  String get version {
+    return Intl.message(
+      'Version',
+      name: 'version',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light Mode`
+  String get theme_normal {
+    return Intl.message(
+      'Light Mode',
+      name: 'theme_normal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Mode`
+  String get theme_dark {
+    return Intl.message(
+      'Dark Mode',
+      name: 'theme_dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow System`
+  String get theme_auto {
+    return Intl.message(
+      'Follow System',
+      name: 'theme_auto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloading...`
+  String get downloading {
+    return Intl.message(
+      'Downloading...',
+      name: 'downloading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New version`
+  String get new_version {
+    return Intl.message(
+      'New version',
+      name: 'new_version',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update now`
+  String get update_now {
+    return Intl.message(
+      'Update now',
+      name: 'update_now',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to "small talk"`
+  String get title_promot {
+    return Intl.message(
+      'Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to "small talk"',
+      name: 'title_promot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Release Cancel`
+  String get leave_cancel {
+    return Intl.message(
+      'Release Cancel',
+      name: 'leave_cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Release Send`
+  String get leave_send {
+    return Intl.message(
+      'Release Send',
+      name: 'leave_send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yesterday`
+  String get yesterday {
+    return Intl.message(
+      'Yesterday',
+      name: 'yesterday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The content is empty, please add content`
+  String get empty_content_need_add {
+    return Intl.message(
+      'The content is empty, please add content',
+      name: 'empty_content_need_add',
       desc: '',
       args: [],
     );
@@ -717,6 +1057,8 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'ko'),
       Locale.fromSubtags(languageCode: 'zh'),
     ];
   }

@@ -132,8 +132,8 @@ class GeminiListItem extends ConsumerWidget {
                       confirmCallback: () {
                         ref.watch(geminiListProvider.notifier).remove(item);
                       },
-                      content: '确定删除当前配置吗？',
-                      title: 'S.current.reminder',
+                      content: S.current.delete_config_reminder,
+                      title: S.current.reminder,
                       autoPop: true,
                       hideCancelBtn: false,
                     );
@@ -162,7 +162,7 @@ class GeminiListItem extends ConsumerWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        officer ? "官方" : "第三方",
+                        officer ? S.current.official : S.current.third_party,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: officer ? 14 : 12,
@@ -208,9 +208,9 @@ class GeminiListItem extends ConsumerWidget {
                                         horizontal: 5,
                                         vertical: 0,
                                       ),
-                                      child: const Text(
-                                        "默认",
-                                        style: TextStyle(
+                                      child:  Text(
+                                        S.current.default1,
+                                        style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 10,
                                         ),

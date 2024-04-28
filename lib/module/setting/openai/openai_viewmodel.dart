@@ -83,12 +83,12 @@ class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
   bool add(AllModelBean openAi) {
     //校验别名是否重复
     if (state.value?.where((element) => element.alias == openAi.alias).isNotEmpty ?? false) {
-      "别名不可以重复".fail();
+      S.current.alias_repeat.fail();
       return false;
     }
     //apiKey不能重复
     if (state.value?.where((element) => element.apiKey == openAi.apiKey).isNotEmpty ?? false) {
-      "apiKey不可以重复".fail();
+      S.current.apikey_repeat.fail();
       return false;
     }
     var defApiKey = getDefaultApiKey();
