@@ -31,5 +31,10 @@ flutter run
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.jpg" width="200" height="400" /></center></td>
 
 </tr>
+<tr>
 
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.jpg" width="200" height="400" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.jpg" width="200" height="400" /></center></td>
+
+</tr>
 </table>
