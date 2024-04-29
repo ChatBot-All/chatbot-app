@@ -40,8 +40,13 @@ interface class OpenAIModel implements OpenAIModelBase {
       ),
       onSuccess: (Map<String, dynamic> response) {
         final List data = response['data'];
-
-        return data.map((model) => OpenAIModelModel.fromMap(model)).toList();
+        //有的模型里的data里是["a","b","c"]这种格式的需要特殊解析
+        return data.map((model) {
+          if (model is String) {
+            return OpenAIModelModel(id: model, ownedBy: "", permission: []);
+          }
+          return OpenAIModelModel.fromMap(model);
+        }).toList();
       },
       client: client,
     );

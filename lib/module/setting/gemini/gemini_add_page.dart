@@ -258,8 +258,6 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 var result = await API().validateApiKey(openAi);
                 if (result) {
                   S.current.validate_success.success();
-                } else {
-                  S.current.validate_fail.fail();
                 }
               }),
               const SizedBox(height: 15),

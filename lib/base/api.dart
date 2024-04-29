@@ -56,7 +56,11 @@ class API {
         var models = await gemini.listModels();
         return models.isNotEmpty;
       }
+    } on RequestFailedException catch (e) {
+      e.message.fail();
+      return false;
     } catch (e) {
+      e.toString().fail();
       return false;
     }
   }
@@ -81,7 +85,11 @@ class API {
         var models = await gemini.listModels();
         return models.map((e) => SupportedModels(ownedBy: e.version, id: e.name)).toList();
       }
+    } on RequestFailedException catch (e) {
+      e.message.fail();
+      return [];
     } catch (e) {
+      e.toString().fail();
       return [];
     }
   }

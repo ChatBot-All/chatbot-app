@@ -19,7 +19,7 @@ class CommonTextField extends ConsumerWidget {
       focusNode: focusNode,
       placeholder: S.current.input_text,
       controller: controller,
-      maxLines: 1,
+      maxLines: maxLine??1,
       minLines: 1,
       maxLength: maxLength,
       cursorColor: Theme.of(context).primaryColor,

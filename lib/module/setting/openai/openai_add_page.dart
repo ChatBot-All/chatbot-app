@@ -265,8 +265,6 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 var result = await API().validateApiKey(openAi);
                 if (result) {
                   S.current.validate_success.success();
-                } else {
-                  S.current.validate_fail.fail();
                 }
               }),
               const SizedBox(height: 15),
