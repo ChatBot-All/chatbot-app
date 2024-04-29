@@ -55,7 +55,7 @@
   "save_success": "저장 성공",
   "save_fail": "저장 실패",
   "generate_image_fail": "이미지 생성 실패",
-  "enter_setting_init_server": "먼저 설정으로 들어가서 서비스 제공업체를 구성하세요",
+  "enter_setting_init_server": "먼저 서비스를 입력하고 서비스 제공업체를 구성하세요.",
   "yes_know": "알겠습니다",
   "only_support_dalle3": "현재 이미지 생성은 dall-e-3 모델만 지원합니다. 추가한 서비스 제공업체는 모두 해당 모델을 지원하지 않습니다",
   "not_support_tts": "추가한 서비스 제공업체는 음성 채팅을 지원하지 않습니다",

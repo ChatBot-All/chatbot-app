@@ -65,7 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "empty_content_need_add": MessageLookupByLibrary.simpleMessage(
             "The content is empty, please add content"),
         "enter_setting_init_server": MessageLookupByLibrary.simpleMessage(
-            "Please enter the server address"),
+            "Please enter the service first and configure the service provider"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "feedback_question": MessageLookupByLibrary.simpleMessage(
             "What do you think of ChatBot?"),

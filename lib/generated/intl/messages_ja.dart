@@ -61,8 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "empty_content_need_add": MessageLookupByLibrary.simpleMessage(
             "まだコンテンツがありません。右上隅をクリックして追加してください。"),
-        "enter_setting_init_server":
-            MessageLookupByLibrary.simpleMessage("最初に設定に入ってプロバイダーを設定してください。"),
+        "enter_setting_init_server": MessageLookupByLibrary.simpleMessage(
+            "まずサービスに入り、サービスプロバイダーを設定してください"),
         "feedback": MessageLookupByLibrary.simpleMessage("フィードバック"),
         "feedback_question": MessageLookupByLibrary.simpleMessage("問題のフィードバック"),
         "gemini_setting": MessageLookupByLibrary.simpleMessage("Gemini プロバイダー"),

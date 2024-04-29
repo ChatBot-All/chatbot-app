@@ -55,7 +55,7 @@
   "save_success": "保存に成功しました。",
   "save_fail": "保存に失敗しました。",
   "generate_image_fail": "画像の生成に失敗しました。",
-  "enter_setting_init_server": "最初に設定に入ってプロバイダーを設定してください。",
+  "enter_setting_init_server": "まずサービスに入り、サービスプロバイダーを設定してください",
   "yes_know": "わかりました。",
   "only_support_dalle3": "現時点では、画像の生成は dall-e-3 モデルのみをサポートしています。追加したプロバイダーはいずれもこのモデルをサポートしていません。",
   "not_support_tts": "追加したプロバイダーは音声チャットをサポートしていません。",

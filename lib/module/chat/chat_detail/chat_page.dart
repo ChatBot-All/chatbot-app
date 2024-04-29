@@ -638,16 +638,18 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                       ),
                     ),
                     const SizedBox(width: 15),
-                    Consumer(builder: (context, ref, _) {
-                      return AnimatedCrossFade(
-                        duration: const Duration(milliseconds: 100),
-                        firstChild: sendButton(disableMode),
-                        secondChild: addImage(),
-                        crossFadeState: (ref.watch(sendButtonVisibleProvider) == true || disableMode == true)
-                            ? CrossFadeState.showFirst
-                            : CrossFadeState.showSecond,
-                      );
-                    }),
+                    !widget.supportImage
+                        ? sendButton(disableMode)
+                        : Consumer(builder: (context, ref, _) {
+                            return AnimatedCrossFade(
+                              duration: const Duration(milliseconds: 100),
+                              firstChild: sendButton(disableMode),
+                              secondChild: addImage(),
+                              crossFadeState: (ref.watch(sendButtonVisibleProvider) == true || disableMode == true)
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
+                            );
+                          }),
                   ],
                 );
               }),

@@ -61,7 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "empty_content_need_add":
             MessageLookupByLibrary.simpleMessage("아직 내용이 없으니 오른쪽 상단을 눌러 추가하세요"),
         "enter_setting_init_server": MessageLookupByLibrary.simpleMessage(
-            "먼저 설정으로 들어가서 서비스 제공업체를 구성하세요"),
+            "먼저 서비스를 입력하고 서비스 제공업체를 구성하세요."),
         "feedback": MessageLookupByLibrary.simpleMessage("피드백"),
         "feedback_question": MessageLookupByLibrary.simpleMessage("문제 피드백"),
         "gemini_setting":

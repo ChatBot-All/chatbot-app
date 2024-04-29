@@ -600,10 +600,10 @@ class S {
     );
   }
 
-  /// `Please enter the server address`
+  /// `Please enter the service first and configure the service provider`
   String get enter_setting_init_server {
     return Intl.message(
-      'Please enter the server address',
+      'Please enter the service first and configure the service provider',
       name: 'enter_setting_init_server',
       desc: '',
       args: [],

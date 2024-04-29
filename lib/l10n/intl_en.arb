@@ -55,7 +55,7 @@
   "save_success": "Save success",
   "save_fail": "Save fail",
   "generate_image_fail": "Generate image fail",
-  "enter_setting_init_server": "Please enter the server address",
+  "enter_setting_init_server": "Please enter the service first and configure the service provider",
   "yes_know": "Got it",
   "only_support_dalle3": "Only support DALL-E 3",
   "not_support_tts": "The current model does not support TTS",
