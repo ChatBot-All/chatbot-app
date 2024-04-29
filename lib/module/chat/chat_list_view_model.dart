@@ -4,10 +4,14 @@ import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 
 import '../../base.dart';
-import '../setting/openai/openai_viewmodel.dart';
 
+///全局生成图片使用的parentID
 var specialGenerateImageChatParentItemTime = 100000;
+
+///全局随便聊聊使用的parentID
 var specialGenerateTextChatParentItemTime = 100001;
+
+///全局语音聊天使用的parentID
 var specialGenerateAudioChatParentItemTime = 100002;
 
 final chatParentListProvider = StateNotifierProvider<ChatParentListNotify, AsyncValue<List<ChatParentItem>>>((ref) {

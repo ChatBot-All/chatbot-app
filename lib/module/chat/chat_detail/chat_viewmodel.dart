@@ -18,23 +18,27 @@ final isGeneratingContentProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
 });
 
-///当前的聊天Parent信息
+///当前的聊天Parent信息，只有ChatParentItem真实存在才有数据，像special相关的id是没有数据的
 final currentChatParentItemProvider = StateProvider.autoDispose<ChatParentItem?>((ref) {
   return null;
 });
 
+///生成图片页面正在使用的模型
 final currentGenerateImageModelProvider = StateProvider.autoDispose<AllModelBean?>((ref) {
   return null;
 });
 
+///语音聊天页面正在使用的模型
 final currentGenerateAudioChatModelProvider = StateProvider.autoDispose<AllModelBean?>((ref) {
   return null;
 });
 
+///当前的聊天信息正在选择的图片列表
 final imagesProvider = StateProvider<List<String>>((ref) {
   return [];
 });
 
+///针对parentID所关联的所有的聊天信息
 final chatProvider =
     StateNotifierProvider.autoDispose.family<ChatNotify, AsyncValue<List<ChatItem>>, int>((ref, parentID) {
   return ChatNotify(const AsyncValue.loading(), ref, parentID);
@@ -88,7 +92,7 @@ class ChatNotify extends StateNotifier<AsyncValue<List<ChatItem>>> {
 
   @override
   void dispose() {
-    //把数据库所有的状态为0的全部置为3
+    //把数据库所有的状态为0的全部置为3，用户关闭了页面，所有正在请求的内容将被移除，异常状态会被重置为错误的状态
     ChatItemProvider().updateStatus(parentID, 0, 3);
     super.dispose();
   }

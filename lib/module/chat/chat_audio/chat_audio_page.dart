@@ -421,6 +421,7 @@ class MyCustomSource extends StreamAudioSource {
   }
 }
 
+///全局共享的当前生成音频聊天人声
 final talkerProvider = StateProvider<String>((ref) {
   return talkers.first;
 });

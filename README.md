@@ -4,7 +4,7 @@
 
 Free and open source mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models.
 
-免费开源的移动端私人 ChatGPT 应用, 支持 GPT3, GPT4 & Gemini Pro 模型。
+免费开源的移动端私人 ChatGPT 应用, 支持 GPT3, GPT4 & Gemini Pro 模型。 [如何使用](./USAGE.md)
 
 </div>
 
