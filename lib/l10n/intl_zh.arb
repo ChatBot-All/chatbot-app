@@ -55,7 +55,7 @@
   "save_success": "保存成功",
   "save_fail": "保存失败",
   "generate_image_fail": "图片生成失败",
-  "enter_setting_init_server": "请先进入设置并配置服务商",
+  "enter_setting_init_server": "请先进入服务并配置服务商",
   "yes_know": "知道了",
   "only_support_dalle3": "目前生成图片仅支持 dall-e-3 模型,您所添加的服务商均不支持该模型",
   "not_support_tts": "您所添加的服务商不支持语音聊天",

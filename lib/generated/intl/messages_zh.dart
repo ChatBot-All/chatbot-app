@@ -55,7 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "empty_content_need_add":
             MessageLookupByLibrary.simpleMessage("您还没有内容，快点击右上角添加吧"),
         "enter_setting_init_server":
-            MessageLookupByLibrary.simpleMessage("请先进入设置并配置服务商"),
+            MessageLookupByLibrary.simpleMessage("请先进入服务并配置服务商"),
         "feedback": MessageLookupByLibrary.simpleMessage("反馈"),
         "feedback_question": MessageLookupByLibrary.simpleMessage("问题反馈"),
         "gemini_setting": MessageLookupByLibrary.simpleMessage("Gemini 服务商"),
