@@ -119,6 +119,7 @@ class GeminiImpl extends APIImpl {
       );
       await Future.delayed(const Duration(milliseconds: 100));
       var models = await gemini.listModels();
+      eDismiss();
       return models.isNotEmpty;
     } on RequestFailedException catch (e) {
       e.message.fail();

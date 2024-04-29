@@ -165,6 +165,8 @@ class ChatGPTImpl extends APIImpl {
     try {
       initAPI(bean);
       List<OpenAIModelModel> models = await OpenAI.instance.model.list();
+
+      eDismiss();
       if (models.isNotEmpty) {
         return true;
       }
@@ -182,7 +184,10 @@ class ChatGPTImpl extends APIImpl {
   Future<List<SupportedModels>> getSupportModules(AllModelBean bean) async {
     try {
       initAPI(bean);
-      return (await OpenAI.instance.model.list()).map((e) => SupportedModels(ownedBy: e.ownedBy, id: e.id)).toList();
+      var result =
+          (await OpenAI.instance.model.list()).map((e) => SupportedModels(ownedBy: e.ownedBy, id: e.id)).toList();
+      eDismiss();
+      return result;
     } on RequestFailedException catch (e) {
       e.message.fail();
       return [];
