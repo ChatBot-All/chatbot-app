@@ -30,14 +30,10 @@ Free and open source mobile private ChatGPT application, supporting GPT3, GPT4 &
 ## Download
 >* Telegram : [ChatBot](https://t.me/chatbot_all)
 >* Android Url: [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS Compile yourself:
+>* iOS 正在等待TestFlight审核通过:
 
 ```shell
-flutter pub get
-cd ios
-pod install
-cd ..
-flutter run
+如果能通过，就发邀请链接，如果失败，就打包iPA吧，苹果政策不允许APP通过API KEY激活使用的方式上架。。。
 ```
 
 <table>
@@ -63,4 +59,18 @@ flutter run
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.jpg" width="200" height="400" /></center></td>
 
 </tr>
+</table>
+
+单纯的为AI发电，请勿催更，如果你觉得项目不错，可以请我喝杯咖啡。
+
+<table>
+
+<tr>
+
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/alipay.jpg" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/wechat.jpg" width="300"  /></center></td>
+
+</tr>
+
+
 </table>
