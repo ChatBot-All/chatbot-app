@@ -10,7 +10,7 @@ import '../../base/db/chat_item.dart';
 import '../../base/theme.dart';
 import '../../hive_bean/openai_bean.dart';
 import '../chat/chat_list_view_model.dart';
-import '../command/command_page.dart';
+import '../prompt/prompt_page.dart';
 import '../services/services_page.dart';
 import '../setting/setting_page.dart';
 
@@ -61,7 +61,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
         index: currentIndex,
         children: const [
           ChatListPage(),
-          CommandPage(),
+          PromptPage(),
           ServicesPage(),
           SettingPage(),
         ],
@@ -118,8 +118,7 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                         return;
                       }
                       F.push(const ChatAudioPage()).then((value) {
-                        ChatItemProvider()
-                            .deleteAll(specialGenerateAudioChatParentItemTime);
+                        ChatItemProvider().deleteAll(specialGenerateAudioChatParentItemTime);
                       });
                     },
                     behavior: HitTestBehavior.opaque,
@@ -195,6 +194,7 @@ class BottomNavPainter extends CustomPainter {
   final Color bgColor;
 
   BottomNavPainter({this.bgColor = Colors.white});
+
   @override
   void paint(Canvas canvas, Size size) {
     //绘制矩形，然后顶部中间是个半圆
