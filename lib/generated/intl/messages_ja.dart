@@ -141,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "third_party": MessageLookupByLibrary.simpleMessage("サードパーティ"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4 ～ 5 文字を使用して、この文の簡潔なテーマを直接返します。説明、句読点、あいまい語、余分なテキスト、太字は使用しないでください。テーマがない場合は、「雑談」を直接返してください。"),
+        "tts": MessageLookupByLibrary.simpleMessage("読む"),
         "update_now": MessageLookupByLibrary.simpleMessage("更新する"),
         "validate": MessageLookupByLibrary.simpleMessage("検証"),
         "validate_fail": MessageLookupByLibrary.simpleMessage("検証に失敗しました。"),

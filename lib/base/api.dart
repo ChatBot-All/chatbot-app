@@ -35,12 +35,7 @@ class API {
   Future<bool> validateApiKey(AllModelBean bean) async {
     try {
       if (bean.model == APIType.openAI.code) {
-        OpenAI.apiKey = bean.apiKey ?? "";
-        OpenAI.baseUrl = (bean.apiServer ?? "");
-        OpenAI.organization = bean.organization;
-        OpenAI.requestsTimeOut = const Duration(seconds: 10);
-        OpenAI.showLogs = true;
-        OpenAI.showResponsesLogs = true;
+        initOpenAIKey(bean);
         List<OpenAIModelModel> models = await OpenAI.instance.model.list();
         if (models.isNotEmpty) {
           return true;
@@ -68,12 +63,7 @@ class API {
   Future<List<SupportedModels>> getSupportModules(AllModelBean bean) async {
     try {
       if (bean.model == APIType.openAI.code) {
-        OpenAI.apiKey = bean.apiKey ?? "";
-        OpenAI.baseUrl = (bean.apiServer ?? "");
-        OpenAI.organization = bean.organization;
-        OpenAI.requestsTimeOut = const Duration(seconds: 10);
-        OpenAI.showLogs = true;
-        OpenAI.showResponsesLogs = true;
+        initOpenAIKey(bean);
         return (await OpenAI.instance.model.list()).map((e) => SupportedModels(ownedBy: e.ownedBy, id: e.id)).toList();
       } else {
         Gemini gemini = Gemini.init(
@@ -83,6 +73,7 @@ class API {
         );
         await Future.delayed(const Duration(milliseconds: 100));
         var models = await gemini.listModels();
+        eDismiss();
         return models.map((e) => SupportedModels(ownedBy: e.version, id: e.name)).toList();
       }
     } on RequestFailedException catch (e) {
@@ -127,12 +118,7 @@ class API {
         var result = await gemini.chat(contents, modelName: modelType);
         return result?.content?.parts?.last.text ?? "";
       }
-      OpenAI.apiKey = bean.apiKey ?? "";
-      OpenAI.baseUrl = (bean.apiServer ?? "");
-      OpenAI.organization = bean.organization;
-      OpenAI.requestsTimeOut = const Duration(seconds: 6000);
-      OpenAI.showLogs = true;
-      OpenAI.showResponsesLogs = true;
+      initOpenAIKey(bean);
 
       //取后10个列表数据
 
@@ -179,12 +165,7 @@ class API {
 
   Future<String> audio2OpenAIText(AllModelBean bean, String path) async {
     try {
-      OpenAI.apiKey = bean.apiKey ?? "";
-      OpenAI.baseUrl = (bean.apiServer ?? "");
-      OpenAI.organization = bean.organization;
-      OpenAI.requestsTimeOut = const Duration(seconds: 6000);
-      OpenAI.showLogs = true;
-      OpenAI.showResponsesLogs = true;
+      initOpenAIKey(bean);
       OpenAIAudioModel transcription = await OpenAI.instance.audio.createTranscription(
         file: File(path),
         model: bean.getWhisperModels.first.id ?? "",
@@ -204,12 +185,7 @@ class API {
     OpenAIImageStyle style,
     OpenAIImageSize size,
   ) async {
-    OpenAI.apiKey = bean.apiKey ?? "";
-    OpenAI.baseUrl = (bean.apiServer ?? "");
-    OpenAI.organization = bean.organization;
-    OpenAI.requestsTimeOut = const Duration(seconds: 6000);
-    OpenAI.showLogs = true;
-    OpenAI.showResponsesLogs = true;
+    initOpenAIKey(bean);
 
     OpenAIImageModel image = await OpenAI.instance.image.create(
       model: "dall-e-3",
@@ -363,16 +339,25 @@ class API {
     }
   }
 
-  Future<File> text2TTS(String content, String voice) async {
-    File speechFile = await OpenAI.instance.audio.createSpeech(
-      model: "tts-1",
-      input: content,
-      voice: "nova",
-      responseFormat: OpenAIAudioSpeechResponseFormat.mp3,
-      outputDirectory: await getApplicationDocumentsDirectory(),
-      outputFileName: DateTime.now().millisecondsSinceEpoch.toString(),
-    );
-    return speechFile;
+  Future<File?> text2TTS(AllModelBean bean, String content, String voice) async {
+    try {
+      initOpenAIKey(bean);
+      File speechFile = await OpenAI.instance.audio.createSpeech(
+        model: "tts-1",
+        input: content,
+        voice: voice.toLowerCase(),
+        responseFormat: OpenAIAudioSpeechResponseFormat.mp3,
+        outputDirectory: await getApplicationDocumentsDirectory(),
+        outputFileName: DateTime.now().millisecondsSinceEpoch.toString(),
+      );
+      return speechFile;
+    } on RequestFailedException catch (e) {
+      e.message.fail();
+      return null;
+    } catch (e) {
+      e.toString().fail();
+      return null;
+    }
 
 // The file result.
   }
@@ -437,12 +422,7 @@ class API {
     String model,
     List<RequestParams> chatItems,
   ) async {
-    OpenAI.apiKey = bean.apiKey ?? "";
-    OpenAI.baseUrl = (bean.apiServer ?? "");
-    OpenAI.organization = bean.organization;
-    OpenAI.requestsTimeOut = const Duration(seconds: 6000);
-    OpenAI.showLogs = true;
-    OpenAI.showResponsesLogs = true;
+    initOpenAIKey(bean);
 
     final list = chatItems
         .map((e) => OpenAIChatCompletionChoiceMessageModel(
@@ -467,6 +447,15 @@ class API {
     return GenerateContentBean(content: result.choices.first.message.content?.first.text ?? "");
   }
 
+  void initOpenAIKey(AllModelBean bean) {
+    OpenAI.apiKey = bean.apiKey ?? "";
+    OpenAI.baseUrl = (bean.apiServer ?? "");
+    OpenAI.organization = bean.organization;
+    OpenAI.requestsTimeOut = const Duration(seconds: 6000);
+    OpenAI.showLogs = true;
+    OpenAI.showResponsesLogs = true;
+  }
+
   Future<Stream<GenerateContentBean>> _createOpenAIChat(
     int moduleName,
     int historyCount,
@@ -476,12 +465,7 @@ class API {
     List<RequestParams> chatItems,
   ) async {
     try {
-      OpenAI.apiKey = bean.apiKey ?? "";
-      OpenAI.baseUrl = (bean.apiServer ?? "");
-      OpenAI.organization = bean.organization;
-      OpenAI.requestsTimeOut = const Duration(seconds: 6000);
-      OpenAI.showLogs = true;
-      OpenAI.showResponsesLogs = true;
+      initOpenAIKey(bean);
 
       final list = chatItems
           .map((e) => OpenAIChatCompletionChoiceMessageModel(

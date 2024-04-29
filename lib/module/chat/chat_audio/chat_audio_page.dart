@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/utils/hive_box.dart';
+import 'package:dart_openai/dart_openai.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -353,19 +354,28 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       if (data.content == null || data.content!.isEmpty) {
         throw Exception(S.current.generate_content_is_empty);
       }
-      var tts = await API().text2TTS(data.content!, ref.watch(talkerProvider.notifier).state);
+      var tts = await API().text2TTS(ref.watch(currentGenerateAudioChatModelProvider.notifier).state!, data.content!,
+          ref.watch(talkerProvider.notifier).state);
       ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.speaking;
 
       if (player.playing) {
         player.stop();
       }
+      if (tts == null) {
+        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
 
+        return;
+      }
       await player.setAudioSource(MyCustomSource(tts.readAsBytesSync()));
       await player.play();
       ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
     } catch (e) {
+      String error = e.toString();
+      if (e is RequestFailedException) {
+        error = e.message;
+      }
       ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
-      e.toString().fail();
+      error.fail();
       chatItem.content = "";
       chatItem.status = MessageStatus.failed.index;
       userChatItem.status = MessageStatus.failed.index;

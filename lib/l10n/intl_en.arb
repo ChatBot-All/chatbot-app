@@ -99,5 +99,6 @@
   "cancel": "Cancel",
   "send": "Send",
   "yesterday": "Yesterday",
-  "empty_content_need_add": "The content is empty, please add content"
+  "empty_content_need_add": "The content is empty, please add content",
+  "tts": "Deacon"
 }

@@ -148,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "third_party": MessageLookupByLibrary.simpleMessage("Third"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to \"small talk\""),
+        "tts": MessageLookupByLibrary.simpleMessage("Deacon"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update now"),
         "validate": MessageLookupByLibrary.simpleMessage("Validate"),
         "validate_fail":

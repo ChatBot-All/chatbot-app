@@ -47,6 +47,7 @@
   "alias_repeat": "别名不可以重复",
   "apikey_repeat": "ApiKey不可以重复",
   "vivid": "超现实",
+  "tts": "朗读",
   "natural": "现实的",
   "size": "尺寸",
   "style": "风格",

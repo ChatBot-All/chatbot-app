@@ -55,7 +55,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.openAi?.time != null ? "${S.current.edit} ChatGPT ${S.current.servers}" : "${S.current.btn_add} ChatGPT ${S.current.servers}"),
+          title: Text(widget.openAi?.time != null
+              ? "${S.current.edit} ChatGPT ${S.current.servers}"
+              : "${S.current.btn_add} ChatGPT ${S.current.servers}"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -92,7 +94,10 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
               SettingWithTitle(
                 label: "API Key",
                 widget: CommonTextField(
-                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: S.current.input_text),
+                    maxLine: 3,
+                    color: Theme.of(context).canvasColor,
+                    controller: controller,
+                    hintText: S.current.input_text),
               ),
               const SizedBox(height: 15),
               Container(
@@ -251,9 +256,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child:  Text(
+                child: Text(
                   S.current.validate,
-                  style:const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 AllModelBean openAi = AllModelBean();
@@ -276,9 +281,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child:  Text(
+                child: Text(
                   S.current.save,
-                  style:const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 try {
@@ -317,9 +322,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
 
                   var apiResult = await API().getSupportModules(openAi);
                   supportedModels = apiResult.map((e) => SupportedModels(id: e.id, ownedBy: e.ownedBy)).toList();
-                  eDismiss();
                   if (supportedModels.isEmpty) {
-                    S.current.getmodules_fail.fail();
                     return;
                   }
                   openAi.supportedModels = supportedModels;

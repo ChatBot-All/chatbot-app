@@ -138,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "third_party": MessageLookupByLibrary.simpleMessage("타사"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4~5자로 이 문장의 간략한 주제를 바로 반환하고, 설명하지 말고, 구두점을 사용하지 말고, 어조사를 사용하지 말고, 불필요한 텍스트를 추가하지 말고, 굵게 표시하지 말고, 주제가 없으면 \"잡담\"을 바로 반환하세요"),
+        "tts": MessageLookupByLibrary.simpleMessage("읽다"),
         "update_now": MessageLookupByLibrary.simpleMessage("업데이트"),
         "validate": MessageLookupByLibrary.simpleMessage("검증"),
         "validate_fail": MessageLookupByLibrary.simpleMessage("검증 실패"),

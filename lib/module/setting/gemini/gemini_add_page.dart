@@ -309,13 +309,10 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 try {
                   var result = await API().getSupportModules(openAi);
                   supportedModels = result.map((e) => SupportedModels(id: e.id, ownedBy: e.ownedBy)).toList();
-                  eDismiss();
                 } catch (e) {
-                  eDismiss();
                 }
 
                 if (supportedModels.isEmpty) {
-                  S.current.getmodules_fail.fail();
                   return;
                 }
 

@@ -99,5 +99,6 @@
   "cancel": "취소",
   "send": "보내기",
   "yesterday": "어제",
-  "empty_content_need_add": "아직 내용이 없으니 오른쪽 상단을 눌러 추가하세요"
+  "empty_content_need_add": "아직 내용이 없으니 오른쪽 상단을 눌러 추가하세요",
+  "tts": "읽다"
 }

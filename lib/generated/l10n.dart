@@ -1049,6 +1049,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Deacon`
+  String get tts {
+    return Intl.message(
+      'Deacon',
+      name: 'tts',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

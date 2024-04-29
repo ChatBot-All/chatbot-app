@@ -412,7 +412,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
   return [
     if (resendMessage != null)
       PullDownMenuItem(
-        icon: CupertinoIcons.doc_on_doc,
+        icon: CupertinoIcons.arrow_counterclockwise,
         title: S.current.resend,
         onTap: () {
           resendMessage(chatItem.content ?? "");
@@ -420,7 +420,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
       ),
     if (sendMessageAgain != null)
       PullDownMenuItem(
-        icon: CupertinoIcons.doc_on_doc,
+        icon: CupertinoIcons.arrow_2_circlepath,
         title: S.current.send_again,
         onTap: () {
           sendMessageAgain(chatItem.content ?? "");

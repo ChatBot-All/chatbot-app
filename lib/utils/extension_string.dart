@@ -68,7 +68,7 @@ extension ExtensionString on String? {
   void toClipboard() {
     if (this == null) return;
     Clipboard.setData(ClipboardData(text: this!));
-    "已复制".toast();
+    S.current.copy_success.success();
   }
 
   Widget action(VoidCallback onPressed, {TextStyle? style}) {

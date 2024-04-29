@@ -10,6 +10,7 @@ import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pull_down_button/pull_down_button.dart';
@@ -33,6 +34,7 @@ import '../../../base/db/chat_item.dart';
 import '../../../base/providers.dart';
 import '../../../const.dart';
 import '../../../hive_bean/openai_bean.dart';
+import '../chat_audio/chat_audio_page.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   final ChatParentItem localChatHistory;
@@ -46,6 +48,8 @@ class ChatPage extends ConsumerStatefulWidget {
 class _ChatPageState extends ConsumerState<ChatPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
+
+  var player = AudioPlayer();
 
   bool isScrollManual = false;
 
@@ -102,7 +106,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     });
     return Consumer(builder: (context, ref, _) {
       var result = ref.watch(currentChatParentItemProvider);
-      var supportedModel = getModelByApiKey(result?.apiKey ?? "").getTextModels;
+
+      AllModelBean currentModel = getModelByApiKey(result?.apiKey ?? "");
+
+      var supportedModel = currentModel.getTextModels;
       var realModel = getRealModel(supportedModel, result?.moduleType);
       if (realModel != result?.moduleType) {
         WidgetsBinding.instance.endOfFrame.then((value) {
@@ -275,10 +282,20 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                                 sendMessageAgain: (content) {
                                   sendMessage(result.id, content, item.images);
                                 },
+                                ttsCallBack: currentModel.getTTSModels.isEmpty
+                                    ? null
+                                    : (content) {
+                                        playText(currentModel, content);
+                                      },
                               );
                             } else if (item.type == ChatType.bot.index) {
                               resultWidget = BotMessage(
                                 chatItem: item,
+                                ttsCallBack: currentModel.getTTSModels.isEmpty
+                                    ? null
+                                    : (content) {
+                                        playText(currentModel, content);
+                                      },
                               );
                             } else {
                               resultWidget = AssistMessage(chatItem: item);
@@ -393,8 +410,26 @@ requestFailedException:\n
     }, cancelOnError: true);
   }
 
+  void playText(AllModelBean bean, String content) async {
+    if (bean.getTTSModels.isEmpty) {
+      return;
+    }
+    var tts = await API().text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
+
+    if (player.playing) {
+      player.stop();
+    }
+    if (tts == null) {
+      return;
+    }
+
+    await player.setAudioSource(MyCustomSource(tts.readAsBytesSync()));
+    await player.play();
+  }
+
   @override
   void dispose() {
+    player.dispose();
     _streamSubscription?.cancel();
     super.dispose();
   }
@@ -776,7 +811,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 }
 
 List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, ChatItem chatItem,
-    ResendMessage? resendMessage, SendMessageAgain? sendMessageAgain) {
+    ResendMessage? resendMessage, SendMessageAgain? sendMessageAgain, TTSCallBack? ttsCallBack) {
   return [
     if (resendMessage != null)
       PullDownMenuItem(
@@ -795,12 +830,19 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
         },
       ),
 
+    if (ttsCallBack != null)
+      PullDownMenuItem(
+        icon: CupertinoIcons.volume_up,
+        title: S.current.tts,
+        onTap: () {
+          ttsCallBack(chatItem.content ?? "");
+        },
+      ),
     PullDownMenuItem(
       icon: CupertinoIcons.doc_on_doc,
       title: S.current.copy,
       onTap: () {
-        Clipboard.setData(ClipboardData(text: chatItem.content ?? ""));
-        S.current.copy_success.success();
+        (chatItem.content ?? "").toClipboard();
       },
     ),
     //分享
@@ -834,11 +876,13 @@ List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, 
 
 typedef ResendMessage = void Function(String content);
 typedef SendMessageAgain = void Function(String content);
+typedef TTSCallBack = void Function(String content);
 
-class UserMessage extends ConsumerStatefulWidget {
+class UserMessage extends ConsumerWidget {
   final ChatItem chatItem;
   final ResendMessage resendMessage;
   final SendMessageAgain sendMessageAgain;
+  final TTSCallBack? ttsCallBack;
   final bool hideResend;
 
   const UserMessage(
@@ -846,15 +890,11 @@ class UserMessage extends ConsumerStatefulWidget {
       required this.chatItem,
       required this.resendMessage,
       required this.sendMessageAgain,
+      this.ttsCallBack,
       this.hideResend = false});
 
   @override
-  ConsumerState<UserMessage> createState() => _UserMessageState();
-}
-
-class _UserMessageState extends ConsumerState<UserMessage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -864,7 +904,7 @@ class _UserMessageState extends ConsumerState<UserMessage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             //重试
-            if (widget.chatItem.status == MessageStatus.failed.index)
+            if (chatItem.status == MessageStatus.failed.index)
               Consumer(builder: (context, ref, _) {
                 return const Icon(CupertinoIcons.exclamationmark_circle_fill, color: Colors.red, size: 20).click(() {
                   showCommonDialog(
@@ -872,9 +912,9 @@ class _UserMessageState extends ConsumerState<UserMessage> {
                     title: S.current.reminder,
                     confirmCallback: () {
                       ref
-                          .watch(chatProvider(widget.chatItem.parentID ?? 0).notifier)
-                          .remove(widget.chatItem, connectOtherTimeID: true);
-                      widget.resendMessage(widget.chatItem.content ?? "");
+                          .watch(chatProvider(chatItem.parentID ?? 0).notifier)
+                          .remove(chatItem, connectOtherTimeID: true);
+                      resendMessage(chatItem.content ?? "");
                     },
                     content: S.current.conform_resend,
                     confirmText: S.current.confirm,
@@ -884,80 +924,84 @@ class _UserMessageState extends ConsumerState<UserMessage> {
             const SizedBox(width: 10),
             PullDownButton(
               itemBuilder: (context) => getMessageActions2(
-                  context,
-                  ref,
-                  widget.chatItem,
-                  widget.hideResend
-                      ? null
-                      : (content) {
-                          ref
-                              .watch(chatProvider(widget.chatItem.parentID ?? 0).notifier)
-                              .remove(widget.chatItem, connectOtherTimeID: true);
-                          widget.resendMessage(content);
-                        }, (content) {
-                widget.sendMessageAgain(content);
-              }),
-              buttonBuilder: (context, showMenu) => Container(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.8,
-                  minWidth: 10,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
+                context,
+                ref,
+                chatItem,
+                hideResend
+                    ? null
+                    : (content) {
+                        ref
+                            .watch(chatProvider(chatItem.parentID ?? 0).notifier)
+                            .remove(chatItem, connectOtherTimeID: true);
+                        resendMessage(content);
+                      },
+                (content) {
+                  sendMessageAgain(content);
+                },
+                ttsCallBack,
+              ),
+              buttonBuilder: (context, showMenu) => GestureDetector(
+                onLongPress: () {
+                  showMenu();
+                },
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.8,
+                    minWidth: 10,
                   ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (widget.chatItem.images != null &&
-                        widget.chatItem.images!.isNotEmpty &&
-                        (widget.chatItem.images!.where((element) => element.isEmpty).length !=
-                            widget.chatItem.images!.length))
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          runAlignment: WrapAlignment.end,
-                          direction: Axis.horizontal,
-                          children: [
-                            ...widget.chatItem.images!.where((element) => element.isNotEmpty).map((e) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.memory(
-                                  base64Decode(e),
-                                  width: 80,
-                                  height: 80,
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
-                                ),
-                              );
-                            }),
-                          ],
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (chatItem.images != null &&
+                          chatItem.images!.isNotEmpty &&
+                          (chatItem.images!.where((element) => element.isEmpty).length != chatItem.images!.length))
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            runAlignment: WrapAlignment.end,
+                            direction: Axis.horizontal,
+                            children: [
+                              ...chatItem.images!.where((element) => element.isNotEmpty).map((e) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.memory(
+                                    base64Decode(e),
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                    gaplessPlayback: true,
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      if (chatItem.images != null &&
+                          chatItem.images!.isNotEmpty &&
+                          (chatItem.images!.where((element) => element.isEmpty).length != chatItem.images!.length))
+                        const SizedBox(height: 10),
+                      Text(
+                        chatItem.content ?? "",
+                        style: const TextStyle(
+                          color: Color(0xff091807),
                         ),
                       ),
-                    if (widget.chatItem.images != null &&
-                        widget.chatItem.images!.isNotEmpty &&
-                        (widget.chatItem.images!.where((element) => element.isEmpty).length !=
-                            widget.chatItem.images!.length))
-                      const SizedBox(height: 10),
-                    Text(
-                      widget.chatItem.content ?? "",
-                      style: const TextStyle(
-                        color: Color(0xff091807),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ).click(() {
-                showMenu();
-              }),
+              ),
             ),
           ],
         ),
@@ -968,8 +1012,9 @@ class _UserMessageState extends ConsumerState<UserMessage> {
 
 class BotMessage extends ConsumerWidget {
   final ChatItem chatItem;
+  final TTSCallBack? ttsCallBack;
 
-  const BotMessage({super.key, required this.chatItem});
+  const BotMessage({super.key, required this.chatItem, this.ttsCallBack});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -986,24 +1031,27 @@ class BotMessage extends ConsumerWidget {
           ),
           const SizedBox(height: 5),
           PullDownButton(
-            itemBuilder: (context) => getMessageActions2(context, ref, chatItem, null, null),
-            buttonBuilder: (context, showMenu) => Container(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.7,
-                minWidth: 10,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
+            itemBuilder: (context) => getMessageActions2(context, ref, chatItem, null, null, ttsCallBack),
+            buttonBuilder: (context, showMenu) => GestureDetector(
+              onLongPress: () {
+                showMenu();
+              },
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                  minWidth: 10,
                 ),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                ),
+                child: getMessage(ref, context),
               ),
-              child: getMessage(ref, context),
-            ).click(() {
-              showMenu();
-            }),
+            ),
           ),
         ],
       ),
