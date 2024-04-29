@@ -380,7 +380,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
     ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).add(botChatItem);
     await Future.delayed(const Duration(milliseconds: 50));
     try {
-      var resultImages = await API().createOpenAIImage(
+      var resultImages = await API().generateOpenAIImage(
         ref.watch(currentGenerateImageModelProvider.notifier).state!,
         userChatItem.content ?? "",
         ref.watch(openAIImageStyleProvider.notifier).state,

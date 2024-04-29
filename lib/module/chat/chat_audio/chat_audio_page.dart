@@ -99,8 +99,8 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
         S.current.no_module_use.fail();
         return;
       }
-      var content = await API().audio2OpenAIText(model, path);
-      if (content.isNotEmpty) {
+      var content = await API().tts2Text(model, path);
+      if (content != null && content.isNotEmpty) {
         sendMessage(model, content);
       } else {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
@@ -340,11 +340,12 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     var allChats = ref.watch(chatProvider(specialGenerateAudioChatParentItemTime).notifier).add(chatItem);
     await Future.delayed(const Duration(milliseconds: 50));
     try {
-      var data = await API().createTextChatDirectly(
+      var data = await API().generateContent(
         double.parse("1.0"),
         model,
         model.getDefaultModelType.id ?? "gpt-4",
         allChats,
+        [],
       );
 
       chatItem.content = data.content;

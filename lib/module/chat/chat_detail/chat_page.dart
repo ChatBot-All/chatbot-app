@@ -240,9 +240,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   //list里的前2条状态必须是成功
 
                   requestTitled = true;
-                  API()
-                      .generateChatTitle(result, getModelByApiKey(result.apiKey ?? ""), result.moduleType!, list)
-                      .then((value) {
+                  API().generateChatTitle(result.temperature ?? "1.0", getModelByApiKey(result.apiKey ?? ""),
+                      result.moduleType!, list, []).then((value) {
                     ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(title: value));
                   }).catchError((e) {
                     e.toString().fail();
@@ -369,13 +368,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     ref.watch(imagesProvider.notifier).update((state) => []);
 
     var chatParentItem = ref.watch(currentChatParentItemProvider.notifier).state!;
-    _streamSubscription = (await API().createTextChat(
-      chatParentItem.moduleName!,
-      chatParentItem.historyMessageCount ?? 4,
-      double.parse(chatParentItem.temperature ?? "1.0"),
+    _streamSubscription = (await API().streamGenerateContent(
+      chatParentItem.temperature ?? "1.0",
       getModelByApiKey(ref.watch(currentChatParentItemProvider.notifier).state!.apiKey!),
       ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
       ref.watch(chatProvider(id).notifier).chats,
+      [],
       id == specialGenerateTextChatParentItemTime,
     ))
         .listen((event) {
@@ -505,10 +503,12 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 
     try {
       AllModelBean bean = getModelByApiKey(ref.watch(currentChatParentItemProvider.notifier).state?.apiKey ?? "");
-      var content = await API().audio2OpenAIText(bean, path);
-      if (content.isNotEmpty) {
+      var content = await API().tts2Text(bean, path);
+      if (content != null && content.isNotEmpty) {
         _controller.text = content;
         sendMessage();
+      } else {
+        ref.watch(isGeneratingContentProvider.notifier).state = false;
       }
     } catch (e) {
       ref.watch(isGeneratingContentProvider.notifier).state = false;
