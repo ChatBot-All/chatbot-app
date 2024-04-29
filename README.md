@@ -29,12 +29,8 @@ Free and open source mobile private ChatGPT application, supporting GPT3, GPT4 &
 
 ## Download
 >* Telegram : [ChatBot](https://t.me/chatbot_all)
->* Android Url: [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS 正在等待TestFlight审核通过:
-
-```shell
-如果能通过，就发邀请链接，如果失败，就打包iPA吧，苹果政策不允许APP通过API KEY激活使用的方式上架。。。
-```
+>* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
+>* iOS : [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
 
 <table>
 
