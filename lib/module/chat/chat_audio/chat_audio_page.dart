@@ -290,11 +290,11 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
                     ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
                   },
                   child: Transform.translate(
-                    offset: const Offset(0, -20),
+                    offset: const Offset(0, -40),
                     child: Lottie.asset(
                       "assets/lottie/audio.json",
-                      width: 100,
-                      height: 100,
+                      width: 130,
+                      height: 130,
                       fit: BoxFit.cover,
                     ),
                   ),
