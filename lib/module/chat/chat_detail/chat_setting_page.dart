@@ -299,7 +299,6 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                                 supportedModels.add(
                                     SupportedModels(id: model, ownedBy: ""));
                               }
-
                               return PullDownButton(
                                 scrollController: ScrollController(),
                                 buttonBuilder: (_, showMenu) => Row(
