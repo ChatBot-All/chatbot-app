@@ -60,6 +60,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     if (bean.getTTSModels.isEmpty) {
       return;
     }
+    if (content.isEmpty) return;
     var tts = await API().text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
 
     if (player.playing) {
@@ -285,20 +286,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    MoreFunctions(
-                      speakCall: supportedModel.getTTSModels.isEmpty
-                          ? null
-                          : () {
-                              playText(supportedModel, fromTextController.text);
-                            },
-                      toClipboard: () {
-                        fromTextController.text.toClipboard();
-                      },
-                      toShare: () {
-                        Share.share(fromTextController.text);
-                      },
-                    ),
+
                     const SizedBox(height: 30),
                     const Divider(),
                     if (translatedContent.isNotEmpty) const SizedBox(height: 30),
@@ -330,8 +318,12 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           speakCall: supportedModel.getTTSModels.isEmpty
                               ? null
                               : () {
-                                  playText(supportedModel, fromTextController.text);
+                                  playText(supportedModel, translatedContent);
                                 },
+                          stopCall: () {
+                            player.stop();
+                            ref.watch(playingAudioProvider.notifier).state = false;
+                          },
                           toClipboard: () {
                             translatedContent.toClipboard();
                           },
@@ -340,6 +332,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           },
                         ),
                       ),
+                    SizedBox(height: F.height/3),
                   ],
                 ),
               );
@@ -490,6 +483,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
   StreamSubscription<GenerateContentBean>? _streamSubscription;
 
   void _translate(AllModelBean model, String content) async {
+    S.current.loading.loading();
     ref.watch(translatedContentProvider.notifier).state = "";
     //prompt
     var promptItem = ChatItem(
@@ -553,6 +547,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     );
     await Future.delayed(const Duration(milliseconds: 50));
 
+    eDismiss();
     _streamSubscription = (await API().streamGenerateContent(
       HiveBox().temperature,
       ref.watch(currentGenerateTranslateChatModelProvider.notifier).state!,
@@ -595,22 +590,37 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
 
 typedef SpeakCall = void Function();
 
-class MoreFunctions extends StatelessWidget {
+class MoreFunctions extends ConsumerWidget {
   final SpeakCall? speakCall;
+  final SpeakCall stopCall;
   final SpeakCall toClipboard;
   final SpeakCall toShare;
 
-  const MoreFunctions({super.key, required this.speakCall, required this.toClipboard, required this.toShare});
+  const MoreFunctions({
+    super.key,
+    required this.speakCall,
+    required this.stopCall,
+    required this.toClipboard,
+    required this.toShare,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    var playing = ref.watch(playingAudioProvider);
+
     return Row(
       children: [
         const SizedBox(width: 5),
-        if (speakCall != null)
+        if (speakCall != null && !playing)
           Icon(CupertinoIcons.speaker_3, size: 20, color: Theme.of(context).textTheme.titleMedium?.color).click(
             () {
               speakCall!();
+            },
+          ),
+        if (playing)
+          Icon(CupertinoIcons.stop_circle, size: 20, color: Theme.of(context).textTheme.titleMedium?.color).click(
+            () {
+              stopCall();
             },
           ),
         const Spacer(),
@@ -634,4 +644,8 @@ class MoreFunctions extends StatelessWidget {
 
 final translatedContentProvider = StateProvider.autoDispose<String>((ref) {
   return "";
+});
+
+final playingAudioProvider = StateProvider.autoDispose<bool>((ref) {
+  return false;
 });
