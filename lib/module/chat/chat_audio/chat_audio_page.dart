@@ -40,14 +40,13 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
   @override
   void initState() {
     super.initState();
-
+    supportedModels = HiveBox()
+        .openAIConfig
+        .values
+        .where((element) => (element.getWhisperModels.isNotEmpty && element.getTTSModels.isNotEmpty))
+        .toList();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (ref.watch(currentGenerateAudioChatModelProvider.notifier).state == null) {
-        supportedModels = HiveBox()
-            .openAIConfig
-            .values
-            .where((element) => (element.getWhisperModels.isNotEmpty && element.getTTSModels.isNotEmpty))
-            .toList();
         ref.watch(currentGenerateAudioChatModelProvider.notifier).state = supportedModels.first;
         ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state = supportedModels.first;
       }
@@ -94,14 +93,13 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       return;
     }
     ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
-    ref.watch(isGeneratingContentProvider.notifier).state = true;
 
     try {
       var model = ref.watch(currentGenerateAudioChatModelProvider.notifier).state;
       var textModel = ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state;
 
       if (model == null || textModel == null) {
-        ref.watch(isGeneratingContentProvider.notifier).state = false;
+        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
         S.current.no_module_use.fail();
         return;
       }
@@ -109,11 +107,11 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       if (content != null && content.isNotEmpty) {
         sendMessage(model, textModel, content);
       } else {
-        ref.watch(isGeneratingContentProvider.notifier).state = false;
+        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
         S.current.can_not_get_voice_content.fail();
       }
     } catch (e) {
-      ref.watch(isGeneratingContentProvider.notifier).state = false;
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
       e.toString().fail();
     }
   }

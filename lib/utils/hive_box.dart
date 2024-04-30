@@ -3,18 +3,22 @@ import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import '../const.dart';
+
 class HiveBox {
   static const String cAppConfig = 'appConfig';
   static const String cAppConfigDefaultApiServerKey = 'defaultApiServerKey';
   static const String cChatHistory = 'chatHistory';
   static const String cOpenAIConfig = 'openAIConfig';
-  static const String cDefaultApiServerKey = 'defaultApiServerKey';
-  static const String cDefaultTemperature = 'defaultTemperature';
+  static const String cDefaultApiServerKey = 'defaultApiServerKey'; //默认的模型的key
+  static const String cDefaultTemperature = 'defaultTemperature'; //默认的温度参数
 
   static const String cApiServerHistory = 'apiServerHistory'; //OPENAI 添加第三方服务器历史记录
   static const String cGeminiApiServerHistory = 'geminiApiServerHistory'; //OPENAI 添加第三方服务器历史记录
   ///子key
-  static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle';
+  static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle'; //自动生成标题
+  static const String cAppConfigFromLanguage = 'fromLanguage'; //翻译默认的语言
+  static const String cAppConfigToLanguage = 'toLanguage'; //翻译默认的目标语言
 
   Box<String> get appConfig => _appConfig;
 
@@ -27,6 +31,13 @@ class HiveBox {
   Box<String> get geminiApiServerHistory => _geminiApiServerHistory;
 
   String get temperature => _appConfig.get(cDefaultTemperature, defaultValue: "0.5") ?? "0.5";
+
+  String get fromLanguage =>
+      _appConfig.get(cAppConfigFromLanguage, defaultValue: supportedLanguages['zh-Hans']!) ??
+      supportedLanguages['zh-Hans']!;
+
+  String get toLanguage =>
+      _appConfig.get(cAppConfigToLanguage, defaultValue: supportedLanguages['en']!) ?? supportedLanguages['en']!;
 
   late Box<String> _appConfig;
   late Box<String> _apiServerHistory;

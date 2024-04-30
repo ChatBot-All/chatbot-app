@@ -39,6 +39,12 @@ final currentGenerateAudioChatTextParserProvider = StateProvider<AllModelBean?>(
   return null;
 });
 
+
+///语音聊天页面正在使用的模型
+final currentGenerateTranslateChatModelProvider = StateProvider<AllModelBean?>((ref) {
+  return null;
+});
+
 ///当前的聊天信息正在选择的图片列表
 final imagesProvider = StateProvider<List<String>>((ref) {
   return [];

@@ -20,3 +20,64 @@ class AutoGenerateTitleNotify extends StateNotifier<bool> {
     state = bool.parse(HiveBox().appConfig.get(HiveBox.cAppConfigAutoGenerateTitle) ?? "true");
   }
 }
+
+final defaultTemperatureProvider = StateNotifierProvider<DefaultTemperatureNotify, String>((ref) {
+  return DefaultTemperatureNotify(HiveBox().temperature);
+});
+
+class DefaultTemperatureNotify extends StateNotifier<String> {
+  DefaultTemperatureNotify(String state) : super(state);
+
+  String get value => state;
+
+  void change(String value) {
+    state = value;
+    HiveBox().appConfig.put(HiveBox.cDefaultTemperature, value);
+  }
+
+  void load() {
+    state = HiveBox().temperature;
+  }
+}
+
+final versionProvider = StateProvider<String>((ref) {
+  return "";
+});
+
+final fromLanguageProvider = StateNotifierProvider<FromLanguageNotify, String>((ref) {
+  return FromLanguageNotify(HiveBox().fromLanguage);
+});
+
+class FromLanguageNotify extends StateNotifier<String> {
+  FromLanguageNotify(String state) : super(state);
+
+  String get value => state;
+
+  void change(String value) {
+    state = value;
+    HiveBox().appConfig.put(HiveBox.cAppConfigFromLanguage, value);
+  }
+
+  void load() {
+    state = HiveBox().fromLanguage;
+  }
+}
+
+final toLanguageProvider = StateNotifierProvider<ToLanguageNotify, String>((ref) {
+  return ToLanguageNotify(HiveBox().toLanguage);
+});
+
+class ToLanguageNotify extends StateNotifier<String> {
+  ToLanguageNotify(String state) : super(state);
+
+  String get value => state;
+
+  void change(String value) {
+    state = value;
+    HiveBox().appConfig.put(HiveBox.cAppConfigToLanguage, value);
+  }
+
+  void load() {
+    state = HiveBox().toLanguage;
+  }
+}

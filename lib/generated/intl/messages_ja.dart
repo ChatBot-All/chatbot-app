@@ -96,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leave_cancel": MessageLookupByLibrary.simpleMessage("離れてキャンセル"),
         "leave_send": MessageLookupByLibrary.simpleMessage("離れて送信"),
         "library": MessageLookupByLibrary.simpleMessage("工房"),
+        "loading": MessageLookupByLibrary.simpleMessage("読み込み中..."),
         "models": MessageLookupByLibrary.simpleMessage("モデル"),
         "name": MessageLookupByLibrary.simpleMessage("名前"),
         "natural": MessageLookupByLibrary.simpleMessage("現実的"),

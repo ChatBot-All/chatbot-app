@@ -94,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leave_cancel": MessageLookupByLibrary.simpleMessage("놓으면 취소"),
         "leave_send": MessageLookupByLibrary.simpleMessage("놓으면 보내기"),
         "library": MessageLookupByLibrary.simpleMessage("공방"),
+        "loading": MessageLookupByLibrary.simpleMessage("로딩 중..."),
         "models": MessageLookupByLibrary.simpleMessage("모델"),
         "name": MessageLookupByLibrary.simpleMessage("이름"),
         "natural": MessageLookupByLibrary.simpleMessage("현실적"),

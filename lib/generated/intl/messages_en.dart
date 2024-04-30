@@ -102,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leave_cancel": MessageLookupByLibrary.simpleMessage("Release Cancel"),
         "leave_send": MessageLookupByLibrary.simpleMessage("Release Send"),
         "library": MessageLookupByLibrary.simpleMessage("Library"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "models": MessageLookupByLibrary.simpleMessage("Model"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "natural": MessageLookupByLibrary.simpleMessage("Natural"),

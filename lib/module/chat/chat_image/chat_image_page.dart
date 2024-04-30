@@ -58,9 +58,10 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         }
       }
     });
+    supportedModels = HiveBox().openAIConfig.values.where((element) => (element.getDallModels.isNotEmpty)).toList();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ///查找出所有支持"dall-e-3"的模型
-      supportedModels = HiveBox().openAIConfig.values.where((element) => (element.getDallModels.isNotEmpty)).toList();
 
       ref.watch(currentGenerateImageModelProvider.notifier).state = supportedModels.first;
     });

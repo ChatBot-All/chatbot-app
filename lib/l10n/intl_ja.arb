@@ -104,5 +104,6 @@
   "author": "作者",
   "title": "タイトル",
   "add_prompt": "AIプロンプトを追加",
-  "text_parse_model": "テキスト解析モデル"
+  "text_parse_model": "テキスト解析モデル",
+  "loading": "読み込み中..."
 }

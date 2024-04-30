@@ -5,6 +5,7 @@ import 'package:ChatBot/base/components/common_dialog.dart';
 import 'package:ChatBot/base/theme.dart';
 import 'package:ChatBot/module/chat/chat_audio/chat_audio_page.dart';
 import 'package:ChatBot/module/chat/chat_image/chat_image_page.dart';
+import 'package:ChatBot/module/chat/chat_translate/chat_translate_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -174,6 +175,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                         children: [
                           const ChatSpecialTextListItem(),
                           const ChatImageListItem(),
+                          const ChatTranslateListItem(),
                           if (data.isEmpty)
                             SizedBox(
                                 height: F.height -
@@ -199,6 +201,74 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class ChatTranslateListItem extends ConsumerWidget {
+  const ChatTranslateListItem({super.key});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return Container(
+      color: ref.watch(themeProvider).pinedBgColor(),
+      child: Column(
+        children: [
+          Container(
+            color: ref.watch(themeProvider).pinedBgColor(),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              children: [
+                const SizedBox(width: 15),
+                Consumer(builder: (context, ref, _) {
+                  return Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Icon(
+                      Icons.translate,
+                      color: Theme.of(context).primaryColor,
+                      size: 24,
+                    ),
+                  );
+                }),
+                const SizedBox(width: 15),
+                Expanded(
+                  child: Text(
+                    "翻译",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ).click(() {
+            if (!isExistModels()) {
+              showCommonDialog(
+                context,
+                title: S.current.reminder,
+                content: S.current.enter_setting_init_server,
+                hideCancelBtn: true,
+                autoPop: true,
+                confirmText: S.current.yes_know,
+                confirmCallback: () {},
+              );
+              return;
+            }
+
+            F.push(const ChatTranslatePage());
+          }),
+          const Divider(
+            indent: 80,
+          ),
+        ],
       ),
     );
   }

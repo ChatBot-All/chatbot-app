@@ -104,5 +104,6 @@
   "author": "Author",
   "title": "Title",
   "add_prompt": "Add AI Prompt",
-  "text_parse_model": "Text Parsing Model"
+  "text_parse_model": "Text Parsing Model",
+  "loading": "Loading..."
 }

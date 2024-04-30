@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "leave_cancel": MessageLookupByLibrary.simpleMessage("松开 取消"),
         "leave_send": MessageLookupByLibrary.simpleMessage("松开 发送"),
         "library": MessageLookupByLibrary.simpleMessage("工坊"),
+        "loading": MessageLookupByLibrary.simpleMessage("加载中..."),
         "models": MessageLookupByLibrary.simpleMessage("模型"),
         "name": MessageLookupByLibrary.simpleMessage("名称"),
         "natural": MessageLookupByLibrary.simpleMessage("现实的"),

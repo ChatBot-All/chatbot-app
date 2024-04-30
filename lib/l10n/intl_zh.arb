@@ -104,5 +104,6 @@
   "author": "作者",
   "title": "标题",
   "add_prompt": "新增 AI 提示",
-  "text_parse_model": "文本解析模型"
+  "text_parse_model": "文本解析模型",
+  "loading": "加载中..."
 }

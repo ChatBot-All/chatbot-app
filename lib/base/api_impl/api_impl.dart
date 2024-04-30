@@ -159,6 +159,8 @@ abstract class APIImpl {
       l = requestParams.length - 1;
     }
 
+
+    print(requestParams.last.content);
     if (withoutHistoryMessage) {
       return [requestParams.last];
     }

@@ -463,25 +463,3 @@ class SettingItem extends StatelessWidget {
   }
 }
 
-final versionProvider = StateProvider<String>((ref) {
-  return "";
-});
-
-final defaultTemperatureProvider = StateNotifierProvider<DefaultTemperatureNotify, String>((ref) {
-  return DefaultTemperatureNotify(HiveBox().temperature);
-});
-
-class DefaultTemperatureNotify extends StateNotifier<String> {
-  DefaultTemperatureNotify(String state) : super(state);
-
-  String get value => state;
-
-  void change(String value) {
-    state = value;
-    HiveBox().appConfig.put(HiveBox.cDefaultTemperature, value);
-  }
-
-  void load() {
-    state = HiveBox().temperature;
-  }
-}
