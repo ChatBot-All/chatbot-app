@@ -100,5 +100,8 @@
   "send": "送信",
   "yesterday": "昨日",
   "empty_content_need_add": "まだコンテンツがありません。右上隅をクリックして追加してください。",
-  "tts": "読む"
+  "tts": "読む",
+  "author": "作者",
+  "title": "タイトル",
+  "add_prompt": "AIプロンプトを追加"
 }

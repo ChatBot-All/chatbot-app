@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add_prompt": MessageLookupByLibrary.simpleMessage("AI 프롬프트가 추가되었습니다."),
         "alias_desc": MessageLookupByLibrary.simpleMessage(
             "동일한 서비스 제공업체를 여러 개 구분하는 데만 사용됨"),
         "alias_empty": MessageLookupByLibrary.simpleMessage("별칭을 비워둘 수 없습니다"),
@@ -34,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("ApiKey를 중복해서 사용할 수 없습니다"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "author": MessageLookupByLibrary.simpleMessage("저자"),
         "auto_title": MessageLookupByLibrary.simpleMessage("제목 자동 생성"),
         "btn_add": MessageLookupByLibrary.simpleMessage("추가"),
         "canPaint": MessageLookupByLibrary.simpleMessage("그림 그리기 가능"),
@@ -136,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_normal": MessageLookupByLibrary.simpleMessage("일반 모드"),
         "theme_setting": MessageLookupByLibrary.simpleMessage("테마 설정"),
         "third_party": MessageLookupByLibrary.simpleMessage("타사"),
+        "title": MessageLookupByLibrary.simpleMessage("제목"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4~5자로 이 문장의 간략한 주제를 바로 반환하고, 설명하지 말고, 구두점을 사용하지 말고, 어조사를 사용하지 말고, 불필요한 텍스트를 추가하지 말고, 굵게 표시하지 말고, 주제가 없으면 \"잡담\"을 바로 반환하세요"),
         "tts": MessageLookupByLibrary.simpleMessage("읽다"),

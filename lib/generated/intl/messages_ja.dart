@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add_prompt": MessageLookupByLibrary.simpleMessage("AIプロンプトを追加"),
         "alias_desc":
             MessageLookupByLibrary.simpleMessage("同じプロバイダーを複数追加する場合にのみ使用されます。"),
         "alias_empty":
@@ -35,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("ApiKey を繰り返すことはできません。"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "author": MessageLookupByLibrary.simpleMessage("作者"),
         "auto_title": MessageLookupByLibrary.simpleMessage("タイトルを自動生成"),
         "btn_add": MessageLookupByLibrary.simpleMessage("追加"),
         "canPaint": MessageLookupByLibrary.simpleMessage("描画可能"),
@@ -139,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_normal": MessageLookupByLibrary.simpleMessage("通常モード"),
         "theme_setting": MessageLookupByLibrary.simpleMessage("テーマ設定"),
         "third_party": MessageLookupByLibrary.simpleMessage("サードパーティ"),
+        "title": MessageLookupByLibrary.simpleMessage("タイトル"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4 ～ 5 文字を使用して、この文の簡潔なテーマを直接返します。説明、句読点、あいまい語、余分なテキスト、太字は使用しないでください。テーマがない場合は、「雑談」を直接返してください。"),
         "tts": MessageLookupByLibrary.simpleMessage("読む"),

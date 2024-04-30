@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add_prompt": MessageLookupByLibrary.simpleMessage("Add AI Prompt"),
         "alias_desc": MessageLookupByLibrary.simpleMessage(
             "Alias is used to distinguish different models"),
         "alias_empty":
@@ -37,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("API Key cannot be repeated"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "author": MessageLookupByLibrary.simpleMessage("Author"),
         "auto_title":
             MessageLookupByLibrary.simpleMessage("Auto Generate Title"),
         "btn_add": MessageLookupByLibrary.simpleMessage("Add"),
@@ -146,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_normal": MessageLookupByLibrary.simpleMessage("Light Mode"),
         "theme_setting": MessageLookupByLibrary.simpleMessage("Theme Setting"),
         "third_party": MessageLookupByLibrary.simpleMessage("Third"),
+        "title": MessageLookupByLibrary.simpleMessage("Title"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to \"small talk\""),
         "tts": MessageLookupByLibrary.simpleMessage("Deacon"),

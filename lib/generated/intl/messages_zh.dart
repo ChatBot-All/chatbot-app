@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add_prompt": MessageLookupByLibrary.simpleMessage("新增 AI 提示"),
         "alias_desc": MessageLookupByLibrary.simpleMessage("仅用于多个相同的服务商之间区分"),
         "alias_empty": MessageLookupByLibrary.simpleMessage("别名不能为空"),
         "alias_input": MessageLookupByLibrary.simpleMessage("请输入别名"),
@@ -30,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alias_required": MessageLookupByLibrary.simpleMessage("别名(必填)"),
         "apikey_repeat": MessageLookupByLibrary.simpleMessage("ApiKey不可以重复"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "author": MessageLookupByLibrary.simpleMessage("作者"),
         "auto_title": MessageLookupByLibrary.simpleMessage("自动生成标题"),
         "btn_add": MessageLookupByLibrary.simpleMessage("添加"),
         "canPaint": MessageLookupByLibrary.simpleMessage("可作画"),
@@ -123,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "theme_normal": MessageLookupByLibrary.simpleMessage("普通模式"),
         "theme_setting": MessageLookupByLibrary.simpleMessage("主题设置"),
         "third_party": MessageLookupByLibrary.simpleMessage("第三方"),
+        "title": MessageLookupByLibrary.simpleMessage("标题"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”"),
         "tts": MessageLookupByLibrary.simpleMessage("朗读"),

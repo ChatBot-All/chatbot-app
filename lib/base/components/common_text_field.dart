@@ -7,11 +7,19 @@ class CommonTextField extends ConsumerWidget {
   final String hintText;
   final Color? color;
   final int? maxLine;
+  final int? minLine;
   final int? maxLength;
   final FocusNode? focusNode;
 
   const CommonTextField(
-      {super.key, this.focusNode, required this.controller, required this.hintText, this.maxLength, this.color, this.maxLine = 1});
+      {super.key,
+      this.focusNode,
+      this.minLine = 1,
+      required this.controller,
+      required this.hintText,
+      this.maxLength,
+      this.color,
+      this.maxLine = 1});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -19,9 +27,13 @@ class CommonTextField extends ConsumerWidget {
       focusNode: focusNode,
       placeholder: S.current.input_text,
       controller: controller,
-      maxLines: maxLine??1,
-      minLines: 1,
+      maxLines: maxLine ?? 1,
+      minLines: minLine ?? 1,
       maxLength: maxLength,
+      keyboardType: TextInputType.multiline,
+      textAlignVertical: TextAlignVertical.top,
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.start,
       cursorColor: Theme.of(context).primaryColor,
       style: Theme.of(context).textTheme.titleMedium,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),

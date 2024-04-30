@@ -100,5 +100,8 @@
   "send": "Send",
   "yesterday": "Yesterday",
   "empty_content_need_add": "The content is empty, please add content",
-  "tts": "Deacon"
+  "tts": "Deacon",
+  "author": "Author",
+  "title": "Title",
+  "add_prompt": "Add AI Prompt"
 }
