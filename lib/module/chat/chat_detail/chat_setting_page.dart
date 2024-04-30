@@ -3,11 +3,8 @@ import 'package:ChatBot/base/components/components.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/module/chat/chat_list_view_model.dart';
 import 'package:ChatBot/utils/hive_box.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../base/components/common_text_field.dart';
 import '../../../hive_bean/supported_models.dart';
@@ -41,7 +38,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
       if (!focusNode.hasFocus) {
         var current = ref.watch(currentChatParentItemProvider.notifier).state;
         if ((current?.title ?? "") != nameController.text) {
-          ref.watch(currentChatParentItemProvider.notifier).state = current?.copyWith(title: nameController.text);
+          ref.watch(currentChatParentItemProvider.notifier).state =
+              current?.copyWith(title: nameController.text);
         }
       }
     });
@@ -50,8 +48,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
         var current = ref.watch(currentChatParentItemProvider.notifier).state;
         int count = current?.historyMessageCount ?? 4;
         if (count != int.parse(countController.text)) {
-          ref.watch(currentChatParentItemProvider.notifier).state =
-              current?.copyWith(historyMessageCount: int.parse(countController.text));
+          ref.watch(currentChatParentItemProvider.notifier).state = current
+              ?.copyWith(historyMessageCount: int.parse(countController.text));
         }
       }
     });
@@ -67,7 +65,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
         var currentLocalChatHistory = ref.watch(currentChatParentItemProvider);
 
         nameController.text = currentLocalChatHistory?.title ?? "";
-        countController.text = (currentLocalChatHistory?.historyMessageCount ?? 4).toString();
+        countController.text =
+            (currentLocalChatHistory?.historyMessageCount ?? 4).toString();
         return Scaffold(
           appBar: AppBar(
             title: Text(S.current.chat_setting),
@@ -80,7 +79,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                   SettingWithTitle(
                     label: S.current.name,
                     widget: IgnorePointer(
-                      ignoring: currentLocalChatHistory?.id == specialGenerateTextChatParentItemTime,
+                      ignoring: currentLocalChatHistory?.id ==
+                          specialGenerateTextChatParentItemTime,
                       child: CommonTextField(
                         focusNode: focusNode,
                         color: Theme.of(context).canvasColor,
@@ -99,7 +99,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Card(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -108,57 +109,57 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
-                            DropdownButtonHideUnderline(
-                              child: DropdownButton2<String>(
-                                isDense: true,
-                                iconStyleData: IconStyleData(
-                                  icon: Icon(
-                                    CupertinoIcons.chevron_down,
-                                    color: Theme.of(context).textTheme.titleSmall?.color,
+                            PullDownButton(
+                              scrollController: ScrollController(),
+                              buttonBuilder: (_, showMenu) => Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    currentLocalChatHistory?.temperature ??
+                                        HiveBox().temperature,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Icon(
+                                    CupertinoIcons.chevron_up_chevron_down,
+                                    color: Theme.of(context)
+                                        .appBarTheme
+                                        .titleTextStyle
+                                        ?.color,
                                     size: 16,
                                   ),
-                                ),
-                                hint: Text(
-                                  S.current.select,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Theme.of(context).hintColor,
-                                  ),
-                                ),
-                                items: List.generate(21, (index) => ((index) / 10).toString())
-                                    .map((item) => DropdownMenuItem<String>(
-                                          alignment: Alignment.center,
-                                          value: item,
-                                          child: Text(
-                                            item,
-                                            style: TextStyle(
-                                              color: Theme.of(context).textTheme.titleSmall?.color,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                        ))
-                                    .toList(),
-                                value: currentLocalChatHistory?.temperature ?? HiveBox().temperature,
-                                onChanged: (String? e) {
-                                  ref.watch(currentChatParentItemProvider.notifier).state =
-                                      currentLocalChatHistory?.copyWith(temperature: e.toString());
-                                },
-                                dropdownStyleData: DropdownStyleData(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                                buttonStyleData: ButtonStyleData(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                ),
-                              ),
+                                ],
+                              ).click(() {
+                                showMenu();
+                              }),
+                              itemBuilder: (BuildContext context) {
+                                return List.generate(21,
+                                        (index) => ((index) / 10).toString())
+                                    .map(
+                                      (e) => PullDownMenuItem(
+                                        onTap: () {
+                                          ref
+                                                  .watch(
+                                                      currentChatParentItemProvider
+                                                          .notifier)
+                                                  .state =
+                                              currentLocalChatHistory?.copyWith(
+                                                  temperature: e.toString());
+                                        },
+                                        title: e,
+                                        iconColor:
+                                            Theme.of(context).primaryColor,
+                                        icon: e !=
+                                                (currentLocalChatHistory
+                                                        ?.temperature ??
+                                                    HiveBox().temperature)
+                                            ? null
+                                            : CupertinoIcons.checkmark_alt,
+                                      ),
+                                    )
+                                    .toList();
+                              },
                             ),
                           ],
                         ),
@@ -175,7 +176,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Card(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                        padding:
+                            const EdgeInsets.only(left: 16, top: 3, bottom: 3),
                         child: Row(
                           children: [
                             Expanded(
@@ -189,51 +191,68 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                               final modelList = ref.watch(allModelListProvider);
                               return MultiStateWidget<List<AllModelBean>>(
                                 value: modelList,
-                                data: (data) => DropdownButtonHideUnderline(
-                                  child: DropdownButton2<AllModelBean>(
-                                    isDense: true,
-                                    hint: Text(
-                                      S.current.select,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Theme.of(context).hintColor,
+                                data: (data) => PullDownButton(
+                                  buttonBuilder: (_, showMenu) => Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        getModelByApiKey(currentLocalChatHistory
+                                                        ?.apiKey ??
+                                                    "")
+                                                .alias ??
+                                            "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
                                       ),
-                                    ),
-                                    items: data
-                                        .map((item) => DropdownMenuItem<AllModelBean>(
-                                              value: item,
-                                              child: Text(
-                                                item.alias ?? "",
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ))
-                                        .toList(),
-                                    value: getModelByApiKey(currentLocalChatHistory?.apiKey ?? ""),
-                                    onChanged: (AllModelBean? e) {
-                                      ref.watch(currentChatParentItemProvider.notifier).state =
-                                          currentLocalChatHistory?.copyWith(
-                                              apiKey: e?.apiKey,
-                                              moduleType:
-                                                  (e == null || e.supportedModels == null || e.supportedModels!.isEmpty)
-                                                      ? "gpt-4"
-                                                      : (e.supportedModels?.first.id ?? "gpt-4"),
-                                              moduleName: e?.model ?? 1);
-                                    },
-                                    dropdownStyleData: DropdownStyleData(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                      const SizedBox(width: 5),
+                                      Icon(
+                                        CupertinoIcons.chevron_up_chevron_down,
+                                        color: Theme.of(context)
+                                            .appBarTheme
+                                            .titleTextStyle
+                                            ?.color,
+                                        size: 16,
                                       ),
-                                    ),
-                                    buttonStyleData: ButtonStyleData(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).canvasColor,
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    ),
-                                  ),
+                                    ],
+                                  ).click(() {
+                                    showMenu();
+                                  }),
+                                  scrollController: ScrollController(),
+                                  itemBuilder: (BuildContext context) {
+                                    return data
+                                        .map(
+                                          (e) => PullDownMenuItem(
+                                            onTap: () {
+                                              ref
+                                                      .watch(
+                                                          currentChatParentItemProvider
+                                                              .notifier)
+                                                      .state =
+                                                  currentLocalChatHistory?.copyWith(
+                                                      apiKey: e.apiKey,
+                                                      moduleType: (e.supportedModels ==
+                                                                  null ||
+                                                              e.supportedModels!
+                                                                  .isEmpty)
+                                                          ? "gpt-4"
+                                                          : (e.supportedModels
+                                                                  ?.first.id ??
+                                                              "gpt-4"),
+                                                      moduleName: e.model ?? 1);
+                                            },
+                                            title: e.alias ?? "",
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: e.apiKey !=
+                                                    currentLocalChatHistory
+                                                        ?.apiKey
+                                                ? null
+                                                : CupertinoIcons.checkmark_alt,
+                                          ),
+                                        )
+                                        .toList();
+                                  },
                                 ),
                               );
                             }),
@@ -253,7 +272,8 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Card(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -264,56 +284,78 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                             ),
                             const SizedBox(width: 10),
                             Builder(builder: (context) {
-                              final supportedModels =
-                                  getModelByApiKey(currentLocalChatHistory?.apiKey ?? "").getTextModels;
+                              final supportedModels = getModelByApiKey(
+                                      currentLocalChatHistory?.apiKey ?? "")
+                                  .getTextModels;
 
-                              final model = currentLocalChatHistory?.moduleType ?? supportedModels.first.id ?? "";
+                              final model =
+                                  currentLocalChatHistory?.moduleType ??
+                                      supportedModels.first.id ??
+                                      "";
 
-                              if (supportedModels.where((element) => element.id == model).isEmpty) {
-                                supportedModels.add(SupportedModels(id: model, ownedBy: ""));
+                              if (supportedModels
+                                  .where((element) => element.id == model)
+                                  .isEmpty) {
+                                supportedModels.add(
+                                    SupportedModels(id: model, ownedBy: ""));
                               }
-                              return DropdownButtonHideUnderline(
-                                child: DropdownButton2<String>(
-                                  isDense: true,
-                                  hint: Text(
-                                    S.current.select,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Theme.of(context).hintColor,
+
+                              return PullDownButton(
+                                scrollController: ScrollController(),
+                                buttonBuilder: (_, showMenu) => Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      currentLocalChatHistory?.moduleType ??
+                                          supportedModels.first.id ??
+                                          '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                     ),
-                                  ),
-                                  dropdownStyleData: DropdownStyleData(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
+                                    const SizedBox(width: 5),
+                                    Icon(
+                                      CupertinoIcons.chevron_up_chevron_down,
+                                      color: Theme.of(context)
+                                          .appBarTheme
+                                          .titleTextStyle
+                                          ?.color,
+                                      size: 16,
                                     ),
-                                  ),
-                                  items: supportedModels
-                                      .map((item) => DropdownMenuItem<String>(
-                                            value: item.id,
-                                            child: Text(
-                                              item.id?.replaceFirst("models/", "") ?? "",
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ))
-                                      .toList(),
-                                  value: currentLocalChatHistory?.moduleType ?? supportedModels.first.id ?? '',
-                                  onChanged: (String? e) {
-                                    ref.watch(currentChatParentItemProvider.notifier).state =
-                                        currentLocalChatHistory?.copyWith(moduleType: e);
-                                  },
-                                  buttonStyleData: ButtonStyleData(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).canvasColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                ),
+                                  ],
+                                ).click(() {
+                                  showMenu();
+                                }),
+                                itemBuilder: (BuildContext context) {
+                                  return supportedModels
+                                      .map(
+                                        (e) => PullDownMenuItem(
+                                          onTap: () {
+                                            ref
+                                                    .watch(
+                                                        currentChatParentItemProvider
+                                                            .notifier)
+                                                    .state =
+                                                currentLocalChatHistory
+                                                    ?.copyWith(
+                                                        moduleType: e.id);
+                                          },
+                                          title: e.id?.replaceFirst(
+                                                  "models/", "") ??
+                                              "",
+                                          iconColor:
+                                              Theme.of(context).primaryColor,
+                                          icon: e.id !=
+                                                  currentLocalChatHistory
+                                                      ?.moduleType
+                                              ? null
+                                              : CupertinoIcons.checkmark_alt,
+                                        ),
+                                      )
+                                      .toList();
+                                },
                               );
                             }),
-                            const SizedBox(width: 15),
                           ],
                         ),
                       ),

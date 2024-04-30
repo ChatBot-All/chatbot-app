@@ -38,7 +38,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight,
+            bottom: MediaQuery.paddingOf(context).bottom +
+                kBottomNavigationBarHeight,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                     child: Column(
                       children: [
                         Row(
@@ -83,7 +85,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                 return CupertinoSwitch(
                                     value: ref.watch(autoGenerateTitleProvider),
                                     onChanged: (v) {
-                                      ref.read(autoGenerateTitleProvider.notifier).change(v);
+                                      ref
+                                          .read(autoGenerateTitleProvider
+                                              .notifier)
+                                          .change(v);
                                     });
                               }),
                             ),
@@ -102,36 +107,54 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               ),
                             ),
                             Consumer(builder: (context, ref, _) {
-                              var defaultTemperature = ref.watch(defaultTemperatureProvider);
+                              var defaultTemperature =
+                                  ref.watch(defaultTemperatureProvider);
 
                               return PullDownButton(
+                                scrollController: ScrollController(),
                                 itemBuilder: (BuildContext context) {
-                                  return List.generate(21, (index) => ((index) / 10).toString())
+                                  return List.generate(21,
+                                          (index) => ((index) / 10).toString())
                                       .map((item) => PullDownMenuItem(
                                             title: item,
                                             onTap: () {
-                                              ref.watch(defaultTemperatureProvider.notifier).change(item);
+                                              ref
+                                                  .watch(
+                                                      defaultTemperatureProvider
+                                                          .notifier)
+                                                  .change(item);
                                             },
-                                            iconColor: Theme.of(context).primaryColor,
-                                            icon: item != defaultTemperature ? null : CupertinoIcons.checkmark_alt,
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: item != defaultTemperature
+                                                ? null
+                                                : CupertinoIcons.checkmark_alt,
                                           ))
                                       .toList();
                                 },
-                                buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                                buttonBuilder: (BuildContext context,
+                                    Future<void> Function() showMenu) {
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
                                     child: Row(children: [
                                       Text(
                                         defaultTemperature,
                                         style: TextStyle(
-                                          color: Theme.of(context).textTheme.titleSmall?.color,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.color,
                                           fontSize: 15,
                                         ),
                                       ),
                                       const SizedBox(width: 5),
                                       Icon(
                                         CupertinoIcons.chevron_up_chevron_down,
-                                        color: Theme.of(context).textTheme.titleSmall?.color,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.color,
                                         size: 16,
                                       ),
                                     ]).click(showMenu),
@@ -168,7 +191,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -181,33 +205,52 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                           var theme = ref.watch(themeProvider);
 
                           return PullDownButton(
+                            scrollController: ScrollController(),
                             itemBuilder: (BuildContext context) {
                               return [0, 1, 2]
                                   .map((item) => PullDownMenuItem(
                                         title: getNameByThemeType(item),
                                         onTap: () {
-                                          ref.watch(themeProvider.notifier).change(item);
+                                          ref
+                                              .watch(themeProvider.notifier)
+                                              .change(item);
                                         },
-                                        iconColor: Theme.of(context).primaryColor,
-                                        icon: item != ref.watch(themeProvider.notifier).type.index
+                                        iconColor:
+                                            Theme.of(context).primaryColor,
+                                        icon: item !=
+                                                ref
+                                                    .watch(
+                                                        themeProvider.notifier)
+                                                    .type
+                                                    .index
                                             ? null
                                             : CupertinoIcons.checkmark_alt,
                                       ))
                                   .toList();
                             },
-                            buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                            buttonBuilder: (BuildContext context,
+                                Future<void> Function() showMenu) {
                               return Row(children: [
                                 Text(
-                                  getNameByThemeType(ref.watch(themeProvider.notifier).type.index),
+                                  getNameByThemeType(ref
+                                      .watch(themeProvider.notifier)
+                                      .type
+                                      .index),
                                   style: TextStyle(
-                                    color: Theme.of(context).textTheme.titleSmall?.color,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.color,
                                     fontSize: 15,
                                   ),
                                 ),
                                 const SizedBox(width: 5),
                                 Icon(
                                   CupertinoIcons.chevron_up_chevron_down,
-                                  color: Theme.of(context).textTheme.titleSmall?.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.color,
                                   size: 16,
                                 ),
                               ]).click(showMenu);
@@ -245,7 +288,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -256,20 +300,23 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ),
                             Icon(
                               CupertinoIcons.right_chevron,
-                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
                               size: 14,
                             ),
                           ],
                         ),
                       ).click(() {
-                        launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
+                        launchUrl(Uri.parse(
+                            "https://github.com/ChatBot-All/chatbot-app"));
                       }),
                       const Divider(
                         indent: 15,
                         endIndent: 15,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -280,7 +327,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ),
                             Icon(
                               CupertinoIcons.right_chevron,
-                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
                               size: 14,
                             ),
                           ],
@@ -332,7 +380,8 @@ class SettingWithTitle extends StatelessWidget {
   final String label;
   final Widget widget;
 
-  const SettingWithTitle({super.key, required this.label, required this.widget});
+  const SettingWithTitle(
+      {super.key, required this.label, required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -359,14 +408,20 @@ class SettingItem extends StatelessWidget {
   final String subTitle;
   final int count;
 
-  const SettingItem({super.key, required this.iconUrl, required this.title, required this.subTitle, this.count = 0});
+  const SettingItem(
+      {super.key,
+      required this.iconUrl,
+      required this.title,
+      required this.subTitle,
+      this.count = 0});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).cardColor,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -393,9 +448,10 @@ class SettingItem extends StatelessWidget {
                           title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                       if (count > 0)
@@ -415,7 +471,10 @@ class SettingItem extends StatelessWidget {
                     subTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontSize: 13),
                   ),
                 ],
               ),

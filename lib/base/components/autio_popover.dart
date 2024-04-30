@@ -237,7 +237,7 @@ class AudioOverlay {
   void showAudio(BuildContext context) {
     overlayEntry = OverlayEntry(builder: (context) {
       return const AudioPopOver();
-    });
+    },opaque: true);
     Overlay.of(context).insert(overlayEntry!);
   }
 

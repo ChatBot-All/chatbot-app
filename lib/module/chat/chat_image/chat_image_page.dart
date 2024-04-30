@@ -47,23 +47,32 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
 
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
-        _scrollController.animateTo(0, duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
+        _scrollController.animateTo(0,
+            duration: const Duration(milliseconds: 100),
+            curve: Curves.easeInOut);
       }
     });
 
     _scrollController.addListener(() {
-      if (ref.watch(isGeneratingContentProvider) == false && isScrollManual && _focusNode.hasFocus) {
+      if (ref.watch(isGeneratingContentProvider) == false &&
+          isScrollManual &&
+          _focusNode.hasFocus) {
         if (_scrollController.position.pixels != 0) {
           _focusNode.unfocus();
         }
       }
     });
-    supportedModels = HiveBox().openAIConfig.values.where((element) => (element.getDallModels.isNotEmpty)).toList();
+    supportedModels = HiveBox()
+        .openAIConfig
+        .values
+        .where((element) => (element.getDallModels.isNotEmpty))
+        .toList();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ///查找出所有支持"dall-e-3"的模型
 
-      ref.watch(currentGenerateImageModelProvider.notifier).state = supportedModels.first;
+      ref.watch(currentGenerateImageModelProvider.notifier).state =
+          supportedModels.first;
     });
   }
 
@@ -116,7 +125,8 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 15),
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 5, top: 15),
                           child: Text(
                             S.current.size,
                             style: Theme.of(context).textTheme.bodySmall,
@@ -129,7 +139,10 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                               valueStrByOpenAIImageSize(e),
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
-                            trailing: e == ref.watch(openAIImageSizeProvider.notifier).state
+                            trailing: e ==
+                                    ref
+                                        .watch(openAIImageSizeProvider.notifier)
+                                        .state
                                 ? Icon(
                                     CupertinoIcons.checkmark,
                                     color: Theme.of(context).primaryColor,
@@ -137,13 +150,16 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                                   )
                                 : null,
                             onTap: () {
-                              ref.watch(openAIImageSizeProvider.notifier).state = e;
+                              ref
+                                  .watch(openAIImageSizeProvider.notifier)
+                                  .state = e;
                               Navigator.of(context).pop();
                             },
                           );
                         }),
                         Padding(
-                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 5),
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 5, top: 5),
                           child: Text(
                             S.current.style,
                             style: Theme.of(context).textTheme.bodySmall,
@@ -156,7 +172,11 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                               valueStrByOpenAIImageStyle(e),
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
-                            trailing: e == ref.watch(openAIImageStyleProvider.notifier).state
+                            trailing: e ==
+                                    ref
+                                        .watch(
+                                            openAIImageStyleProvider.notifier)
+                                        .state
                                 ? Icon(
                                     CupertinoIcons.checkmark,
                                     color: Theme.of(context).primaryColor,
@@ -164,7 +184,9 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                                   )
                                 : null,
                             onTap: () {
-                              ref.watch(openAIImageStyleProvider.notifier).state = e;
+                              ref
+                                  .watch(openAIImageStyleProvider.notifier)
+                                  .state = e;
                               Navigator.of(context).pop();
                             },
                           );
@@ -216,7 +238,8 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
               ),
               Builder(builder: (context) {
                 return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
                     child: Transform.rotate(
                       angle: pi / 2,
                       child: Icon(
@@ -242,7 +265,10 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                                     )
                                   : null,
                               onTap: () {
-                                ref.watch(currentGenerateImageModelProvider.notifier).state = e;
+                                ref
+                                    .watch(currentGenerateImageModelProvider
+                                        .notifier)
+                                    .state = e;
                                 Navigator.of(context).pop();
                               },
                             );
@@ -265,7 +291,8 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
           ),
         ),
         body: Consumer(builder: (context, ref, _) {
-          var chat = ref.watch(chatProvider(specialGenerateImageChatParentItemTime));
+          var chat =
+              ref.watch(chatProvider(specialGenerateImageChatParentItemTime));
           return MultiStateWidget(
               value: chat,
               data: (list) {
@@ -301,7 +328,9 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                                 resendMessage: (content) {
                                   //删除自己和关联的bot消息
                                   ref
-                                      .watch(chatProvider(supportedModel.time ?? 0).notifier)
+                                      .watch(
+                                          chatProvider(supportedModel.time ?? 0)
+                                              .notifier)
                                       .remove(item, connectOtherTimeID: true);
                                   sendMessage(content);
                                 },
@@ -326,19 +355,29 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                       focusNode: _focusNode,
                       scrollToTop: () {
                         _scrollController.animateTo(0,
-                            duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
+                            duration: const Duration(milliseconds: 100),
+                            curve: Curves.easeInOut);
                       },
                       supportAudio: supportedModel.getWhisperModels.isNotEmpty,
                       sendMessage: (content, images) async {
                         sendMessage(content);
                       },
                       cancelSend: () {
-                        ChatItem lastOne =
-                            ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).chats.last;
+                        ChatItem lastOne = ref
+                            .watch(chatProvider(
+                                    specialGenerateImageChatParentItemTime)
+                                .notifier)
+                            .chats
+                            .last;
                         lastOne.content = "canceled by user";
                         lastOne.status = MessageStatus.canceled.index;
-                        ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).update(lastOne);
-                        ref.watch(isGeneratingContentProvider.notifier).state = false;
+                        ref
+                            .watch(chatProvider(
+                                    specialGenerateImageChatParentItemTime)
+                                .notifier)
+                            .update(lastOne);
+                        ref.watch(isGeneratingContentProvider.notifier).state =
+                            false;
                       },
                       supportImage: false,
                     ),
@@ -359,12 +398,15 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
       parentID: specialGenerateImageChatParentItemTime,
       messageType: MessageType.image.index,
       moduleType: "dall-e-3",
-      moduleName: ref.watch(currentGenerateImageModelProvider.notifier).state!.model,
+      moduleName:
+          ref.watch(currentGenerateImageModelProvider.notifier).state!.model,
       time: DateTime.now().millisecondsSinceEpoch,
     );
 
     await Future.delayed(const Duration(milliseconds: 50));
-    ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).add(userChatItem);
+    ref
+        .read(chatProvider(specialGenerateImageChatParentItemTime).notifier)
+        .add(userChatItem);
 
     String result = "";
     var botChatItem = ChatItem(
@@ -374,11 +416,14 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
       parentID: specialGenerateImageChatParentItemTime,
       requestID: userChatItem.time,
       messageType: MessageType.image.index,
-      moduleName: ref.watch(currentGenerateImageModelProvider.notifier).state!.model,
+      moduleName:
+          ref.watch(currentGenerateImageModelProvider.notifier).state!.model,
       moduleType: "dall-e-3",
       time: DateTime.now().millisecondsSinceEpoch,
     );
-    ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).add(botChatItem);
+    ref
+        .read(chatProvider(specialGenerateImageChatParentItemTime).notifier)
+        .add(botChatItem);
     await Future.delayed(const Duration(milliseconds: 50));
     try {
       var resultImages = await API().generateOpenAIImage(
@@ -396,20 +441,30 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         botChatItem.content = S.current.generate_image_fail;
       }
       ref.read(isGeneratingContentProvider.notifier).state = false;
-      ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).update(botChatItem);
+      ref
+          .read(chatProvider(specialGenerateImageChatParentItemTime).notifier)
+          .update(botChatItem);
     } catch (e) {
       userChatItem.status = MessageStatus.failed.index;
-      ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).update(userChatItem);
+      ref
+          .read(chatProvider(specialGenerateImageChatParentItemTime).notifier)
+          .update(userChatItem);
       botChatItem.content = e.toString();
       botChatItem.status = MessageStatus.failed.index;
       ref.read(isGeneratingContentProvider.notifier).state = false;
-      ref.read(chatProvider(specialGenerateImageChatParentItemTime).notifier).update(botChatItem);
+      ref
+          .read(chatProvider(specialGenerateImageChatParentItemTime).notifier)
+          .update(botChatItem);
     }
   }
 }
 
-List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef ref, ChatItem chatItem,
-    ResendMessage? resendMessage, SendMessageAgain? sendMessageAgain) {
+List<PullDownMenuItem> getImageMessageActions2(
+    BuildContext context,
+    WidgetRef ref,
+    ChatItem chatItem,
+    ResendMessage? resendMessage,
+    SendMessageAgain? sendMessageAgain) {
   return [
     if (resendMessage != null)
       PullDownMenuItem(
@@ -467,7 +522,9 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
             title: S.current.reminder,
             confirmText: S.current.delete,
             confirmCallback: () {
-              ref.read(chatProvider(chatItem.parentID ?? 0).notifier).remove(chatItem);
+              ref
+                  .read(chatProvider(chatItem.parentID ?? 0).notifier)
+                  .remove(chatItem);
             },
           );
         });
@@ -495,7 +552,8 @@ class BotImageMessage extends ConsumerWidget {
             children: [
               Text(
                 chatItem.moduleType ?? "",
-                style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+                style: TextStyle(
+                    fontSize: 14, color: Theme.of(context).primaryColor),
               ),
               Text(
                 "  ${chatItem.time.toYMDHM()}",
@@ -508,7 +566,9 @@ class BotImageMessage extends ConsumerWidget {
           ),
           const SizedBox(height: 5),
           PullDownButton(
-            itemBuilder: (context) => getImageMessageActions2(context, ref, chatItem, null, null),
+            scrollController: ScrollController(),
+            itemBuilder: (context) =>
+                getImageMessageActions2(context, ref, chatItem, null, null),
             buttonBuilder: (context, showMenu) => GestureDetector(
               onLongPress: () {
                 showMenu();
@@ -556,7 +616,8 @@ class BotImageMessage extends ConsumerWidget {
           ),
         ),
       );
-    } else if (chatItem.status == MessageStatus.success.index && (chatItem.images?.isNotEmpty ?? false)) {
+    } else if (chatItem.status == MessageStatus.success.index &&
+        (chatItem.images?.isNotEmpty ?? false)) {
       return Hero(
         tag: chatItem.images?.first ?? "",
         child: ClipRRect(
