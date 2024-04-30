@@ -105,7 +105,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                             Expanded(
                               child: Text(
                                 S.current.tempture,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                             DropdownButtonHideUnderline(
@@ -181,7 +181,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                             Expanded(
                               child: Text(
                                 S.current.servers,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -259,7 +259,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                             Expanded(
                               child: Text(
                                 S.current.models,
-                                style: Theme.of(context).textTheme.bodySmall,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
                             const SizedBox(width: 10),

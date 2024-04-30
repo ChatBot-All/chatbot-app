@@ -90,6 +90,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                         ),
                         const Divider(
                           indent: 0,
+                          endIndent: 0,
                         ),
                         Row(
                           children: [
@@ -273,11 +274,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
-                    child: Column(
-                      children: [
-                        Row(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        child: Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -291,13 +292,17 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               size: 14,
                             ),
                           ],
-                        ).click(() {
-                          launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
-                        }),
-                        const Divider(
-                          indent: 0,
                         ),
-                        Row(
+                      ).click(() {
+                        launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
+                      }),
+                      const Divider(
+                        indent: 15,
+                        endIndent: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        child: Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -311,11 +316,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               size: 14,
                             ),
                           ],
-                        ).click(() {
-                          launchUrl(Uri.parse("https://t.me/chatbot_all"));
-                        }),
-                      ],
-                    ),
+                        ),
+                      ).click(() {
+                        launchUrl(Uri.parse("https://t.me/chatbot_all"));
+                      }),
+                    ],
                   ),
                 ),
               ),
@@ -459,4 +464,3 @@ class SettingItem extends StatelessWidget {
     );
   }
 }
-
