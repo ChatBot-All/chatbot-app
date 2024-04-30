@@ -5,6 +5,7 @@ import 'package:ChatBot/utils/hive_box.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
@@ -102,56 +103,40 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ),
                             Consumer(builder: (context, ref, _) {
                               var defaultTemperature = ref.watch(defaultTemperatureProvider);
-                              return DropdownButtonHideUnderline(
-                                child: DropdownButton2<String>(
-                                  isDense: true,
-                                  iconStyleData: IconStyleData(
-                                    icon: Icon(
-                                      CupertinoIcons.chevron_down,
-                                      color: Theme.of(context).textTheme.titleSmall?.color,
-                                      size: 16,
-                                    ),
-                                  ),
-                                  hint: Text(
-                                    S.current.select,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Theme.of(context).hintColor,
-                                    ),
-                                  ),
-                                  items: List.generate(21, (index) => ((index) / 10).toString())
-                                      .map((item) => DropdownMenuItem<String>(
-                                            alignment: Alignment.center,
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: TextStyle(
-                                                color: Theme.of(context).textTheme.titleSmall?.color,
-                                                fontSize: 15,
-                                              ),
-                                            ),
+
+                              return PullDownButton(
+                                itemBuilder: (BuildContext context) {
+                                  return List.generate(21, (index) => ((index) / 10).toString())
+                                      .map((item) => PullDownMenuItem(
+                                            title: item,
+                                            onTap: () {
+                                              ref.watch(defaultTemperatureProvider.notifier).change(item);
+                                            },
+                                            iconColor: Theme.of(context).primaryColor,
+                                            icon: item != defaultTemperature ? null : CupertinoIcons.checkmark_alt,
                                           ))
-                                      .toList(),
-                                  value: defaultTemperature,
-                                  onChanged: (String? e) {
-                                    ref.watch(defaultTemperatureProvider.notifier).change(e ?? "0.6");
-                                  },
-                                  dropdownStyleData: DropdownStyleData(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  buttonStyleData: ButtonStyleData(
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.transparent,
-                                        width: 1,
+                                      .toList();
+                                },
+                                buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    child: Row(children: [
+                                      Text(
+                                        defaultTemperature,
+                                        style: TextStyle(
+                                          color: Theme.of(context).textTheme.titleSmall?.color,
+                                          fontSize: 15,
+                                        ),
                                       ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                ),
+                                      const SizedBox(width: 5),
+                                      Icon(
+                                        CupertinoIcons.chevron_up_chevron_down,
+                                        color: Theme.of(context).textTheme.titleSmall?.color,
+                                        size: 16,
+                                      ),
+                                    ]).click(showMenu),
+                                  );
+                                },
                               );
                             }),
                           ],
@@ -183,7 +168,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                     child: Row(
                       children: [
                         Expanded(
@@ -194,56 +179,39 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                         ),
                         Consumer(builder: (context, ref, _) {
                           var theme = ref.watch(themeProvider);
-                          return DropdownButtonHideUnderline(
-                            child: DropdownButton2<int>(
-                              isDense: true,
-                              iconStyleData: IconStyleData(
-                                icon: Icon(
-                                  CupertinoIcons.chevron_down,
+
+                          return PullDownButton(
+                            itemBuilder: (BuildContext context) {
+                              return [0, 1, 2]
+                                  .map((item) => PullDownMenuItem(
+                                        title: getNameByThemeType(item),
+                                        onTap: () {
+                                          ref.watch(themeProvider.notifier).change(item);
+                                        },
+                                        iconColor: Theme.of(context).primaryColor,
+                                        icon: item != ref.watch(themeProvider.notifier).type.index
+                                            ? null
+                                            : CupertinoIcons.checkmark_alt,
+                                      ))
+                                  .toList();
+                            },
+                            buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                              return Row(children: [
+                                Text(
+                                  getNameByThemeType(ref.watch(themeProvider.notifier).type.index),
+                                  style: TextStyle(
+                                    color: Theme.of(context).textTheme.titleSmall?.color,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Icon(
+                                  CupertinoIcons.chevron_up_chevron_down,
                                   color: Theme.of(context).textTheme.titleSmall?.color,
                                   size: 16,
                                 ),
-                              ),
-                              hint: Text(
-                                S.current.select,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).hintColor,
-                                ),
-                              ),
-                              items: [0, 1, 2]
-                                  .map((item) => DropdownMenuItem<int>(
-                                        alignment: Alignment.center,
-                                        value: item,
-                                        child: Text(
-                                          getNameByThemeType(item),
-                                          style: TextStyle(
-                                            color: Theme.of(context).textTheme.titleSmall?.color,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ))
-                                  .toList(),
-                              value: ref.watch(themeProvider.notifier).type.index,
-                              onChanged: (int? e) {
-                                ref.watch(themeProvider.notifier).change(e ?? 2);
-                              },
-                              dropdownStyleData: DropdownStyleData(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                              buttonStyleData: ButtonStyleData(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                            ),
+                              ]).click(showMenu);
+                            },
                           );
                         }),
                       ],

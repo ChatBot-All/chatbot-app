@@ -286,7 +286,6 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 30),
                     const Divider(),
                     if (translatedContent.isNotEmpty) const SizedBox(height: 30),
@@ -332,7 +331,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           },
                         ),
                       ),
-                    SizedBox(height: F.height/3),
+                    SizedBox(height: F.height / 3),
                   ],
                 ),
               );
