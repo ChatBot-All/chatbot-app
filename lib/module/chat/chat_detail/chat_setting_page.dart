@@ -125,7 +125,7 @@ class _ChatSettingPageState extends ConsumerState<ChatSettingPage> {
                                     color: Theme.of(context).hintColor,
                                   ),
                                 ),
-                                items: List.generate(20, (index) => ((index + 1) / 10).toString())
+                                items: List.generate(21, (index) => ((index) / 10).toString())
                                     .map((item) => DropdownMenuItem<String>(
                                           alignment: Alignment.center,
                                           value: item,

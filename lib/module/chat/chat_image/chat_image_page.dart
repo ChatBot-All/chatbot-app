@@ -631,10 +631,10 @@ class AssistMessage extends StatelessWidget {
   }
 }
 
-final openAIImageSizeProvider = StateProvider.autoDispose<OpenAIImageSize>((ref) {
+final openAIImageSizeProvider = StateProvider<OpenAIImageSize>((ref) {
   return OpenAIImageSize.size1024;
 });
 
-final openAIImageStyleProvider = StateProvider.autoDispose<OpenAIImageStyle>((ref) {
+final openAIImageStyleProvider = StateProvider<OpenAIImageStyle>((ref) {
   return OpenAIImageStyle.natural;
 });

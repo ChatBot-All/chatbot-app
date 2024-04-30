@@ -14,6 +14,9 @@ var specialGenerateTextChatParentItemTime = 100001;
 ///全局语音聊天使用的parentID
 var specialGenerateAudioChatParentItemTime = 100002;
 
+///全局翻译聊天使用的parentID
+var specialGenerateTranslateChatParentItemTime = 100003;
+
 final chatParentListProvider = StateNotifierProvider<ChatParentListNotify, AsyncValue<List<ChatParentItem>>>((ref) {
   return ChatParentListNotify(const AsyncValue.loading(), ref);
 });
