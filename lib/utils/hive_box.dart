@@ -9,10 +9,10 @@ class HiveBox {
   static const String cChatHistory = 'chatHistory';
   static const String cOpenAIConfig = 'openAIConfig';
   static const String cDefaultApiServerKey = 'defaultApiServerKey';
-  static const String cApiServerHistory =
-      'apiServerHistory'; //OPENAI 添加第三方服务器历史记录
-  static const String cGeminiApiServerHistory =
-      'geminiApiServerHistory'; //OPENAI 添加第三方服务器历史记录
+  static const String cDefaultTemperature = 'defaultTemperature';
+
+  static const String cApiServerHistory = 'apiServerHistory'; //OPENAI 添加第三方服务器历史记录
+  static const String cGeminiApiServerHistory = 'geminiApiServerHistory'; //OPENAI 添加第三方服务器历史记录
   ///子key
   static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle';
 
@@ -25,6 +25,8 @@ class HiveBox {
   Box<String> get apiServerHistory => _apiServerHistory;
 
   Box<String> get geminiApiServerHistory => _geminiApiServerHistory;
+
+  String get temperature => _appConfig.get(cDefaultTemperature, defaultValue: "0.5") ?? "0.5";
 
   late Box<String> _appConfig;
   late Box<String> _apiServerHistory;

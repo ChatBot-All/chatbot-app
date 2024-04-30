@@ -1,6 +1,7 @@
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/providers.dart';
 import 'package:ChatBot/base/theme.dart';
+import 'package:ChatBot/utils/hive_box.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -65,21 +66,95 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Text(
-                            S.current.auto_title,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.current.auto_title,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Consumer(builder: (context, ref, _) {
+                                return CupertinoSwitch(
+                                    value: ref.watch(autoGenerateTitleProvider),
+                                    onChanged: (v) {
+                                      ref.read(autoGenerateTitleProvider.notifier).change(v);
+                                    });
+                              }),
+                            ),
+                          ],
                         ),
-                        Consumer(builder: (context, ref, _) {
-                          return CupertinoSwitch(
-                              value: ref.watch(autoGenerateTitleProvider),
-                              onChanged: (v) {
-                                ref.read(autoGenerateTitleProvider.notifier).change(v);
-                              });
-                        }),
+                        const Divider(
+                          indent: 0,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.current.tempture,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Consumer(builder: (context, ref, _) {
+                              var defaultTemperature = ref.watch(defaultTemperatureProvider);
+                              return DropdownButtonHideUnderline(
+                                child: DropdownButton2<String>(
+                                  isDense: true,
+                                  iconStyleData: IconStyleData(
+                                    icon: Icon(
+                                      CupertinoIcons.chevron_down,
+                                      color: Theme.of(context).textTheme.titleSmall?.color,
+                                      size: 16,
+                                    ),
+                                  ),
+                                  hint: Text(
+                                    S.current.select,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Theme.of(context).hintColor,
+                                    ),
+                                  ),
+                                  items: List.generate(20, (index) => ((index + 1) / 10).toString())
+                                      .map((item) => DropdownMenuItem<String>(
+                                            alignment: Alignment.center,
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: TextStyle(
+                                                color: Theme.of(context).textTheme.titleSmall?.color,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ))
+                                      .toList(),
+                                  value: defaultTemperature,
+                                  onChanged: (String? e) {
+                                    ref.watch(defaultTemperatureProvider.notifier).change(e ?? "0.6");
+                                  },
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                  buttonStyleData: ButtonStyleData(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -391,3 +466,22 @@ class SettingItem extends StatelessWidget {
 final versionProvider = StateProvider<String>((ref) {
   return "";
 });
+
+final defaultTemperatureProvider = StateNotifierProvider<DefaultTemperatureNotify, String>((ref) {
+  return DefaultTemperatureNotify(HiveBox().temperature);
+});
+
+class DefaultTemperatureNotify extends StateNotifier<String> {
+  DefaultTemperatureNotify(String state) : super(state);
+
+  String get value => state;
+
+  void change(String value) {
+    state = value;
+    HiveBox().appConfig.put(HiveBox.cDefaultTemperature, value);
+  }
+
+  void load() {
+    state = HiveBox().temperature;
+  }
+}

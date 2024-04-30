@@ -240,7 +240,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   //list里的前2条状态必须是成功
 
                   requestTitled = true;
-                  API().generateChatTitle(result.temperature ?? "1.0", getModelByApiKey(result.apiKey ?? ""),
+                  API().generateChatTitle(result.temperature ?? HiveBox().temperature, getModelByApiKey(result.apiKey ?? ""),
                       result.moduleType!, list, []).then((value) {
                     ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(title: value));
                   }).catchError((e) {
@@ -369,7 +369,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
     var chatParentItem = ref.watch(currentChatParentItemProvider.notifier).state!;
     _streamSubscription = (await API().streamGenerateContent(
-      chatParentItem.temperature ?? "1.0",
+      chatParentItem.temperature ?? HiveBox().temperature,
       getModelByApiKey(ref.watch(currentChatParentItemProvider.notifier).state!.apiKey!),
       ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
       ref.watch(chatProvider(id).notifier).chats,

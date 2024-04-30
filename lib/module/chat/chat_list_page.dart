@@ -61,6 +61,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                   id: DateTime.now().millisecondsSinceEpoch,
                   moduleName: getModelByApiKey("").model,
                   moduleType: getSupportedModelByApiKey(""),
+                  temperature: HiveBox().temperature,
                   title: S.current.new_chat,
                 )))
                     .then((value) {
