@@ -140,89 +140,103 @@ class _ChatPageState extends ConsumerState<ChatPage> {
             }),
           ],
           title: Builder(builder: (context) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: F.width * 0.5,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        result.title ?? "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).appBarTheme.titleTextStyle,
-                      ),
-                      Text(
-                        "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Builder(builder: (context) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                    child: Transform.rotate(
-                      angle: pi / 2,
-                      child: Icon(
-                        CupertinoIcons.right_chevron,
-                        color: Theme.of(context).textTheme.titleMedium?.color,
-                        size: 16,
-                      ),
+            return PullDownButton(
+              buttonBuilder: (_, showMenu) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: F.width * 0.5,
                     ),
-                  ).click(() {
-                    showPopover(
-                      context: context,
-                      backgroundColor: Theme.of(context).cardColor,
-                      bodyBuilder: (context) => SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ...supportedModel.where((element) => element.id != null && element.id!.isNotEmpty).map((e) {
-                              return ListTile(
-                                title: Text(e.id?.replaceFirst("models/", "") ?? ""),
-                                trailing: e.id == result.moduleType
-                                    ? Icon(
-                                        CupertinoIcons.checkmark,
-                                        color: Theme.of(context).primaryColor,
-                                        size: 16,
-                                      )
-                                    : null,
-                                onTap: () {
-                                  result.moduleType = e.id;
-                                  ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
-                                        moduleType: e.id,
-                                      ));
-
-                                  Navigator.of(context).pop();
-                                },
-                              );
-                            }),
-                          ],
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          result.title ?? "",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).appBarTheme.titleTextStyle,
                         ),
+                        Text(
+                          "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 5),
+                  Icon(
+                    CupertinoIcons.chevron_up_chevron_down,
+                    color:Theme.of(context).appBarTheme.titleTextStyle?.color,
+                    size: 16,
+                  ),
+                ],
+              ).click(() {
+                showMenu();
+              }),
+              itemBuilder: (BuildContext context) {
+                return supportedModel
+                    .where((element) => element.id != null && element.id!.isNotEmpty)
+                    .map(
+                      (e) => PullDownMenuItem(
+                        onTap: () {
+                          result.moduleType = e.id;
+                          ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
+                                moduleType: e.id,
+                              ));
+                        },
+                        title: e.id?.replaceFirst("models/", "") ?? "",
+                        iconColor: Theme.of(context).primaryColor,
+                        icon: e.id != result.moduleType ? null : CupertinoIcons.checkmark_alt,
                       ),
-                      onPop: () {},
-                      direction: PopoverDirection.top,
-                      constraints: BoxConstraints(
-                        maxWidth: 220,
-                        maxHeight: min(supportedModel.length * 50, F.height / 2),
-                      ),
-                      arrowHeight: 8,
-                      arrowWidth: 15,
-                    );
-                  });
-                }),
-              ],
+                    )
+                    .toList();
+              },
+              //   .click(() {
+              // showPopover(
+              //   context: context,
+              //   backgroundColor: Theme.of(context).cardColor,
+              //   bodyBuilder: (context) => SingleChildScrollView(
+              //     child: Column(
+              //       children: [
+              //         ...supportedModel.where((element) => element.id != null && element.id!.isNotEmpty).map((e) {
+              //           return ListTile(
+              //             title: Text(e.id?.replaceFirst("models/", "") ?? ""),
+              //             trailing: e.id == result.moduleType
+              //                 ? Icon(
+              //                     CupertinoIcons.checkmark,
+              //                     color: Theme.of(context).primaryColor,
+              //                     size: 16,
+              //                   )
+              //                 : null,
+              //             onTap: () {
+              //               result.moduleType = e.id;
+              //               ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
+              //                     moduleType: e.id,
+              //                   ));
+              //
+              //               Navigator.of(context).pop();
+              //             },
+              //           );
+              //         }),
+              //       ],
+              //     ),
+              //   ),
+              //   onPop: () {},
+              //   direction: PopoverDirection.top,
+              //   constraints: BoxConstraints(
+              //     maxWidth: 220,
+              //     maxHeight: min(supportedModel.length * 50, F.height / 2),
+              //   ),
+              //   arrowHeight: 8,
+              //   arrowWidth: 15,
+              // );
+              // }
+              // ),
             );
           }),
         ),
@@ -240,8 +254,8 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   //list里的前2条状态必须是成功
 
                   requestTitled = true;
-                  API().generateChatTitle(result.temperature ?? HiveBox().temperature, getModelByApiKey(result.apiKey ?? ""),
-                      result.moduleType!, list, []).then((value) {
+                  API().generateChatTitle(result.temperature ?? HiveBox().temperature,
+                      getModelByApiKey(result.apiKey ?? ""), result.moduleType!, list, []).then((value) {
                     ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(title: value));
                   }).catchError((e) {
                     e.toString().fail();
