@@ -29,7 +29,13 @@ final currentGenerateImageModelProvider = StateProvider.autoDispose<AllModelBean
 });
 
 ///语音聊天页面正在使用的模型
-final currentGenerateAudioChatModelProvider = StateProvider.autoDispose<AllModelBean?>((ref) {
+final currentGenerateAudioChatModelProvider = StateProvider<AllModelBean?>((ref) {
+  return null;
+});
+
+
+///语音聊天中的文本解析模型
+final currentGenerateAudioChatTextParserProvider = StateProvider<AllModelBean?>((ref) {
   return null;
 });
 

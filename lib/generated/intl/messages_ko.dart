@@ -132,6 +132,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("크기"),
         "style": MessageLookupByLibrary.simpleMessage("스타일"),
         "tempture": MessageLookupByLibrary.simpleMessage("온도 매개변수"),
+        "text_parse_model":
+            MessageLookupByLibrary.simpleMessage("텍스트 구문 분석 모델"),
         "theme": MessageLookupByLibrary.simpleMessage("테마"),
         "theme_auto": MessageLookupByLibrary.simpleMessage("시스템 따름"),
         "theme_dark": MessageLookupByLibrary.simpleMessage("어두운 모드"),

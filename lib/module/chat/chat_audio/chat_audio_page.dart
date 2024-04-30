@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
@@ -11,6 +12,7 @@ import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
 import 'package:ChatBot/module/chat/chat_list_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:popover/popover.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';
@@ -40,12 +42,15 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      supportedModels = HiveBox()
-          .openAIConfig
-          .values
-          .where((element) => (element.getWhisperModels.isNotEmpty && element.getTTSModels.isNotEmpty))
-          .toList();
-      ref.watch(currentGenerateAudioChatModelProvider.notifier).state = supportedModels.first;
+      if (ref.watch(currentGenerateAudioChatModelProvider.notifier).state == null) {
+        supportedModels = HiveBox()
+            .openAIConfig
+            .values
+            .where((element) => (element.getWhisperModels.isNotEmpty && element.getTTSModels.isNotEmpty))
+            .toList();
+        ref.watch(currentGenerateAudioChatModelProvider.notifier).state = supportedModels.first;
+        ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state = supportedModels.first;
+      }
     });
   }
 
@@ -93,15 +98,16 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
     try {
       var model = ref.watch(currentGenerateAudioChatModelProvider.notifier).state;
+      var textModel = ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state;
 
-      if (model == null) {
+      if (model == null || textModel == null) {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
         S.current.no_module_use.fail();
         return;
       }
       var content = await API().tts2Text(model, path);
       if (content != null && content.isNotEmpty) {
-        sendMessage(model, content);
+        sendMessage(model, textModel, content);
       } else {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
         S.current.can_not_get_voice_content.fail();
@@ -199,6 +205,81 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
               }),
             ],
           ),
+          actions: [
+            Builder(builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Icon(
+                  CupertinoIcons.ellipsis,
+                  color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                ),
+              ).click(() {
+                showPopover(
+                  context: context,
+                  backgroundColor: Theme.of(context).cardColor,
+                  bodyBuilder: (context) => SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 15),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  S.current.text_parse_model,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Icon(
+                                CupertinoIcons.question_circle,
+                                color: Theme.of(context).textTheme.bodySmall?.color,
+                                size: 14,
+                              ).click(() {
+                                launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app/blob/prompt/USAGE.md"));
+                              }),
+                            ],
+                          ),
+                        ),
+                        ...HiveBox().openAIConfig.values.map((e) {
+                          return ListTile(
+                            dense: true,
+                            title: Text(
+                              e.alias ?? "",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            trailing: e == ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state
+                                ? Icon(
+                                    CupertinoIcons.checkmark,
+                                    color: Theme.of(context).primaryColor,
+                                    size: 16,
+                                  )
+                                : null,
+                            onTap: () {
+                              ref.watch(currentGenerateAudioChatTextParserProvider.notifier).state = e;
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                  onPop: () {},
+                  direction: PopoverDirection.bottom,
+                  constraints: BoxConstraints(
+                    maxWidth: 150,
+                    maxHeight: min(F.height / 2, 395),
+                  ),
+                  arrowHeight: 8,
+                  arrowWidth: 15,
+                );
+              });
+            }),
+          ],
         ),
         body: Consumer(builder: (context, ref, _) {
           var talker = ref.watch(talkerProvider);
@@ -309,7 +390,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
   final player = AudioPlayer();
 
-  Future<void> sendMessage(AllModelBean model, String? text) async {
+  Future<void> sendMessage(AllModelBean model, AllModelBean textModel, String? text) async {
     ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
     var userChatItem = ChatItem(
       type: ChatType.user.index,
@@ -342,8 +423,8 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     try {
       var data = await API().generateContent(
         double.parse("1.0"),
-        model,
-        model.getDefaultModelType.id ?? "gpt-4",
+        textModel,
+        textModel.getDefaultModelType.id ?? "gpt-4",
         allChats,
         [],
       );

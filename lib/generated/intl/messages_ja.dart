@@ -135,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("サイズ"),
         "style": MessageLookupByLibrary.simpleMessage("スタイル"),
         "tempture": MessageLookupByLibrary.simpleMessage("温度パラメーター"),
+        "text_parse_model": MessageLookupByLibrary.simpleMessage("テキスト解析モデル"),
         "theme": MessageLookupByLibrary.simpleMessage("テーマ"),
         "theme_auto": MessageLookupByLibrary.simpleMessage("システムに従う"),
         "theme_dark": MessageLookupByLibrary.simpleMessage("ダークモード"),

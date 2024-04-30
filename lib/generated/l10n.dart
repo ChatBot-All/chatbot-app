@@ -1089,6 +1089,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Text Parsing Model`
+  String get text_parse_model {
+    return Intl.message(
+      'Text Parsing Model',
+      name: 'text_parse_model',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -142,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("Size"),
         "style": MessageLookupByLibrary.simpleMessage("Style"),
         "tempture": MessageLookupByLibrary.simpleMessage("Temperature"),
+        "text_parse_model":
+            MessageLookupByLibrary.simpleMessage("Text Parsing Model"),
         "theme": MessageLookupByLibrary.simpleMessage("Theme"),
         "theme_auto": MessageLookupByLibrary.simpleMessage("Follow System"),
         "theme_dark": MessageLookupByLibrary.simpleMessage("Dark Mode"),

@@ -103,5 +103,6 @@
   "tts": "Deacon",
   "author": "Author",
   "title": "Title",
-  "add_prompt": "Add AI Prompt"
+  "add_prompt": "Add AI Prompt",
+  "text_parse_model": "Text Parsing Model"
 }

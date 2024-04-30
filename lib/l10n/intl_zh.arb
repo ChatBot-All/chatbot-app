@@ -103,5 +103,6 @@
   "empty_content_need_add": "您还没有内容，快点击右上角添加吧",
   "author": "作者",
   "title": "标题",
-  "add_prompt": "新增 AI 提示"
+  "add_prompt": "新增 AI 提示",
+  "text_parse_model": "文本解析模型"
 }

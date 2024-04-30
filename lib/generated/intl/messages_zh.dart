@@ -119,6 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("尺寸"),
         "style": MessageLookupByLibrary.simpleMessage("风格"),
         "tempture": MessageLookupByLibrary.simpleMessage("温度参数"),
+        "text_parse_model": MessageLookupByLibrary.simpleMessage("文本解析模型"),
         "theme": MessageLookupByLibrary.simpleMessage("主题"),
         "theme_auto": MessageLookupByLibrary.simpleMessage("跟随系统"),
         "theme_dark": MessageLookupByLibrary.simpleMessage("深色模式"),
