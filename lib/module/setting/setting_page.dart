@@ -273,11 +273,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Card(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        child: Row(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -291,16 +291,13 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               size: 14,
                             ),
                           ],
+                        ).click(() {
+                          launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
+                        }),
+                        const Divider(
+                          indent: 0,
                         ),
-                      ).click(() {
-                        launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
-                      }),
-                      const Divider(
-                        indent: 0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        child: Row(
+                        Row(
                           children: [
                             Expanded(
                               child: Text(
@@ -314,11 +311,11 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               size: 14,
                             ),
                           ],
-                        ),
-                      ).click(() {
-                        launchUrl(Uri.parse("https://t.me/chatbot_all"));
-                      }),
-                    ],
+                        ).click(() {
+                          launchUrl(Uri.parse("https://t.me/chatbot_all"));
+                        }),
+                      ],
+                    ),
                   ),
                 ),
               ),
