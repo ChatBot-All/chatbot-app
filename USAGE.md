@@ -3,7 +3,7 @@
 ## Points to note
 >* **Any chat added through the upper right corner will carry all historical messages that have been successfully sent**
 >* **Voice messages currently only support ChatGPT’s Whisper model, and voice conversations only support ChatGPT’s Whisper and TTS models**
->* **The purpose of more functions in the upper right corner of the voice chat page: The principle of voice chat is to first convert your voice content into text through the Whisper model, then call the text model to generate content, and then play the content through TTS , and the model selected in the More button is the function of calling the text model to generate content. The advantage is that you can choose any model to generate content instead of the fixed ChatGPT model, which allows for more flexible content generation. **
+>* **The purpose of more functions in the upper right corner of the voice chat page: The principle of voice chat is to first convert your voice content into text through the Whisper model, then call the text model to generate content, and then play the content through TTS , and the model selected in the More button is the function of calling the text model to generate content. The advantage is that you can choose any model to generate content instead of the fixed ChatGPT model, which allows for more flexible content generation.**
 >* **Anywhere where a model version is not selected will be set as the default model version on the service provider list page**
 
 ## 1. Service page
@@ -22,6 +22,10 @@
 ## 3. Setting page
 >* The settings page supports setting whether to generate titles. Generating titles may cause the loss of some tokens. You can set it according to your own needs.
 >* Support switching UI, night mode, following system, etc.
+
+
+<br/>
+<br/>
 
 # 本篇内容将介绍如何使用
 
