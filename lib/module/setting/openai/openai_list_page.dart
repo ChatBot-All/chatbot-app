@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:popover/popover.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../base.dart';
 import '../../../base/components/common_loading.dart';
@@ -22,7 +23,8 @@ class OpenAIListPage extends ConsumerStatefulWidget {
   ConsumerState createState() => _OpenAIListPageState();
 }
 
-class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProviderStateMixin {
+class _OpenAIListPageState extends ConsumerState<OpenAIListPage>
+    with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -30,7 +32,8 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
     super.initState();
     _scrollController.addListener(() {
       //判断是不是上下滚动
-      if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {}
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {}
     });
   }
 
@@ -73,7 +76,8 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
                   itemCount: data.length,
                   physics: const AlwaysScrollableScrollPhysics(),
                   separatorBuilder: (BuildContext context, int index) {
-                    return const Padding(padding: EdgeInsets.symmetric(vertical: 5));
+                    return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 5));
                   },
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   itemBuilder: (BuildContext context, int index) {
@@ -147,7 +151,8 @@ class OpenAIListItem extends ConsumerWidget {
                 children: [
                   const SizedBox(width: 15),
                   Consumer(builder: (context, ref, _) {
-                    bool officer = (item.apiServer?.endsWith("openai.com")) == true;
+                    bool officer =
+                        (item.apiServer?.endsWith("openai.com")) == true;
                     return Container(
                       width: 50,
                       height: 50,
@@ -181,7 +186,10 @@ class OpenAIListItem extends ConsumerWidget {
                                       item.alias ?? (item.apiKey ?? ''),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
@@ -203,9 +211,9 @@ class OpenAIListItem extends ConsumerWidget {
                                         horizontal: 5,
                                         vertical: 0,
                                       ),
-                                      child:  Text(
+                                      child: Text(
                                         S.current.default1,
-                                        style:const TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 10,
                                         ),
@@ -213,64 +221,66 @@ class OpenAIListItem extends ConsumerWidget {
                                     );
                                   }),
                                   Builder(builder: (context) {
-                                    return Container(
-                                      margin: const EdgeInsets.only(left: 10),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Theme.of(context).primaryColor),
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 5,
-                                        vertical: 1,
-                                      ),
-                                      child: Text(
-                                        (item.defaultModelType?.id ?? item.supportedModels?.first.id ?? "")
-                                            .replaceFirst("models/", ""),
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 10,
+                                    return PullDownButton(
+                                      scrollController: ScrollController(),
+                                      itemBuilder: (context) {
+                                        return item.getTextModels
+                                            .where((element) =>
+                                                element.id != null &&
+                                                element.id!.isNotEmpty)
+                                            .map((e) {
+                                          return PullDownMenuItem(
+                                            title: e.id?.replaceFirst(
+                                                    "models/", "") ??
+                                                "",
+                                            icon: e.id ==
+                                                    (item.defaultModelType
+                                                            ?.id ??
+                                                        item.supportedModels
+                                                            ?.first.id)
+                                                ? CupertinoIcons.checkmark
+                                                : null,
+                                            onTap: () {
+                                              ref
+                                                  .watch(openAiListProvider
+                                                      .notifier)
+                                                  .update(item.copyWith(
+                                                    defaultModelType: e,
+                                                  ));
+                                            },
+                                          );
+                                        }).toList();
+                                      },
+                                      buttonBuilder: (context, showMenu) =>
+                                          Container(
+                                        margin: const EdgeInsets.only(left: 10),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
                                         ),
-                                      ),
-                                    ).click(() {
-                                      showPopover(
-                                        context: context,
-                                        backgroundColor: Theme.of(context).cardColor,
-                                        bodyBuilder: (context) => SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              ...item.getTextModels
-                                                  .where((element) => element.id != null && element.id!.isNotEmpty)
-                                                  .map((e) {
-                                                return ListTile(
-                                                  title: Text(e.id?.replaceFirst("models/", "") ?? ""),
-                                                  trailing: e.id ==
-                                                          (item.defaultModelType?.id ?? item.supportedModels?.first.id)
-                                                      ? Icon(
-                                                          CupertinoIcons.checkmark,
-                                                          color: Theme.of(context).primaryColor,
-                                                        )
-                                                      : null,
-                                                  onTap: () {
-                                                    ref.watch(openAiListProvider.notifier).update(item.copyWith(
-                                                          defaultModelType: e,
-                                                        ));
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                );
-                                              }),
-                                            ],
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 5,
+                                          vertical: 1,
+                                        ),
+                                        child: Text(
+                                          (item.defaultModelType?.id ??
+                                                  item.supportedModels?.first
+                                                      .id ??
+                                                  "")
+                                              .replaceFirst("models/", ""),
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 10,
                                           ),
                                         ),
-                                        onPop: () {},
-                                        direction: PopoverDirection.top,
-                                        constraints: BoxConstraints(
-                                          maxWidth: 220,
-                                          maxHeight: min(item.supportedModels!.length * 50, F.height / 2),
-                                        ),
-                                        arrowHeight: 8,
-                                        arrowWidth: 15,
-                                      );
-                                    });
+                                      ).click(() {
+                                        showMenu();
+                                      }),
+                                    );
                                   }),
                                 ],
                               ),
@@ -291,7 +301,10 @@ class OpenAIListItem extends ConsumerWidget {
                           item.apiServer ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(fontSize: 13),
                         ),
                         getSupportedFunctions(context),
                       ],
@@ -300,7 +313,9 @@ class OpenAIListItem extends ConsumerWidget {
                 ],
               ),
             ).click(() {
-              HiveBox().appConfig.put(HiveBox.cDefaultApiServerKey, item.apiKey ?? "");
+              HiveBox()
+                  .appConfig
+                  .put(HiveBox.cDefaultApiServerKey, item.apiKey ?? "");
               onTap();
             }),
           ),

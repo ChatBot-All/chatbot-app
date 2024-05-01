@@ -110,184 +110,128 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         appBar: AppBar(
           actions: [
             Builder(builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Icon(
-                  CupertinoIcons.ellipsis,
-                  color: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                ),
-              ).click(() {
-                showPopover(
-                  context: context,
-                  backgroundColor: Theme.of(context).cardColor,
-                  bodyBuilder: (context) => SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, bottom: 5, top: 15),
-                          child: Text(
-                            S.current.size,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
+              return PullDownButton(
+                scrollController: ScrollController(),
+                itemBuilder: (context) {
+                  return [
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5, top: 5),
+                        child: Text(
+                          S.current.size,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        ...OpenAIImageSize.values.map((e) {
-                          return ListTile(
-                            dense: true,
-                            title: Text(
-                              valueStrByOpenAIImageSize(e),
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            trailing: e ==
-                                    ref
-                                        .watch(openAIImageSizeProvider.notifier)
-                                        .state
-                                ? Icon(
-                                    CupertinoIcons.checkmark,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 16,
-                                  )
-                                : null,
-                            onTap: () {
-                              ref
-                                  .watch(openAIImageSizeProvider.notifier)
-                                  .state = e;
-                              Navigator.of(context).pop();
-                            },
-                          );
-                        }),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, bottom: 5, top: 5),
-                          child: Text(
-                            S.current.style,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ),
-                        ...OpenAIImageStyle.values.map((e) {
-                          return ListTile(
-                            dense: true,
-                            title: Text(
-                              valueStrByOpenAIImageStyle(e),
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            trailing: e ==
-                                    ref
-                                        .watch(
-                                            openAIImageStyleProvider.notifier)
-                                        .state
-                                ? Icon(
-                                    CupertinoIcons.checkmark,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 16,
-                                  )
-                                : null,
-                            onTap: () {
-                              ref
-                                  .watch(openAIImageStyleProvider.notifier)
-                                  .state = e;
-                              Navigator.of(context).pop();
-                            },
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                  onPop: () {},
-                  direction: PopoverDirection.bottom,
-                  constraints: BoxConstraints(
-                    maxWidth: 180,
-                    maxHeight: min(F.height / 2, 395),
-                  ),
-                  arrowHeight: 8,
-                  arrowWidth: 15,
-                );
-              });
-            }),
-          ],
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: F.width * 0.5,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      S.current.generate_image,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).appBarTheme.titleTextStyle,
-                    ),
-                    Text(
-                      "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})dall-e-3",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 13,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Builder(builder: (context) {
-                return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                    child: Transform.rotate(
-                      angle: pi / 2,
-                      child: Icon(
-                        CupertinoIcons.right_chevron,
-                        color: Theme.of(context).textTheme.titleMedium?.color,
-                        size: 16,
-                      ),
-                    )).click(() {
-                  showPopover(
-                    context: context,
-                    backgroundColor: Theme.of(context).cardColor,
-                    bodyBuilder: (context) => SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ...supportedModels.map((e) {
-                            return ListTile(
-                              title: Text(e.alias ?? ""),
-                              trailing: e.alias == supportedModel.alias
-                                  ? Icon(
-                                      CupertinoIcons.checkmark,
-                                      color: Theme.of(context).primaryColor,
-                                      size: 16,
-                                    )
+                    ...OpenAIImageSize.values
+                        .map<PullDownMenuItem>((e) => PullDownMenuItem(
+                              title: valueStrByOpenAIImageSize(e),
+                              iconColor: Theme.of(context).primaryColor,
+                              icon: e ==
+                                      ref
+                                          .watch(
+                                              openAIImageSizeProvider.notifier)
+                                          .state
+                                  ? CupertinoIcons.checkmark_alt
                                   : null,
                               onTap: () {
                                 ref
-                                    .watch(currentGenerateImageModelProvider
-                                        .notifier)
+                                    .watch(openAIImageSizeProvider.notifier)
                                     .state = e;
-                                Navigator.of(context).pop();
                               },
-                            );
-                          }),
-                        ],
+                            ))
+                        .toList(),
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5, top: 5),
+                        child: Text(
+                          S.current.style,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
                     ),
-                    onPop: () {},
-                    direction: PopoverDirection.bottom,
-                    constraints: BoxConstraints(
-                      maxWidth: 220,
-                      maxHeight: min(supportedModels.length * 55, F.height / 2),
-                    ),
-                    arrowHeight: 8,
-                    arrowWidth: 15,
-                  );
-                });
-              }),
-            ],
+                    ...OpenAIImageStyle.values.map((e) {
+                      return PullDownMenuItem(
+                        title: valueStrByOpenAIImageStyle(e),
+                        iconColor: Theme.of(context).primaryColor,
+                        icon: e ==
+                                ref
+                                    .watch(openAIImageStyleProvider.notifier)
+                                    .state
+                            ? CupertinoIcons.checkmark
+                            : null,
+                        onTap: () {
+                          ref.watch(openAIImageStyleProvider.notifier).state =
+                              e;
+                        },
+                      );
+                    }),
+                  ];
+                },
+                buttonBuilder: (_, showMenu) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(
+                    CupertinoIcons.ellipsis,
+                    color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                  ),
+                ).click(() {
+                  showMenu();
+                }),
+              );
+            }),
+          ],
+          title: PullDownButton(
+            scrollController: ScrollController(),
+            itemBuilder: (context) => supportedModels.map((e) {
+              return PullDownMenuItem(
+                title: e.alias ?? "",
+                iconColor: Theme.of(context).primaryColor,
+                icon: e.alias != supportedModel.alias
+                    ? null
+                    : CupertinoIcons.checkmark_alt,
+                onTap: () {
+                  ref.watch(currentGenerateImageModelProvider.notifier).state =
+                      e;
+                },
+              );
+            }).toList(),
+            buttonBuilder: (context, showMenu) => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: F.width * 0.5,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        S.current.generate_image,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).appBarTheme.titleTextStyle,
+                      ),
+                      Text(
+                        "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})dall-e-3",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Icon(
+                  CupertinoIcons.chevron_up_chevron_down,
+                  color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                  size: 16,
+                ),
+              ],
+            ).click(() {
+              showMenu();
+            }),
           ),
         ),
         body: Consumer(builder: (context, ref, _) {

@@ -136,7 +136,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                     Future<void> Function() showMenu) {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                        vertical: 12),
                                     child: Row(children: [
                                       Text(
                                         defaultTemperature,

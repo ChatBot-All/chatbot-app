@@ -155,90 +155,64 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
         behavior: HitTestBehavior.opaque,
         child: Scaffold(
           appBar: AppBar(
-            title: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: F.width * 0.5,
+            title: PullDownButton(
+              scrollController: ScrollController(),
+              buttonBuilder: (_, showMenu) => Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: F.width * 0.5,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "翻译",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).appBarTheme.titleTextStyle,
+                        ),
+                        Text(
+                          "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "翻译",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).appBarTheme.titleTextStyle,
-                      ),
-                      Text(
-                        "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})",
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(
+                    width: 10,
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Builder(builder: (context) {
-                  return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 20),
-                      child: Transform.rotate(
-                        angle: pi / 2,
-                        child: Icon(
-                          CupertinoIcons.right_chevron,
-                          color: Theme.of(context).textTheme.titleMedium?.color,
-                          size: 16,
-                        ),
-                      )).click(() {
-                    showPopover(
-                      context: context,
-                      backgroundColor: Theme.of(context).cardColor,
-                      bodyBuilder: (context) => SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            ...supportedModels.map((e) {
-                              return ListTile(
-                                title: Text(e.alias ?? ""),
-                                trailing: e.alias == supportedModel.alias
-                                    ? Icon(
-                                        CupertinoIcons.checkmark,
-                                        color: Theme.of(context).primaryColor,
-                                        size: 16,
-                                      )
-                                    : null,
-                                onTap: () {
-                                  ref
-                                      .watch(
-                                          currentGenerateTranslateChatModelProvider
-                                              .notifier)
-                                      .state = e;
-                                  Navigator.of(context).pop();
-                                },
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                      onPop: () {},
-                      direction: PopoverDirection.bottom,
-                      constraints: BoxConstraints(
-                        maxWidth: 220,
-                        maxHeight:
-                            min(supportedModels.length * 55, F.height / 2),
-                      ),
-                      arrowHeight: 8,
-                      arrowWidth: 15,
-                    );
-                  });
-                }),
-              ],
+                  Icon(
+                    CupertinoIcons.chevron_up_chevron_down,
+                    color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                    size: 16,
+                  ),
+                ],
+              ).click(() {
+                showMenu();
+              }),
+              itemBuilder: (BuildContext context) {
+                return supportedModels
+                    .map<PullDownMenuItem>((e) => PullDownMenuItem(
+                          title: e.alias ?? "",
+                          iconColor: Theme.of(context).primaryColor,
+                          icon: e.alias != supportedModel.alias
+                              ? null
+                              : CupertinoIcons.checkmark_alt,
+                          onTap: () {
+                            ref
+                                .watch(currentGenerateTranslateChatModelProvider
+                                    .notifier)
+                                .state = e;
+                          },
+                        ))
+                    .toList();
+              },
             ),
           ),
           floatingActionButton:

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:record/record.dart';
 
 import 'package:ChatBot/base.dart';
@@ -138,176 +139,113 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
       if (supportedModel == null) return const Scaffold();
       return Scaffold(
         appBar: AppBar(
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: F.width * 0.5,
+          title: PullDownButton(
+            itemBuilder: (context) {
+              return supportedModels.map((e) {
+                return PullDownMenuItem(
+                  title: e.alias ?? "",
+                  iconColor: Theme.of(context).primaryColor,
+                  icon: e.alias == supportedModel.alias
+                      ? CupertinoIcons.checkmark
+                      : null,
+                  onTap: () {
+                    ref
+                        .watch(currentGenerateAudioChatModelProvider.notifier)
+                        .state = e;
+                  },
+                );
+              }).toList();
+            },
+            buttonBuilder: (_, showMenu) => Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: F.width * 0.5,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        S.current.voiceChat,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).appBarTheme.titleTextStyle,
+                      ),
+                      Text(
+                        "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})",
+                        style: TextStyle(
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      S.current.voiceChat,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).appBarTheme.titleTextStyle,
-                    ),
-                    Text(
-                      "(${getModelByApiKey(supportedModel.apiKey!).alias.toString()})",
-                      style: TextStyle(
-                        fontWeight: FontWeight.normal,
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 13,
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  width: 5,
                 ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Builder(builder: (context) {
-                return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                    child: Transform.rotate(
-                      angle: pi / 2,
-                      child: Icon(
-                        CupertinoIcons.right_chevron,
-                        color: Theme.of(context).textTheme.titleMedium?.color,
-                        size: 16,
-                      ),
-                    )).click(() {
-                  showPopover(
-                    context: context,
-                    backgroundColor: Theme.of(context).cardColor,
-                    bodyBuilder: (context) => SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          ...supportedModels.map((e) {
-                            return ListTile(
-                              title: Text(e.alias ?? ""),
-                              trailing: e.alias == supportedModel.alias
-                                  ? Icon(
-                                      CupertinoIcons.checkmark,
-                                      color: Theme.of(context).primaryColor,
-                                      size: 16,
-                                    )
-                                  : null,
-                              onTap: () {
-                                ref
-                                    .watch(currentGenerateAudioChatModelProvider
-                                        .notifier)
-                                    .state = e;
-                                Navigator.of(context).pop();
-                              },
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
-                    onPop: () {},
-                    direction: PopoverDirection.bottom,
-                    constraints: BoxConstraints(
-                      maxWidth: 220,
-                      maxHeight: min(supportedModels.length * 55, F.height / 2),
-                    ),
-                    arrowHeight: 8,
-                    arrowWidth: 15,
-                  );
-                });
-              }),
-            ],
+                Icon(
+                  CupertinoIcons.chevron_up_chevron_down,
+                  color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                  size: 16,
+                ),
+              ],
+            ).click(() {
+              showMenu();
+            }),
           ),
           actions: [
             Builder(builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Icon(
-                  CupertinoIcons.ellipsis,
-                  color: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                ),
-              ).click(() {
-                showPopover(
-                  context: context,
-                  backgroundColor: Theme.of(context).cardColor,
-                  bodyBuilder: (context) => SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16, right: 16, bottom: 5, top: 15),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  S.current.text_parse_model,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Icon(
-                                CupertinoIcons.question_circle,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.color,
-                                size: 14,
-                              ).click(() {
-                                launchUrl(Uri.parse(
-                                    "https://github.com/ChatBot-All/chatbot-app/blob/prompt/USAGE.md"));
-                              }),
-                            ],
-                          ),
+              return PullDownButton(
+                scrollController: ScrollController(),
+                itemBuilder: (context) {
+                  return [
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Text(
+                          S.current.text_parse_model,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        ...HiveBox().openAIConfig.values.map((e) {
-                          return ListTile(
-                            dense: true,
-                            title: Text(
-                              e.alias ?? "",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            trailing: e ==
-                                    ref
-                                        .watch(
-                                            currentGenerateAudioChatTextParserProvider
-                                                .notifier)
-                                        .state
-                                ? Icon(
-                                    CupertinoIcons.checkmark,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 16,
-                                  )
-                                : null,
-                            onTap: () {
-                              ref
-                                  .watch(
-                                      currentGenerateAudioChatTextParserProvider
-                                          .notifier)
-                                  .state = e;
-                              Navigator.of(context).pop();
-                            },
-                          );
-                        }),
-                      ],
+                      ),
                     ),
+                    ...HiveBox()
+                        .openAIConfig
+                        .values
+                        .map((e) => PullDownMenuItem(
+                              title: e.alias ?? "",
+                              iconColor: Theme.of(context).primaryColor,
+                              icon: e ==
+                                      ref
+                                          .watch(
+                                              currentGenerateAudioChatTextParserProvider
+                                                  .notifier)
+                                          .state
+                                  ? CupertinoIcons.checkmark
+                                  : null,
+                              onTap: () {
+                                ref
+                                    .watch(
+                                        currentGenerateAudioChatTextParserProvider
+                                            .notifier)
+                                    .state = e;
+                              },
+                            ))
+                        .toList(),
+                  ];
+                },
+                buttonBuilder: (_, showMenu) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(
+                    CupertinoIcons.ellipsis,
+                    color: Theme.of(context).appBarTheme.titleTextStyle?.color,
                   ),
-                  onPop: () {},
-                  direction: PopoverDirection.bottom,
-                  constraints: BoxConstraints(
-                    maxWidth: 150,
-                    maxHeight: min(F.height / 2, 395),
-                  ),
-                  arrowHeight: 8,
-                  arrowWidth: 15,
-                );
-              });
+                ).click(() {
+                  showMenu();
+                }),
+              );
             }),
           ],
         ),

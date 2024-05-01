@@ -10,6 +10,7 @@ import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:popover/popover.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../base/components/common_loading.dart';
 import '../../base/components/multi_state_widget.dart';
@@ -39,103 +40,99 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
         title: Text(S.current.home_chat),
         actions: [
           //添加按钮
-          Builder(builder: (context) {
-            return GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                if (!isExistModels()) {
-                  showCommonDialog(
-                    context,
-                    title: S.current.reminder,
-                    content: S.current.enter_setting_init_server,
-                    hideCancelBtn: true,
-                    autoPop: true,
-                    confirmText: "知道了",
-                    confirmCallback: () {},
-                  );
-                  return;
-                }
-                F
-                    .push(ChatPage(
-                        localChatHistory: ChatParentItem(
-                  apiKey: getDefaultApiKey(),
-                  id: DateTime.now().millisecondsSinceEpoch,
-                  moduleName: getModelByApiKey("").model,
-                  moduleType: getSupportedModelByApiKey(""),
-                  temperature: HiveBox().temperature,
-                  title: S.current.new_chat,
-                )))
-                    .then((value) {
-                  ref.read(chatParentListProvider.notifier).load();
-                });
-              },
-              onLongPress: () {
-                if (!isExistModels()) {
-                  showCommonDialog(
-                    context,
-                    title: S.current.reminder,
-                    content: S.current.enter_setting_init_server,
-                    hideCancelBtn: true,
-                    autoPop: true,
-                    confirmText: S.current.yes_know,
-                    confirmCallback: () {},
-                  );
-                  return;
-                }
-
-                var list = HiveBox().openAIConfig.values;
-                showPopover(
-                  context: context,
-                  backgroundColor: Theme.of(context).cardColor,
-                  bodyBuilder: (context) => SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...list.map((e) {
-                          return ListTile(
-                            dense: true,
-                            title: Text(e.alias ?? ""),
-                            onTap: () {
-                              F.pop();
-                              F
-                                  .push(ChatPage(
-                                      localChatHistory: ChatParentItem(
-                                apiKey: e.apiKey ?? "",
-                                id: DateTime.now().millisecondsSinceEpoch,
-                                moduleName: e.model,
-                                moduleType: e.defaultModelType?.id ?? "gpt-4",
-                                title: S.current.new_chat,
-                              )))
-                                  .then((value) {
-                                ref
-                                    .read(chatParentListProvider.notifier)
-                                    .load();
-                              });
-                            },
-                          );
-                        }),
-                      ],
+          PullDownButton(
+            scrollController: ScrollController(),
+            buttonBuilder: (context, showMenu) {
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  if (!isExistModels()) {
+                    showCommonDialog(
+                      context,
+                      title: S.current.reminder,
+                      content: S.current.enter_setting_init_server,
+                      hideCancelBtn: true,
+                      autoPop: true,
+                      confirmText: "知道了",
+                      confirmCallback: () {},
+                    );
+                    return;
+                  }
+                  F
+                      .push(ChatPage(
+                          localChatHistory: ChatParentItem(
+                    apiKey: getDefaultApiKey(),
+                    id: DateTime.now().millisecondsSinceEpoch,
+                    moduleName: getModelByApiKey("").model,
+                    moduleType: getSupportedModelByApiKey(""),
+                    temperature: HiveBox().temperature,
+                    title: S.current.new_chat,
+                  )))
+                      .then((value) {
+                    ref.read(chatParentListProvider.notifier).load();
+                  });
+                },
+                onLongPress: () {
+                  if (!isExistModels()) {
+                    showCommonDialog(
+                      context,
+                      title: S.current.reminder,
+                      content: S.current.enter_setting_init_server,
+                      hideCancelBtn: true,
+                      autoPop: true,
+                      confirmText: S.current.yes_know,
+                      confirmCallback: () {},
+                    );
+                    return;
+                  }
+                  showMenu();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(
+                    CupertinoIcons.add_circled,
+                    color:
+                        Theme.of(context).appBarTheme.actionsIconTheme?.color,
+                    size: 22,
+                  ),
+                ),
+              );
+            },
+            itemBuilder: (context) {
+              return [
+                PullDownMenuTitle(
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 5, top: 5),
+                    child: Text(
+                      S.current.text_parse_model,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                  onPop: () {},
-                  direction: PopoverDirection.top,
-                  constraints: BoxConstraints(
-                    maxWidth: 150,
-                    maxHeight: min(list.length * 50, F.height / 2),
-                  ),
-                  arrowHeight: 8,
-                  arrowWidth: 15,
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Icon(
-                  CupertinoIcons.add_circled,
-                  color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
-                  size: 22,
                 ),
-              ),
-            );
-          }),
+                ...HiveBox()
+                    .openAIConfig
+                    .values
+                    .map((e) => PullDownMenuItem(
+                          title: e.alias ?? "",
+                          onTap: () {
+                            F
+                                .push(ChatPage(
+                                    localChatHistory: ChatParentItem(
+                              apiKey: e.apiKey ?? "",
+                              id: DateTime.now().millisecondsSinceEpoch,
+                              moduleName: e.model,
+                              moduleType: e.defaultModelType?.id ?? "gpt-4",
+                              title: S.current.new_chat,
+                            )))
+                                .then((value) {
+                              ref.read(chatParentListProvider.notifier).load();
+                            });
+                          },
+                        ))
+                    .toList(),
+              ];
+            },
+          ),
         ],
       ),
       body: Consumer(
@@ -243,8 +240,8 @@ class ChatTranslateListItem extends ConsumerWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
               ],
