@@ -260,7 +260,11 @@ class ChatTranslateListItem extends ConsumerWidget {
               return;
             }
 
-            F.push(const ChatTranslatePage());
+            F.push(const ChatTranslatePage()).then((value){
+              ChatItemProvider()
+                  .deleteAll(specialGenerateTranslateChatParentItemTime);
+
+            });
           }),
           const Divider(
             indent: 80,

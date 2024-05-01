@@ -24,7 +24,7 @@ final currentChatParentItemProvider = StateProvider.autoDispose<ChatParentItem?>
 });
 
 ///生成图片页面正在使用的模型
-final currentGenerateImageModelProvider = StateProvider.autoDispose<AllModelBean?>((ref) {
+final currentGenerateImageModelProvider = StateProvider<AllModelBean?>((ref) {
   return null;
 });
 
