@@ -5,7 +5,7 @@
   Created by admin on 2024/5/3.
   
 */
-"Camera" = "若不允许，你将无法拍照";
-"MicroPhone" = "若不允许,你将无法进行语音输入";
-"AddPhoto" = "若不允许，你将无法保存相册照片";
-"Photo" = "若不允许，你将无法上传及保存相册照片";
+NSCameraUsageDescription = "若不允许，你将无法拍照";
+NSMicrophoneUsageDescription = "若不允许,你将无法进行语音输入";
+NSPhotoLibraryAddUsageDescription = "若不允许，你将无法保存相册照片";
+NSPhotoLibraryUsageDescription = "若不允许，你将无法上传及保存相册照片";

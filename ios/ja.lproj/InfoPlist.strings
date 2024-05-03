@@ -5,7 +5,7 @@
   Created by admin on 2024/5/3.
   
 */
-"Camera" = "許可しないと、写真を撮ることができません";
-"MicroPhone" = "許可しないと、音声入力ができません";
-"AddPhoto" = "許可しないと、アルバムの写真を保存することができません";
-"Photo" = "許可しないと、アルバムの写真をアップロード及び保存することができません";
+NSCameraUsageDescription = "許可しないと、写真を撮ることができません";
+NSMicrophoneUsageDescription = "許可しないと、音声入力ができません";
+NSPhotoLibraryAddUsageDescription = "許可しないと、アルバムの写真を保存することができません";
+NSPhotoLibraryUsageDescription = "許可しないと、アルバムの写真をアップロード及び保存することができません";

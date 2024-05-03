@@ -29,13 +29,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>$(Camera)</string>
+	<string>If not allowed, you will not be able to take photos</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(MicroPhone)</string>
+	<string>If not allowed, you will not be able to perform voice input</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(AddPhoto)</string>
+	<string>If not allowed, you will not be able to save album photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(Photo)</string>
+	<string>If not allowed, you will not be able to upload and save album photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

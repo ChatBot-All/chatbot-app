@@ -68,6 +68,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     } else {
       S.current.open_micro_permission.fail();
       audioOverlay.removeAudio();
+      cancel();
     }
   }
 

@@ -6,7 +6,7 @@
   
 */
 
-"Camera" = "If not allowed, you will not be able to take photos";
-"MicroPhone" = "If not allowed, you will not be able to perform voice input";
-"AddPhoto" = "If not allowed, you will not be able to save album photos";
-"Photo" = "If not allowed, you will not be able to upload and save album photos";
+NSCameraUsageDescription = "If not allowed, you will not be able to take photos";
+NSMicrophoneUsageDescription = "If not allowed, you will not be able to perform voice input";
+NSPhotoLibraryAddUsageDescription = "If not allowed, you will not be able to save album photos";
+NSPhotoLibraryUsageDescription = "If not allowed, you will not be able to upload and save album photos";
