@@ -380,10 +380,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       ).click(() {
                         final Uri emailLaunchUri = Uri(
                           scheme: 'mailto',
-                          path: 'mailto:newtab12138@gmail.com',
+                          path: 'newtab12138@gmail.com',
                           queryParameters: {
-                            'subject': 'Bug Report',
-                            'body':  'Bug Report from ChatBot App'
+                            'subject': 'Bug_Report',
+                            'body':  ''
                           },
                         );
                         launchUrl(emailLaunchUri);
