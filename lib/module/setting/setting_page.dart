@@ -1,8 +1,6 @@
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/providers.dart';
 import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/utils/hive_box.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_down_button/pull_down_button.dart';
@@ -140,6 +138,79 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                     child: Row(children: [
                                       Text(
                                         defaultTemperature,
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.color,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Icon(
+                                        CupertinoIcons.chevron_up_chevron_down,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.color,
+                                        size: 16,
+                                      ),
+                                    ]).click(showMenu),
+                                  );
+                                },
+                              );
+                            }),
+                          ],
+                        ),
+                        const Divider(
+                          indent: 0,
+                          endIndent: 0,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                S.current.language,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Consumer(builder: (context, ref, _) {
+                              var globalLanguage =
+                                  ref.watch(globalLanguageProvider);
+
+                              return PullDownButton(
+                                scrollController: ScrollController(),
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    const Locale("auto"),
+                                    ...S.delegate.supportedLocales
+                                  ]
+                                      .map((item) => PullDownMenuItem(
+                                            title: getLocaleNameByCode(
+                                                item.languageCode),
+                                            onTap: () {
+                                              ref
+                                                  .watch(globalLanguageProvider
+                                                      .notifier)
+                                                  .change(item.languageCode);
+                                            },
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: item.languageCode !=
+                                                    globalLanguage
+                                                ? null
+                                                : CupertinoIcons.checkmark_alt,
+                                          ))
+                                      .toList();
+                                },
+                                buttonBuilder: (BuildContext context,
+                                    Future<void> Function() showMenu) {
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
+                                    child: Row(children: [
+                                      Text(
+                                        getLocaleNameByCode(globalLanguage),
                                         style: TextStyle(
                                           color: Theme.of(context)
                                               .textTheme

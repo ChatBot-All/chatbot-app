@@ -91,10 +91,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "is_getting_modules":
             MessageLookupByLibrary.simpleMessage("모델을 가져오는 중..."),
         "is_responsing": MessageLookupByLibrary.simpleMessage("서버가 응답 중..."),
+        "language": MessageLookupByLibrary.simpleMessage("언어"),
         "leave_cancel": MessageLookupByLibrary.simpleMessage("놓으면 취소"),
         "leave_send": MessageLookupByLibrary.simpleMessage("놓으면 보내기"),
         "library": MessageLookupByLibrary.simpleMessage("공방"),
         "loading": MessageLookupByLibrary.simpleMessage("로딩 중..."),
+        "main_language": MessageLookupByLibrary.simpleMessage("한국인"),
         "models": MessageLookupByLibrary.simpleMessage("모델"),
         "name": MessageLookupByLibrary.simpleMessage("이름"),
         "natural": MessageLookupByLibrary.simpleMessage("현실적"),
@@ -144,6 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "title": MessageLookupByLibrary.simpleMessage("제목"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4~5자로 이 문장의 간략한 주제를 바로 반환하고, 설명하지 말고, 구두점을 사용하지 말고, 어조사를 사용하지 말고, 불필요한 텍스트를 추가하지 말고, 굵게 표시하지 말고, 주제가 없으면 \"잡담\"을 바로 반환하세요"),
+        "translate": MessageLookupByLibrary.simpleMessage("번역"),
         "tts": MessageLookupByLibrary.simpleMessage("읽다"),
         "update_now": MessageLookupByLibrary.simpleMessage("업데이트"),
         "validate": MessageLookupByLibrary.simpleMessage("검증"),

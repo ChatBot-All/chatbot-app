@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:hive/hive.dart';
 
 import '../base.dart';
 import 'fimpl/animation_dialog.dart';
@@ -66,7 +65,7 @@ class _FImpl {
     return _singleton;
   }
 
-  _FImpl._internal() {}
+  _FImpl._internal();
 
   Future<T?> animatedDialog<T>(
     Widget widget, {

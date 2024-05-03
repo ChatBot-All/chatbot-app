@@ -93,10 +93,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("モデルを取得しています..."),
         "is_responsing":
             MessageLookupByLibrary.simpleMessage("サーバーが応答しています..."),
+        "language": MessageLookupByLibrary.simpleMessage("言語"),
         "leave_cancel": MessageLookupByLibrary.simpleMessage("離れてキャンセル"),
         "leave_send": MessageLookupByLibrary.simpleMessage("離れて送信"),
         "library": MessageLookupByLibrary.simpleMessage("工房"),
         "loading": MessageLookupByLibrary.simpleMessage("読み込み中..."),
+        "main_language": MessageLookupByLibrary.simpleMessage("日本語"),
         "models": MessageLookupByLibrary.simpleMessage("モデル"),
         "name": MessageLookupByLibrary.simpleMessage("名前"),
         "natural": MessageLookupByLibrary.simpleMessage("現実的"),
@@ -146,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "title": MessageLookupByLibrary.simpleMessage("タイトル"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "4 ～ 5 文字を使用して、この文の簡潔なテーマを直接返します。説明、句読点、あいまい語、余分なテキスト、太字は使用しないでください。テーマがない場合は、「雑談」を直接返してください。"),
+        "translate": MessageLookupByLibrary.simpleMessage("翻訳"),
         "tts": MessageLookupByLibrary.simpleMessage("読む"),
         "update_now": MessageLookupByLibrary.simpleMessage("更新する"),
         "validate": MessageLookupByLibrary.simpleMessage("検証"),

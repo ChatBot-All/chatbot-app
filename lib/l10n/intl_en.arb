@@ -94,8 +94,8 @@
   "new_version": "New version",
   "update_now": "Update now",
   "title_promot": "Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to \"small talk\"",
-  "leave_cancel": "Release Cancel",
-  "leave_send": "Release Send",
+  "leave_cancel": "Leave Cancel",
+  "leave_send": "Leave Send",
   "cancel": "Cancel",
   "send": "Send",
   "yesterday": "Yesterday",
@@ -105,5 +105,8 @@
   "title": "Title",
   "add_prompt": "Add AI Prompt",
   "text_parse_model": "Text Parsing Model",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "main_language": "English",
+  "translate": "Translate",
+  "language": "Language"
 }

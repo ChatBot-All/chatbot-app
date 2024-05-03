@@ -19,6 +19,7 @@ class HiveBox {
   static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle'; //自动生成标题
   static const String cAppConfigFromLanguage = 'fromLanguage'; //翻译默认的语言
   static const String cAppConfigToLanguage = 'toLanguage'; //翻译默认的目标语言
+  static const String cAppConfigGlobalLanguageCode = 'globalLanguageCode'; //默认语言
 
   Box<String> get appConfig => _appConfig;
 
@@ -38,6 +39,9 @@ class HiveBox {
 
   String get toLanguage =>
       _appConfig.get(cAppConfigToLanguage, defaultValue: supportedLanguages['en']!) ?? supportedLanguages['en']!;
+
+  String get globalLanguageCode =>
+      _appConfig.get(cAppConfigGlobalLanguageCode, defaultValue: 'auto') ?? 'en';
 
   late Box<String> _appConfig;
   late Box<String> _apiServerHistory;

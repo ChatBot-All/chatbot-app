@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/components/common_dialog.dart';
@@ -9,7 +8,6 @@ import 'package:ChatBot/module/chat/chat_translate/chat_translate_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:popover/popover.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../base/components/common_loading.dart';
@@ -53,7 +51,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                       content: S.current.enter_setting_init_server,
                       hideCancelBtn: true,
                       autoPop: true,
-                      confirmText: "知道了",
+                      confirmText: S.current.yes_know,
                       confirmCallback: () {},
                     );
                     return;
@@ -236,7 +234,7 @@ class ChatTranslateListItem extends ConsumerWidget {
                 const SizedBox(width: 15),
                 Expanded(
                   child: Text(
-                    "翻译",
+                    S.current.translate,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(

@@ -1,7 +1,59 @@
+import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
+import '../generated/l10n.dart';
 import '../utils/sp_util.dart';
+
+Locale getLocaleByCode(String code) {
+  if (code == "auto") {
+    return WidgetsBinding.instance.window.locale;
+  }
+
+  return S.delegate.supportedLocales.firstWhere(
+      (element) => element.languageCode == code,
+      orElse: () => WidgetsBinding.instance.window.locale);
+}
+
+String getLocaleNameByCode(String code) {
+  if (code == "auto") {
+    return "Auto";
+  }
+
+  switch (code) {
+    case 'en':
+      return "English";
+    case 'ja':
+      return '日本語';
+    case 'zh':
+      return '简体中文';
+    case 'ko':
+      return '한국인';
+  }
+  return "English";
+}
+
+final globalLanguageProvider =
+    StateNotifierProvider<GlobalLanguageModel, String>((ref) {
+  return GlobalLanguageModel(HiveBox().globalLanguageCode);
+});
+
+class GlobalLanguageModel extends StateNotifier<String> {
+  GlobalLanguageModel(super.state);
+
+  String get globalLanguage => getLocaleNameByCode(state);
+
+  Locale get getLocale => getLocaleByCode(state);
+
+  void change(String t) {
+    if (t == state) return;
+    state = t;
+    HiveBox().appConfig.put(HiveBox.cAppConfigGlobalLanguageCode, t);
+    S.load(getLocaleByCode(state));
+  }
+}
 
 final themeProvider = StateNotifierProvider<ThemeViewModel, BaseTheme>((ref) {
   return ThemeViewModel(LightTheme());
@@ -33,7 +85,8 @@ BaseTheme _getThemeByType(int themeType) {
     case 1:
       return DarkTheme();
     case 2:
-      var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
+      var brightness =
+          SchedulerBinding.instance.platformDispatcher.platformBrightness;
       bool isDarkMode = brightness == Brightness.dark;
       if (isDarkMode) {
         return DarkTheme();
@@ -50,7 +103,8 @@ class ThemeViewModel extends StateNotifier<BaseTheme> {
     state = _getThemeByType(type);
   }
 
-  ThemeType get type => ThemeType.getType(SpUtil.getInt("lightTheme", defValue: 2));
+  ThemeType get type =>
+      ThemeType.getType(SpUtil.getInt("lightTheme", defValue: 2));
 
   void change(int t) {
     if (t == type.index) return;
@@ -93,7 +147,6 @@ class LightTheme extends BaseTheme {
   @override
   ThemeData theme() {
     return ThemeData.light().copyWith(
-      useMaterial3: false,
       colorScheme: const ColorScheme.light(
         primary: Color(0xff01C160),
         secondary: Color(0xff01C160),
@@ -253,7 +306,6 @@ class DarkTheme extends BaseTheme {
   @override
   ThemeData theme() {
     return ThemeData.dark().copyWith(
-      useMaterial3: false,
       colorScheme: const ColorScheme.dark(
           primary: Color(0xff01C160),
           secondary: Color(0xff01C160),

@@ -1,6 +1,5 @@
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
-import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base.dart';

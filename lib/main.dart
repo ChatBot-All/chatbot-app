@@ -1,6 +1,6 @@
 import 'package:ChatBot/module/splash_page.dart';
+import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/intl.dart';
 
 import 'base.dart';
 import 'base/riverpod/provider_log.dart';
@@ -10,7 +10,7 @@ import 'initial.dart';
 void main() async {
   await Initial.init();
 
-  S.load(Locale(Intl.getCurrentLocale()));
+  S.load(getLocaleByCode(HiveBox().globalLanguageCode));
   runApp(
     ProviderScope(
       observers: [
@@ -30,7 +30,9 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var globalLanguage = ref.watch(globalLanguageProvider);
     return MaterialApp(
+      key: ValueKey(globalLanguage),
       navigatorKey: F.navigatorKey,
       title: S.current.app_name,
       localeResolutionCallback: (Locale? locale, Iterable<Locale> supportedLocales) {
@@ -49,6 +51,7 @@ class MyApp extends ConsumerWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       home: const SplashPage(),
+      locale: getLocaleByCode(globalLanguage),
       builder: (context, child) {
         return FlutterEasyLoading(
             child: ScrollConfiguration(

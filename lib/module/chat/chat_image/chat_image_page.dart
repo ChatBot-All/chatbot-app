@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:math';
 import 'package:ChatBot/base/components/chat_markdown.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_page.dart';
@@ -19,7 +17,6 @@ import 'package:ChatBot/module/chat/chat_list_view_model.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:popover/popover.dart';
 
 import '../../../base/api.dart';
 import '../../../base/db/chat_item.dart';
@@ -50,6 +47,13 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         _scrollController.animateTo(0,
             duration: const Duration(milliseconds: 100),
             curve: Curves.easeInOut);
+        if (ref.watch(sendButtonVisibleProvider.notifier).state == false) {
+          ref.watch(sendButtonVisibleProvider.notifier).state = true;
+        }
+      } else {
+        if (ref.watch(sendButtonVisibleProvider.notifier).state == true) {
+          ref.watch(sendButtonVisibleProvider.notifier).state = false;
+        }
       }
     });
 

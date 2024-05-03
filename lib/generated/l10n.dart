@@ -990,20 +990,20 @@ class S {
     );
   }
 
-  /// `Release Cancel`
+  /// `Leave Cancel`
   String get leave_cancel {
     return Intl.message(
-      'Release Cancel',
+      'Leave Cancel',
       name: 'leave_cancel',
       desc: '',
       args: [],
     );
   }
 
-  /// `Release Send`
+  /// `Leave Send`
   String get leave_send {
     return Intl.message(
-      'Release Send',
+      'Leave Send',
       name: 'leave_send',
       desc: '',
       args: [],
@@ -1105,6 +1105,36 @@ class S {
     return Intl.message(
       'Loading...',
       name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get main_language {
+    return Intl.message(
+      'English',
+      name: 'main_language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translate`
+  String get translate {
+    return Intl.message(
+      'Translate',
+      name: 'translate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
       desc: '',
       args: [],
     );

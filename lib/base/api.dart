@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/hive_bean/generate_content.dart';
@@ -6,8 +5,6 @@ import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
 import 'package:dart_openai/dart_openai.dart';
-import 'package:flutter_gemini/flutter_gemini.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'api_impl/api_impl.dart';
 import 'api_impl/chatgpt_impl.dart';

@@ -105,5 +105,8 @@
   "title": "标题",
   "add_prompt": "新增 AI 提示",
   "text_parse_model": "文本解析模型",
-  "loading": "加载中..."
+  "loading": "加载中...",
+  "main_language": "简体中文",
+  "translate": "翻译",
+  "language": "语言"
 }

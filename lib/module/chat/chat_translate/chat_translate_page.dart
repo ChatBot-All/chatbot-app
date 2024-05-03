@@ -165,7 +165,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          "翻译",
+                          S.current.translate,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).appBarTheme.titleTextStyle,

@@ -19,26 +19,26 @@ class ClaudeContentBean {
     if (json['content'] != null) {
       content = <Content>[];
       json['content'].forEach((v) {
-        content!.add(new Content.fromJson(v));
+        content!.add(Content.fromJson(v));
       });
     }
     model = json['model'];
     stopReason = json['stop_reason'];
     stopSequence = json['stop_sequence'];
-    usage = json['usage'] != null ? new Usage.fromJson(json['usage']) : null;
+    usage = json['usage'] != null ? Usage.fromJson(json['usage']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.content != null) {
-      data['content'] = this.content!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    if (content != null) {
+      data['content'] = content!.map((v) => v.toJson()).toList();
     }
-    data['model'] = this.model;
-    data['stop_reason'] = this.stopReason;
-    data['stop_sequence'] = this.stopSequence;
-    if (this.usage != null) {
-      data['usage'] = this.usage!.toJson();
+    data['model'] = model;
+    data['stop_reason'] = stopReason;
+    data['stop_sequence'] = stopSequence;
+    if (usage != null) {
+      data['usage'] = usage!.toJson();
     }
     return data;
   }
@@ -54,8 +54,8 @@ class Content {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['text'] = this.text;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['text'] = text;
     return data;
   }
 }
@@ -72,9 +72,9 @@ class Usage {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['input_tokens'] = this.inputTokens;
-    data['output_tokens'] = this.outputTokens;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['input_tokens'] = inputTokens;
+    data['output_tokens'] = outputTokens;
     return data;
   }
 }

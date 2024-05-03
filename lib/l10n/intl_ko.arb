@@ -105,5 +105,8 @@
   "title": "제목",
   "add_prompt": "AI 프롬프트가 추가되었습니다.",
   "text_parse_model": "텍스트 구문 분석 모델",
-  "loading": "로딩 중..."
+  "loading": "로딩 중...",
+  "main_language": "한국인",
+  "translate": "번역",
+  "language": "언어"
 }

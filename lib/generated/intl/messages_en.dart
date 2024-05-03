@@ -99,10 +99,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Getting models..."),
         "is_responsing":
             MessageLookupByLibrary.simpleMessage("The server is responding..."),
-        "leave_cancel": MessageLookupByLibrary.simpleMessage("Release Cancel"),
-        "leave_send": MessageLookupByLibrary.simpleMessage("Release Send"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "leave_cancel": MessageLookupByLibrary.simpleMessage("Leave Cancel"),
+        "leave_send": MessageLookupByLibrary.simpleMessage("Leave Send"),
         "library": MessageLookupByLibrary.simpleMessage("Library"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+        "main_language": MessageLookupByLibrary.simpleMessage("English"),
         "models": MessageLookupByLibrary.simpleMessage("Model"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "natural": MessageLookupByLibrary.simpleMessage("Natural"),
@@ -154,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "title_promot": MessageLookupByLibrary.simpleMessage(
             "Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to \"small talk\""),
+        "translate": MessageLookupByLibrary.simpleMessage("Translate"),
         "tts": MessageLookupByLibrary.simpleMessage("Deacon"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update now"),
         "validate": MessageLookupByLibrary.simpleMessage("Validate"),

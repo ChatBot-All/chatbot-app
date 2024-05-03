@@ -1,9 +1,6 @@
-import 'dart:math';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:dart_openai/dart_openai.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
@@ -13,8 +10,6 @@ import 'package:ChatBot/base.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
 import 'package:ChatBot/module/chat/chat_list_view_model.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:popover/popover.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';

@@ -58,6 +58,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   lottie: ^3.1.0
 
+  synchronized: any
 dev_dependencies:
   flutter_lints: ^2.0.0
   #flutter pub run flutter_launcher_icons

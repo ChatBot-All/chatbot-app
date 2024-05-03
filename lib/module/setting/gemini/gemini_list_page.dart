@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:ChatBot/base/components/common_dialog.dart';
 import 'package:ChatBot/base/components/common_loading.dart';
@@ -8,7 +7,6 @@ import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:popover/popover.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../base.dart';
@@ -37,10 +35,6 @@ class _GeminiListPageState extends ConsumerState<GeminiListPage>
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

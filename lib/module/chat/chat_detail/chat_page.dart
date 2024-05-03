@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:ChatBot/base/components/chat_markdown.dart';
 import 'package:ChatBot/base/components/send_button.dart';
 import 'package:ChatBot/base/theme.dart';
@@ -8,7 +7,6 @@ import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_setting_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,13 +24,11 @@ import 'package:ChatBot/module/chat/chat_list_view_model.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:popover/popover.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';
 import '../../../base/db/chat_item.dart';
 import '../../../base/providers.dart';
-import '../../../const.dart';
 import '../../../hive_bean/openai_bean.dart';
 import '../chat_audio/chat_audio_page.dart';
 
@@ -110,6 +106,10 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     });
     return Consumer(builder: (context, ref, _) {
       var result = ref.watch(currentChatParentItemProvider);
+
+      if (result?.id == specialGenerateTextChatParentItemTime) {
+        result?.title = S.current.new_chat;
+      }
 
       AllModelBean currentModel = getModelByApiKey(result?.apiKey ?? "");
 
@@ -754,7 +754,13 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                     ),
                     const SizedBox(width: 15),
                     !widget.supportImage
-                        ? sendButton(disableMode)
+                        ? Consumer(builder: (context, ref, _) {
+                            var visible = ref.watch(sendButtonVisibleProvider);
+                            if (!visible || disableMode == true) {
+                              return const SizedBox.shrink();
+                            }
+                            return sendButton(disableMode);
+                          })
                         : Consumer(builder: (context, ref, _) {
                             return AnimatedCrossFade(
                               duration: const Duration(milliseconds: 100),
@@ -830,8 +836,9 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
           size: 30,
         ),
       ).click(() {
-        if (ref.watch(isGeneratingContentProvider.notifier).state == true)
+        if (ref.watch(isGeneratingContentProvider.notifier).state == true) {
           return;
+        }
 
         ImagePicker images = ImagePicker();
         images.pickMultiImage().then(
