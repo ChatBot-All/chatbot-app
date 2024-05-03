@@ -1,20 +1,82 @@
+import 'package:ChatBot/const.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import '../generated/l10n.dart';
 import '../utils/sp_util.dart';
 
-Locale getLocaleByCode(String code) {
+enum SupportedLanguage {
+  zh('zh'),
+  en('en'),
+  ja('ja'),
+  ko('ko');
+
+  final String code;
+
+  const SupportedLanguage(this.code);
+}
+
+List<String> getSupportedLanguage() {
+  return SupportedLanguage.values.map((e) => e.code).toList();
+}
+
+Locale getLocaleByDefaultCode() {
+  String code = HiveBox().globalLanguageCode;
+  String resultCode = code;
   if (code == "auto") {
-    return WidgetsBinding.instance.window.locale;
+    var defLan = WidgetsBinding.instance.window.locale.languageCode;
+    if (getSupportedLanguage().contains(defLan)) {
+      resultCode = defLan;
+    } else {
+      if (defLan.startsWith("zh")) {
+        resultCode = 'zh';
+      }
+    }
   }
 
   return S.delegate.supportedLocales.firstWhere(
-      (element) => element.languageCode == code,
+      (element) => element.languageCode == resultCode,
       orElse: () => WidgetsBinding.instance.window.locale);
+}
+
+Locale getLocaleByCode(String code) {
+  String resultCode = code;
+  if (code == "auto") {
+    var defLan = WidgetsBinding.instance.window.locale.languageCode;
+    if (getSupportedLanguage().contains(defLan)) {
+      resultCode = defLan;
+    } else {
+      if (defLan.startsWith("zh")) {
+        resultCode = 'zh';
+      }
+    }
+  }
+
+  return S.delegate.supportedLocales.firstWhere(
+      (element) => element.languageCode == resultCode,
+      orElse: () => WidgetsBinding.instance.window.locale);
+}
+
+Map<String, String> getLocaleLanguages() {
+  String code = getLocaleByDefaultCode().languageCode;
+
+  if (code == SupportedLanguage.en.code) {
+    return supportedEnglishLanguages;
+  }
+
+  if (code == SupportedLanguage.zh.code) {
+    return supportedLanguages;
+  }
+
+  if (code == SupportedLanguage.ko.code) {
+    return supportedKoLanguages;
+  }
+  if (code == SupportedLanguage.ja.code) {
+    return supportedJapaneseLanguages;
+  }
+
+  return supportedEnglishLanguages;
 }
 
 String getLocaleNameByCode(String code) {

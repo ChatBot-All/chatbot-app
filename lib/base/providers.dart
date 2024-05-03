@@ -53,9 +53,9 @@ class FromLanguageNotify extends StateNotifier<String> {
 
   String get value => state;
 
-  void change(String value) {
-    state = value;
-    HiveBox().appConfig.put(HiveBox.cAppConfigFromLanguage, value);
+  void change(String key) {
+    state = key;
+    HiveBox().appConfig.put(HiveBox.cAppConfigFromLanguage, key);
   }
 
   void load() {
@@ -72,9 +72,9 @@ class ToLanguageNotify extends StateNotifier<String> {
 
   String get value => state;
 
-  void change(String value) {
-    state = value;
-    HiveBox().appConfig.put(HiveBox.cAppConfigToLanguage, value);
+  void change(String key) {
+    state = key;
+    HiveBox().appConfig.put(HiveBox.cAppConfigToLanguage, key);
   }
 
   void load() {

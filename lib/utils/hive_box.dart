@@ -3,6 +3,7 @@ import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
 import 'package:hive_flutter/adapters.dart';
 
+import '../base/theme.dart';
 import '../const.dart';
 
 class HiveBox {
@@ -34,11 +35,11 @@ class HiveBox {
   String get temperature => _appConfig.get(cDefaultTemperature, defaultValue: "0.5") ?? "0.5";
 
   String get fromLanguage =>
-      _appConfig.get(cAppConfigFromLanguage, defaultValue: supportedLanguages['zh-Hans']!) ??
-      supportedLanguages['zh-Hans']!;
+      _appConfig.get(cAppConfigFromLanguage, defaultValue: getLocaleLanguages()['zh-Hans']!) ??
+          getLocaleLanguages()['zh-Hans']!;
 
   String get toLanguage =>
-      _appConfig.get(cAppConfigToLanguage, defaultValue: supportedLanguages['en']!) ?? supportedLanguages['en']!;
+      _appConfig.get(cAppConfigToLanguage, defaultValue: getLocaleLanguages()['en']!) ?? getLocaleLanguages()['en']!;
 
   String get globalLanguageCode =>
       _appConfig.get(cAppConfigGlobalLanguageCode, defaultValue: 'auto') ?? 'en';

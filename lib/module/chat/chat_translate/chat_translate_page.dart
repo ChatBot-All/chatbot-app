@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/db/chat_item.dart';
+import 'package:ChatBot/base/theme.dart';
 import 'package:ChatBot/const.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
 import 'package:ChatBot/module/chat/chat_list_view_model.dart';
@@ -243,7 +244,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      fromLanguage,
+                      getLocaleLanguages()[fromLanguage]??"",
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 16),
@@ -282,7 +283,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                       const SizedBox(height: 30),
                     if (translatedContent.isNotEmpty)
                       Text(
-                        toLanguage,
+                        getLocaleLanguages()[toLanguage]??"",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14,
@@ -347,7 +348,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         var fromLanguage = ref.watch(fromLanguageProvider);
                         return PullDownButton(
                           scrollController: ScrollController(),
-                          itemBuilder: (context) => supportedLanguages.entries
+                          itemBuilder: (context) => getLocaleLanguages().entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
                                     enabled: e.value !=
@@ -357,7 +358,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                                     onTap: () {
                                       ref
                                           .watch(fromLanguageProvider.notifier)
-                                          .change(e.value);
+                                          .change(e.key);
                                     },
                                   ))
                               .toList(),
@@ -369,7 +370,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  fromLanguage,
+                                  getLocaleLanguages()[fromLanguage]??"",
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ))),
@@ -399,7 +400,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         var toLanguage = ref.watch(toLanguageProvider);
                         return PullDownButton(
                           scrollController: ScrollController(),
-                          itemBuilder: (context) => supportedLanguages.entries
+                          itemBuilder: (context) => getLocaleLanguages().entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
                                     enabled: e.value !=
@@ -410,7 +411,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                                     onTap: () {
                                       ref
                                           .watch(toLanguageProvider.notifier)
-                                          .change(e.value);
+                                          .change(e.key);
                                     },
                                   ))
                               .toList(),
@@ -422,7 +423,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                               ),
                               child: Center(
                                   child: Text(
-                                toLanguage,
+                                    getLocaleLanguages()[toLanguage]??"",
                                 style: Theme.of(context).textTheme.titleMedium,
                               )),
                             ),
@@ -521,18 +522,18 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     var generatedUserPrompt =
         "translate from ${ref.watch(fromLanguageProvider.notifier).value} to ${ref.watch(toLanguageProvider.notifier).value}";
 
-    if (detectTo == supportedLanguages["wyw"] ||
-        detectTo == supportedLanguages["yue"]) {
+    if (detectTo == getLocaleLanguages()["wyw"] ||
+        detectTo == getLocaleLanguages()["yue"]) {
       generatedUserPrompt = "翻译成$detectTo";
     }
-    if (detectFrom == supportedLanguages["wyw"] ||
-        detectFrom == supportedLanguages["zh-Hans"] ||
-        detectFrom == supportedLanguages["zh-Hant"]) {
-      if (detectTo == supportedLanguages["zh-Hant"]) {
+    if (detectFrom == getLocaleLanguages()["wyw"] ||
+        detectFrom == getLocaleLanguages()["zh-Hans"] ||
+        detectFrom == getLocaleLanguages()["zh-Hant"]) {
+      if (detectTo == getLocaleLanguages()["zh-Hant"]) {
         generatedUserPrompt = "翻译成繁体白话文";
-      } else if (detectTo == supportedLanguages["zh-Hans"]) {
+      } else if (detectTo == getLocaleLanguages()["zh-Hans"]) {
         generatedUserPrompt = "翻译成简体白话文";
-      } else if (detectTo == supportedLanguages["yue"]) {
+      } else if (detectTo == getLocaleLanguages()["yue"]) {
         generatedUserPrompt = "翻译成粤语白话文";
       }
     }
