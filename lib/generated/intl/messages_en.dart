@@ -69,8 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enter_setting_init_server": MessageLookupByLibrary.simpleMessage(
             "Please enter the service first and configure the service provider"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
-        "feedback_question": MessageLookupByLibrary.simpleMessage(
-            "What do you think of ChatBot?"),
+        "feedback_question": MessageLookupByLibrary.simpleMessage("Feedback"),
         "gemini_setting": MessageLookupByLibrary.simpleMessage("Gemini Server"),
         "gemini_setting_desc": MessageLookupByLibrary.simpleMessage(
             "Set the API key and API Server of Gemini"),

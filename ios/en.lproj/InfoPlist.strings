@@ -1,0 +1,12 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by admin on 2024/5/3.
+  
+*/
+
+"Camera" = "If not allowed, you will not be able to take photos";
+"MicroPhone" = "If not allowed, you will not be able to perform voice input";
+"AddPhoto" = "If not allowed, you will not be able to save album photos";
+"Photo" = "If not allowed, you will not be able to upload and save album photos";

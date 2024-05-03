@@ -11,12 +11,13 @@ class SendButton extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return CupertinoButton(
       minSize: 10,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(vertical: 5),
       color: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(5),
-      child:  Text(
+      child: Text(
         S.current.send,
-        style:const TextStyle(
+        style: const TextStyle(
             color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
       ),
       onPressed: () {

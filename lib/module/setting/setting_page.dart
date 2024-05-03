@@ -378,8 +378,15 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                           ],
                         ),
                       ).click(() {
-                        launchUrl(Uri.parse(
-                            "https://github.com/ChatBot-All/chatbot-app"));
+                        final Uri emailLaunchUri = Uri(
+                          scheme: 'mailto',
+                          path: 'mailto:newtab12138@gmail.com',
+                          queryParameters: {
+                            'subject': 'Bug Report',
+                            'body':  'Bug Report from ChatBot App'
+                          },
+                        );
+                        launchUrl(emailLaunchUri);
                       }),
                       const Divider(
                         indent: 15,

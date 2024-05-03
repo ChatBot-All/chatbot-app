@@ -890,10 +890,10 @@ class S {
     );
   }
 
-  /// `What do you think of ChatBot?`
+  /// `Feedback`
   String get feedback_question {
     return Intl.message(
-      'What do you think of ChatBot?',
+      'Feedback',
       name: 'feedback_question',
       desc: '',
       args: [],
