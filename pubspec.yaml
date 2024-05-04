@@ -57,6 +57,7 @@ dependencies:
   photo_view: ^0.15.0
   animated_text_kit: ^4.2.2
   lottie: ^3.1.0
+  flutter_native_splash: ^2.4.0
 
   synchronized: any
 dev_dependencies:
@@ -89,3 +90,13 @@ flutter:
     - assets/lottie/
 flutter_intl:
   enabled: true
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_android: "#FFFFFF"
+  color_dark_android: "#111111"
+  color_ios: "#FFFFFF"
+  color_dark_ios: "#111111"
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#111111"
