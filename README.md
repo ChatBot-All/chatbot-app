@@ -32,12 +32,14 @@ mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models. [
 
 > * Telegram : [ChatBot](https://t.me/chatbot_all)
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
+>* iOS : [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
 >* iOS : [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
 
 ## 下载
 
 > * Telegram : [ChatBot](https://t.me/chatbot_all)
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
+>* iOS : [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
 >* iOS : [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
 
 <table>
