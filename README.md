@@ -46,26 +46,20 @@ mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models. [
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.jpg" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.jpg" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.jpg" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.PNG" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.PNG" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.PNG" width="200"  /></center></td>
 
 </tr>
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.jpg" width="200" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.jpg" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.jpg" width="200" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG" width="200" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG" width="200" /></center></td>
 
 </tr>
-<tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.jpg" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.jpg" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.jpg" width="200" /></center></td>
-
-</tr>
 </table>
 
 ## Roadmap
