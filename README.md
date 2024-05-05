@@ -32,15 +32,15 @@ mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models. [
 
 > * Telegram : [ChatBot](https://t.me/chatbot_all)
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS : [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
->* iOS : [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS TestFlight: [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
+>* iOS AppStore[($0.99 Why)](./WHY.md): [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
 
 ## 下载
 
 > * Telegram : [ChatBot](https://t.me/chatbot_all)
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS : [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
->* iOS : [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS TestFlight: [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
+>* iOS AppStore[($0.99 Why)](./WHY.md): [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
 
 <table>
 
@@ -67,4 +67,18 @@ mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models. [
 
 </tr>
 </table>
+
+## Roadmap
+>* support more languages
+>* support more models
+>* share conversations as image,share to ShareGPT
+>* Desktop APP
+
+## 开发计划
+>* 国际化支持更多的语言
+>* 支持更多的AI模型
+>* 对话内容生成图片，分享对话到ShareGPT
+>* 桌面端适配
+
+
 
