@@ -7,6 +7,7 @@ import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_setting_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -28,6 +29,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';
+import '../../../base/components/screenshoot_view.dart';
 import '../../../base/db/chat_item.dart';
 import '../../../base/providers.dart';
 import '../../../hive_bean/openai_bean.dart';
@@ -45,6 +47,10 @@ class ChatPage extends ConsumerStatefulWidget {
 class _ChatPageState extends ConsumerState<ChatPage> {
   final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
+
+  final ScreenshotController _screenshotController = ScreenshotController();
+
+  final GlobalKey chatListViewKey = GlobalKey();
 
   var player = AudioPlayer();
 
@@ -95,7 +101,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext rootContext) {
     ref.listen(currentChatParentItemProvider, (pre, next) {
       if (next != null) {
         ref.watch(chatParentListProvider.notifier).update(next.copyWith());
@@ -127,223 +133,277 @@ class _ChatPageState extends ConsumerState<ChatPage> {
           appBar: AppBar(),
         );
       }
-      return Scaffold(
-        appBar: AppBar(
-          actions: [
-            PullDownButton(
-              routeTheme: const PullDownMenuRouteTheme(
-                width: 200,
-                accessibilityWidth: 200,
-              ),
-              buttonBuilder: (context, showMenu) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Icon(
-                  CupertinoIcons.ellipsis,
-                  color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
+      return Builder(builder: (rootContext1) {
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              PullDownButton(
+                routeTheme: const PullDownMenuRouteTheme(
+                  width: 200,
+                  accessibilityWidth: 200,
                 ),
-              ).click(() {
-                showMenu();
-              }),
-              itemBuilder: (BuildContext context) {
-                return [
-                  PullDownMenuItem(
-                    title: "截屏",
-                    onTap: () {
-                      F.push(const ChatSettingPage());
-                    },
+                buttonBuilder: (context, showMenu) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Icon(
+                    CupertinoIcons.ellipsis,
+                    color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
                   ),
-                  PullDownMenuItem(
-                      title: "分享到ShareGPT",
-                      onTap: () async {
-                        var url = await API().share2ShareGPT(ref.watch(chatProvider(result.id ?? 0).notifier).chats);
-                        if (url != null && context.mounted) {
-                          showCommonDialog(
-                            context,
-                            title: S.current.reminder,
-                            hideCancelBtn: true,
-                            content: url,
-                            confirmText: S.current.copy,
-                            confirmCallback: () {
-                              url.toClipboard();
-                            },
-                          );
-                        }
-                      }),
-                  PullDownMenuItem(
-                    title: S.current.chat_setting,
-                    onTap: () {
-                      F.push(const ChatSettingPage());
-                    },
-                  ),
-                ];
-              },
-            ),
-          ],
-          title: Builder(builder: (context) {
-            return PullDownButton(
-              scrollController: ScrollController(),
-              buttonBuilder: (_, showMenu) => Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxWidth: F.width * 0.5,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          result.title ?? "",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).appBarTheme.titleTextStyle,
-                        ),
-                        Text(
-                          "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 13,
+                ).click(() {
+                  showMenu();
+                }),
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PullDownMenuItem(
+                      title: "截屏",
+                      onTap: () {
+                        var list = ref.watch(chatProvider(result.id ?? 0).notifier).chats;
+                        _screenshotController
+                            .captureFromLongWidget(
+                          InheritedTheme.captureAll(
+                            rootContext,
+                            Material(
+                              child: Builder(builder: (context) {
+                                var items = list.map((e) {
+                                  if (e.type == ChatType.user.index) {
+                                    return ScreenShootUserMessage(
+                                      chatItem: e,
+                                    );
+                                  } else if (e.type == ChatType.bot.index) {
+                                    return ScreenShootBotMessage(
+                                      chatItem: e,
+                                    );
+                                  } else {
+                                    return ScreenShootAssistMessage(chatItem: e);
+                                  }
+                                }).toList();
+
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: items,
+                                );
+                              }),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 5),
-                  Icon(
-                    CupertinoIcons.chevron_up_chevron_down,
-                    color: Theme.of(context).appBarTheme.titleTextStyle?.color,
-                    size: 16,
-                  ),
-                ],
-              ).click(() {
-                showMenu();
-              }),
-              itemBuilder: (BuildContext context) {
-                return supportedModel
-                    .where((element) => element.id != null && element.id!.isNotEmpty)
-                    .map(
-                      (e) => PullDownMenuItem(
-                        onTap: () {
-                          result.moduleType = e.id;
-                          ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
-                                moduleType: e.id,
-                              ));
-                        },
-                        title: e.id?.replaceFirst("models/", "") ?? "",
-                        iconColor: Theme.of(context).primaryColor,
-                        icon: e.id != result.moduleType ? null : CupertinoIcons.checkmark_alt,
-                      ),
-                    )
-                    .toList();
-              },
-            );
-          }),
-        ),
-        body: Consumer(builder: (context, ref, _) {
-          var chat = ref.watch(chatProvider(result.id ?? 0));
-          return MultiStateWidget(
-              value: chat,
-              data: (list) {
-                if (requestTitled == false &&
-                    list.length >= 2 &&
-                    result.title == S.current.new_chat &&
-                    result.id != specialGenerateTextChatParentItemTime &&
-                    ref.watch(isGeneratingContentProvider) == false &&
-                    ref.watch(autoGenerateTitleProvider.notifier).value == true) {
-                  //list里的前2条状态必须是成功
+                          delay: const Duration(milliseconds: 100),
+                          context: rootContext,
+                        )
+                            .then((value) async {
+                          Uint8List imageFile;
 
-                  requestTitled = true;
-                  API().generateChatTitle(result.temperature ?? HiveBox().temperature,
-                      getModelByApiKey(result.apiKey ?? ""), result.moduleType!, list, []).then((value) {
-                    ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(title: value));
-                  }).catchError((e) {
-                    e.toString().fail();
-                  });
-                }
-                return Column(
+                          try {
+                            imageFile = value;
+                            final imagePath =
+                                '${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.png';
+                            File(imagePath).writeAsBytesSync(imageFile);
+                            await Gal.putImage(imagePath);
+                            S.current.save_success.success();
+                          } catch (e) {
+                            print(e);
+                            S.current.save_fail.fail();
+                          }
+                        });
+                      },
+                    ),
+                    PullDownMenuItem(
+                        title: "分享到ShareGPT",
+                        onTap: () async {
+                          var url = await API().share2ShareGPT(ref.watch(chatProvider(result.id ?? 0).notifier).chats);
+                          if (url != null && context.mounted) {
+                            showCommonDialog(
+                              context,
+                              title: S.current.reminder,
+                              hideCancelBtn: true,
+                              content: url,
+                              confirmText: S.current.copy,
+                              confirmCallback: () {
+                                url.toClipboard();
+                              },
+                            );
+                          }
+                        }),
+                    PullDownMenuItem(
+                      title: S.current.chat_setting,
+                      onTap: () {
+                        F.push(const ChatSettingPage());
+                      },
+                    ),
+                  ];
+                },
+              ),
+            ],
+            title: Builder(builder: (context) {
+              return PullDownButton(
+                scrollController: ScrollController(),
+                buttonBuilder: (_, showMenu) => Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Expanded(
-                      child: Listener(
-                        behavior: HitTestBehavior.opaque,
-                        onPointerDown: (event) {
-                          isScrollManual = false;
-                        },
-                        onPointerMove: (event) {
-                          isScrollManual = true;
-                        },
-                        onPointerCancel: (event) {
-                          isScrollManual = false;
-                        },
-                        onPointerUp: (event) {
-                          isScrollManual = false;
-                        },
-                        child: ListView.builder(
-                          reverse: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          itemBuilder: (context, index) {
-                            var item = list[list.length - 1 - index];
-
-                            Widget resultWidget;
-                            if (item.type == ChatType.user.index) {
-                              resultWidget = UserMessage(
-                                chatItem: item,
-                                resendMessage: (content) {
-                                  sendMessage(result.id, content, item.images);
-                                },
-                                sendMessageAgain: (content) {
-                                  sendMessage(result.id, content, item.images);
-                                },
-                                ttsCallBack: currentModel.getTTSModels.isEmpty
-                                    ? null
-                                    : (content) {
-                                        playText(currentModel, content);
-                                      },
-                              );
-                            } else if (item.type == ChatType.bot.index) {
-                              resultWidget = BotMessage(
-                                chatItem: item,
-                                ttsCallBack: currentModel.getTTSModels.isEmpty
-                                    ? null
-                                    : (content) {
-                                        playText(currentModel, content);
-                                      },
-                              );
-                            } else {
-                              resultWidget = AssistMessage(chatItem: item);
-                            }
-                            return resultWidget;
-                          },
-                          itemCount: list.length,
-                        ),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: F.width * 0.5,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            result.title ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).appBarTheme.titleTextStyle,
+                          ),
+                          Text(
+                            "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    ChatPanel(
-                      focusNode: _focusNode,
-                      supportImage: true,
-                      supportAudio: getModelByApiKey(result.apiKey ?? "").getWhisperModels.isNotEmpty,
-                      scrollToTop: () {
-                        _scrollController.animateTo(0,
-                            duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
-                      },
-                      sendMessage: (content, images) async {
-                        await sendMessage(result.id, content, images);
-                      },
-                      cancelSend: () {
-                        _streamSubscription?.cancel();
-                        ref.watch(imagesProvider.notifier).update((state) => []);
-                        ChatItem lastOne = ref.watch(chatProvider(result.id ?? 0).notifier).chats.last;
-                        lastOne.status = MessageStatus.canceled.index;
-                        ref.watch(chatProvider(result.id ?? 0).notifier).update(lastOne);
-                        ref.watch(isGeneratingContentProvider.notifier).state = false;
-                      },
+                    const SizedBox(width: 5),
+                    Icon(
+                      CupertinoIcons.chevron_up_chevron_down,
+                      color: Theme.of(context).appBarTheme.titleTextStyle?.color,
+                      size: 16,
                     ),
                   ],
-                );
-              });
-        }),
-      );
+                ).click(() {
+                  showMenu();
+                }),
+                itemBuilder: (BuildContext context) {
+                  return supportedModel
+                      .where((element) => element.id != null && element.id!.isNotEmpty)
+                      .map(
+                        (e) => PullDownMenuItem(
+                          onTap: () {
+                            result.moduleType = e.id;
+                            ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
+                                  moduleType: e.id,
+                                ));
+                          },
+                          title: e.id?.replaceFirst("models/", "") ?? "",
+                          iconColor: Theme.of(context).primaryColor,
+                          icon: e.id != result.moduleType ? null : CupertinoIcons.checkmark_alt,
+                        ),
+                      )
+                      .toList();
+                },
+              );
+            }),
+          ),
+          body: Consumer(builder: (context, ref, _) {
+            var chat = ref.watch(chatProvider(result.id ?? 0));
+            return MultiStateWidget(
+                value: chat,
+                data: (list) {
+                  if (requestTitled == false &&
+                      list.length >= 2 &&
+                      result.title == S.current.new_chat &&
+                      result.id != specialGenerateTextChatParentItemTime &&
+                      ref.watch(isGeneratingContentProvider) == false &&
+                      ref.watch(autoGenerateTitleProvider.notifier).value == true) {
+                    //list里的前2条状态必须是成功
+
+                    requestTitled = true;
+                    API().generateChatTitle(result.temperature ?? HiveBox().temperature,
+                        getModelByApiKey(result.apiKey ?? ""), result.moduleType!, list, []).then((value) {
+                      ref
+                          .watch(currentChatParentItemProvider.notifier)
+                          .update((state) => result.copyWith(title: value));
+                    }).catchError((e) {
+                      e.toString().fail();
+                    });
+                  }
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: Listener(
+                          behavior: HitTestBehavior.opaque,
+                          onPointerDown: (event) {
+                            isScrollManual = false;
+                          },
+                          onPointerMove: (event) {
+                            isScrollManual = true;
+                          },
+                          onPointerCancel: (event) {
+                            isScrollManual = false;
+                          },
+                          onPointerUp: (event) {
+                            isScrollManual = false;
+                          },
+                          child: Screenshot(
+                            controller: _screenshotController,
+                            child: ListView.builder(
+                              reverse: true,
+                              key: chatListViewKey,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              controller: _scrollController,
+                              itemBuilder: (context, index) {
+                                var item = list[list.length - 1 - index];
+
+                                Widget resultWidget;
+                                if (item.type == ChatType.user.index) {
+                                  resultWidget = UserMessage(
+                                    chatItem: item,
+                                    resendMessage: (content) {
+                                      sendMessage(result.id, content, item.images);
+                                    },
+                                    sendMessageAgain: (content) {
+                                      sendMessage(result.id, content, item.images);
+                                    },
+                                    ttsCallBack: currentModel.getTTSModels.isEmpty
+                                        ? null
+                                        : (content) {
+                                            playText(currentModel, content);
+                                          },
+                                  );
+                                } else if (item.type == ChatType.bot.index) {
+                                  resultWidget = BotMessage(
+                                    chatItem: item,
+                                    ttsCallBack: currentModel.getTTSModels.isEmpty
+                                        ? null
+                                        : (content) {
+                                            playText(currentModel, content);
+                                          },
+                                  );
+                                } else {
+                                  resultWidget = AssistMessage(chatItem: item);
+                                }
+                                return resultWidget;
+                              },
+                              itemCount: list.length,
+                            ),
+                          ),
+                        ),
+                      ),
+                      ChatPanel(
+                        focusNode: _focusNode,
+                        supportImage: true,
+                        supportAudio: getModelByApiKey(result.apiKey ?? "").getWhisperModels.isNotEmpty,
+                        scrollToTop: () {
+                          _scrollController.animateTo(0,
+                              duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
+                        },
+                        sendMessage: (content, images) async {
+                          await sendMessage(result.id, content, images);
+                        },
+                        cancelSend: () {
+                          _streamSubscription?.cancel();
+                          ref.watch(imagesProvider.notifier).update((state) => []);
+                          ChatItem lastOne = ref.watch(chatProvider(result.id ?? 0).notifier).chats.last;
+                          lastOne.status = MessageStatus.canceled.index;
+                          ref.watch(chatProvider(result.id ?? 0).notifier).update(lastOne);
+                          ref.watch(isGeneratingContentProvider.notifier).state = false;
+                        },
+                      ),
+                    ],
+                  );
+                });
+          }),
+        );
+      });
     });
   }
 
@@ -641,7 +701,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               //获取他相对于整个屏幕左上角的偏移
                               var offset = event.position;
 
-                              double paddingBottom = MediaQuery.of(context).size.height - offset.dy;
+                              double paddingBottom = F.height - offset.dy;
 
                               if (paddingBottom < 200) {
                                 ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
@@ -964,7 +1024,7 @@ class UserMessage extends ConsumerWidget {
                 },
                 child: Container(
                   constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.8,
+                    maxWidth: F.width * 0.8,
                     minWidth: 10,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -1057,7 +1117,7 @@ class BotMessage extends ConsumerWidget {
               },
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.7,
+                  maxWidth: F.width * 0.7,
                   minWidth: 10,
                 ),
                 decoration: BoxDecoration(
@@ -1080,7 +1140,7 @@ class BotMessage extends ConsumerWidget {
   Widget getMessage(WidgetRef ref, BuildContext context) {
     if (chatItem.status == MessageStatus.loading.index) {
       return Container(
-        width: MediaQuery.of(context).size.width * 0.2,
+        width: F.width * 0.2,
         alignment: Alignment.center,
         child: SizedBox(
           width: 40,
@@ -1150,7 +1210,7 @@ class AssistMessage extends StatelessWidget {
       alignment: Alignment.center,
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.9,
+          maxWidth: F.width * 0.9,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         child: Text(
