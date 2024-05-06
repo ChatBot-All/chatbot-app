@@ -351,7 +351,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           itemBuilder: (context) => getLocaleLanguages().entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
-                                    enabled: e.value !=
+                                    enabled: e.key !=
                                         ref
                                             .watch(toLanguageProvider.notifier)
                                             .value,
@@ -403,7 +403,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           itemBuilder: (context) => getLocaleLanguages().entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
-                                    enabled: e.value !=
+                                    enabled: e.key !=
                                         ref
                                             .watch(
                                                 fromLanguageProvider.notifier)

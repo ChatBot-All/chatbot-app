@@ -1,11 +1,137 @@
 import 'dart:convert';
 
 import 'package:ChatBot/base.dart';
+import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:pull_down_button/pull_down_button.dart';
 
+import '../../hive_bean/openai_bean.dart';
 import '../db/chat_item.dart';
+import '../theme.dart';
 import 'chat_markdown.dart';
+
+class ScreenShootChatPage extends ConsumerWidget {
+  final List<ChatItem> list;
+  final BuildContext rootContext;
+  final ChatParentItem result;
+
+  const ScreenShootChatPage({
+    super.key,
+    required this.list,
+    required this.rootContext,
+    required this.result,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return Material(
+      borderRadius: BorderRadius.circular(10),
+      child: Builder(builder: (context) {
+        var items = list.map((e) {
+          if (e.type == ChatType.user.index) {
+            return ScreenShootUserMessage(
+              chatItem: e,
+            );
+          } else if (e.type == ChatType.bot.index) {
+            return ScreenShootBotMessage(
+              chatItem: e,
+            );
+          } else {
+            return ScreenShootAssistMessage(chatItem: e);
+          }
+        }).toList();
+
+        return MediaQuery(
+          data: MediaQuery.of(rootContext).copyWith(size: Size(F.width, F.height)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: kToolbarHeight,
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                    alignment: Alignment.center,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: F.width * 0.8,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            result.title ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).appBarTheme.titleTextStyle,
+                          ),
+                          Text(
+                            "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ...items,
+                  Container(
+                    width: F.width,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: ref.watch(themeProvider).xffF6F6F6(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            "assets/images/logo.jpg",
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Made by CChatBot",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              DateUtil.formatDateMs(DateTime.now().millisecondsSinceEpoch,
+                                  format: DateFormats.y_mo_d_h_m),
+                              style: TextStyle(
+                                color: Theme.of(context).textTheme.bodyMedium?.color,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
 
 class ScreenShootUserMessage extends StatelessWidget {
   final ChatItem chatItem;

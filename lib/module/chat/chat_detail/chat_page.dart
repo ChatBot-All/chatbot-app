@@ -7,6 +7,7 @@ import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_setting_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
@@ -161,28 +162,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             .captureFromLongWidget(
                           InheritedTheme.captureAll(
                             rootContext,
-                            Material(
-                              child: Builder(builder: (context) {
-                                var items = list.map((e) {
-                                  if (e.type == ChatType.user.index) {
-                                    return ScreenShootUserMessage(
-                                      chatItem: e,
-                                    );
-                                  } else if (e.type == ChatType.bot.index) {
-                                    return ScreenShootBotMessage(
-                                      chatItem: e,
-                                    );
-                                  } else {
-                                    return ScreenShootAssistMessage(chatItem: e);
-                                  }
-                                }).toList();
-
-                                return Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: items,
-                                );
-                              }),
+                            ProviderScope(
+                              child: ScreenShootChatPage(
+                                list: list,
+                                rootContext: rootContext,
+                                result: result,
+                              ),
                             ),
                           ),
                           delay: const Duration(milliseconds: 100),
@@ -240,7 +225,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   children: [
                     ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: F.width * 0.5,
+                        maxWidth: F.width * 0.8,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -593,7 +578,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 15, right: 15),
+      padding: const EdgeInsets.only(top: 10, right: 15),
       decoration: BoxDecoration(
         color: ref.watch(themeProvider).xffF6F6F6(),
       ),
