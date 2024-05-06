@@ -181,8 +181,6 @@ class ThemeViewModel extends StateNotifier<BaseTheme> {
   ThemeType get type => ThemeType.getType(SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index));
 
   void change(int t) {
-    if (t == type.index) return;
-
     state = _getThemeByType(t);
     SpUtil.putInt(
       spLightTheme,
@@ -221,7 +219,7 @@ class LightTheme extends BaseTheme {
   @override
   ThemeData theme(Color primaryColor) {
     return ThemeData.light().copyWith(
-      colorScheme:  ColorScheme.light(
+      colorScheme: ColorScheme.light(
         primary: primaryColor,
         secondary: primaryColor,
         surface: Colors.white,
@@ -239,7 +237,7 @@ class LightTheme extends BaseTheme {
       hoverColor: primaryColor,
       cardColor: Colors.white,
       canvasColor: Colors.white,
-      cupertinoOverrideTheme:  CupertinoThemeData(
+      cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: primaryColor,
       ),
       textTheme: const TextTheme(
@@ -303,7 +301,7 @@ class LightTheme extends BaseTheme {
       ),
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      bottomNavigationBarTheme:  BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xffF6F6F7),
         selectedItemColor: primaryColor,
         unselectedItemColor: const Color(0xff181818),
@@ -383,7 +381,7 @@ class DarkTheme extends BaseTheme {
   @override
   ThemeData theme(Color primaryColor) {
     return ThemeData.dark().copyWith(
-      colorScheme:  ColorScheme.dark(
+      colorScheme: ColorScheme.dark(
           primary: primaryColor,
           secondary: primaryColor,
           surface: const Color(0xff2C2C2C),
@@ -467,7 +465,7 @@ class DarkTheme extends BaseTheme {
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: primaryColor,
       ),
-      bottomNavigationBarTheme:  BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: const Color(0xff1C1C1C),
         selectedItemColor: primaryColor,
         unselectedItemColor: const Color(0xffCFCFCF),

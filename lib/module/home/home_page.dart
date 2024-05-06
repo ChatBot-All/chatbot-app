@@ -45,9 +45,9 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     }
 
     if (brightness == Brightness.dark) {
-      ref.read(themeProvider.notifier).change(ThemeType.dark.index);
+      ref.read(themeProvider.notifier).change(ThemeType.system.index);
     } else {
-      ref.read(themeProvider.notifier).change(ThemeType.light.index);
+      ref.read(themeProvider.notifier).change(ThemeType.system.index);
     }
   }
 
