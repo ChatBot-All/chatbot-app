@@ -51,7 +51,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   final ScreenshotController _screenshotController = ScreenshotController();
 
-  final GlobalKey chatListViewKey = GlobalKey();
 
   var player = AudioPlayer();
 
@@ -172,6 +171,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                           ),
                           delay: const Duration(milliseconds: 100),
                           context: rootContext,
+                          pixelRatio: 5
                         )
                             .then((value) async {
                           Uint8List imageFile;
@@ -183,6 +183,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             File(imagePath).writeAsBytesSync(imageFile);
                             await Gal.putImage(imagePath);
                             S.current.save_success.success();
+                            Share.shareXFiles([XFile(imagePath)]);
                           } catch (e) {
                             print(e);
                             S.current.save_fail.fail();
@@ -322,7 +323,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             controller: _screenshotController,
                             child: ListView.builder(
                               reverse: true,
-                              key: chatListViewKey,
                               physics: const AlwaysScrollableScrollPhysics(),
                               controller: _scrollController,
                               itemBuilder: (context, index) {
