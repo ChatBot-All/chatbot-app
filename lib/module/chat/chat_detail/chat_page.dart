@@ -156,6 +156,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     PullDownMenuItem(
                       title: "截屏",
                       onTap: () {
+                        S.current.loading.loading();
                         var list = ref.watch(chatProvider(result.id ?? 0).notifier).chats;
                         _screenshotController
                             .captureFromLongWidget(

@@ -167,6 +167,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                     PullDownMenuItem(
                       title: "截屏",
                       onTap: () {
+                        S.current.loading.loading();
                         var list = ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).chats;
                         _screenshotController
                             .captureFromLongWidget(
@@ -186,10 +187,10 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                           ),
                           delay: const Duration(milliseconds: 100),
                           context: rootContext,
+                          pixelRatio: 5,
                         )
                             .then((value) async {
                           Uint8List imageFile;
-
                           try {
                             imageFile = value;
                             final imagePath =
