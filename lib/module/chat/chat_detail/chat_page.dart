@@ -153,6 +153,23 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     },
                   ),
                   PullDownMenuItem(
+                      title: "分享到ShareGPT",
+                      onTap: () async {
+                        var url = await API().share2ShareGPT(ref.watch(chatProvider(result.id ?? 0).notifier).chats);
+                        if (url != null && context.mounted) {
+                          showCommonDialog(
+                            context,
+                            title: S.current.reminder,
+                            hideCancelBtn: true,
+                            content: url,
+                            confirmText: S.current.copy,
+                            confirmCallback: () {
+                              url.toClipboard();
+                            },
+                          );
+                        }
+                      }),
+                  PullDownMenuItem(
                     title: S.current.chat_setting,
                     onTap: () {
                       F.push(const ChatSettingPage());

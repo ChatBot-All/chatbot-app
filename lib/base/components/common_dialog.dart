@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +31,13 @@ class CommonDialog extends StatelessWidget {
           : Text(
               title!,
             ),
-      content: content == null ? null : Text(content!),
+      content: content == null
+          ? null
+          : SelectableText(
+              content!,
+              selectionHeightStyle: BoxHeightStyle.max,
+              selectionWidthStyle: BoxWidthStyle.max,
+            ),
       actions: hideCancelBtn
           ? [
               CupertinoDialogAction(
@@ -50,9 +58,9 @@ class CommonDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child:  Text(
+                child: Text(
                   S.current.cancel,
-                  style:const TextStyle(
+                  style: const TextStyle(
                     color: Colors.grey,
                   ),
                 ),

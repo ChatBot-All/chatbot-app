@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:ChatBot/base.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:dio/dio.dart';
 
 import '../../hive_bean/generate_content.dart';
 import '../../hive_bean/supported_models.dart';
@@ -98,6 +100,41 @@ abstract class APIImpl {
     return requestParams;
   }
 
+  List<RequestParams> generateShareGPTListParams(List<ChatItem> chatItems) {
+    List<RequestParams> requestParams = [
+      RequestParams(role: ChatType.user.index, content: [], images: []),
+    ];
+
+    List<ChatItem> historyMessages = [];
+    //深拷贝一份chatItems
+    for (var element in chatItems) {
+      historyMessages.add(element.copyWidth());
+    }
+
+    for (int j = 0; j < historyMessages.length; j++) {
+      //遍历historyMessages里的所有内容，将type为0的内容放到user里，将type为1的内容放到model里，并且保证user和model成对出现
+
+      int role = requestParams.last.role;
+
+      if (j == 0 && historyMessages[j].type == ChatType.system.index) {
+        requestParams.last.content.add(historyMessages[j].content ?? "");
+        continue;
+      }
+
+      if (historyMessages[j].type == role) {
+        requestParams.last.content.add(historyMessages[j].content ?? "");
+        requestParams.last.images.addAll(historyMessages[j].images ?? []);
+      } else {
+        requestParams.add(RequestParams(
+            role: historyMessages[j].type ?? 0,
+            content: [historyMessages[j].content ?? ""],
+            images: historyMessages[j].images ?? []));
+      }
+    }
+
+    return requestParams;
+  }
+
   List<RequestParams> generateChatHistory(List<ChatItem> chatItems, bool withoutHistoryMessage) {
     List<RequestParams> requestParams = [
       RequestParams(role: ChatType.user.index, content: [], images: []),
@@ -159,11 +196,52 @@ abstract class APIImpl {
       l = requestParams.length - 1;
     }
 
-
-    print(requestParams.last.content);
     if (withoutHistoryMessage) {
       return [requestParams.last];
     }
     return requestParams;
+  }
+
+  Future<String?> share2ShareGPT(List<ChatItem> chatItem) async {
+    if (chatItem.isEmpty) {
+      return null;
+    }
+    try {
+      Dio dio = Dio(
+        BaseOptions(
+          headers: {
+            "Content-Type": "application/json",
+          },
+        ),
+      );
+
+      var params = generateShareGPTListParams(chatItem)
+          .map((e) => {
+                "from": e.role == ChatType.bot.index ? "gpt" : "human",
+                "value": e.content.join("\n"),
+              })
+          .toList();
+
+
+      if (params.isEmpty) {
+        return null;
+      }
+      var resultParams = {
+        "avatarUrl": null,
+        "items": params,
+      };
+
+      var result = await dio.post("https://sharegpt.com/api/conversations", data: resultParams);
+      if (result.statusCode == 200) {
+        return "https://shareg.pt/${result.data["id"]}";
+      } else {
+        return null;
+      }
+    } on DioException catch (e) {
+      e.message.fail();
+    } catch (e) {
+      e.toString().fail();
+    }
+    return null;
   }
 }
