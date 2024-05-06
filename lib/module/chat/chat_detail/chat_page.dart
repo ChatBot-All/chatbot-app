@@ -37,9 +37,14 @@ import '../../../hive_bean/openai_bean.dart';
 import '../chat_audio/chat_audio_page.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
+  final bool showKeyboard;
   final ChatParentItem localChatHistory;
 
-  const ChatPage({super.key, required this.localChatHistory});
+  const ChatPage({
+    super.key,
+    required this.localChatHistory,
+    this.showKeyboard = false,
+  });
 
   @override
   ConsumerState createState() => _ChatPageState();
@@ -84,6 +89,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(milliseconds: 100), () {
         ref.watch(currentChatParentItemProvider.notifier).update((state) => widget.localChatHistory);
+        if (widget.showKeyboard) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            _focusNode.requestFocus();
+          });
+        }
       });
     });
   }

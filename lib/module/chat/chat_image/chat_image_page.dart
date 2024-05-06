@@ -25,7 +25,9 @@ import '../../../base/components/screenshoot_view.dart';
 import '../../../base/db/chat_item.dart';
 
 class ChatImagePage extends ConsumerStatefulWidget {
-  const ChatImagePage({super.key});
+  final bool showKeyboard;
+
+  const ChatImagePage({super.key, this.showKeyboard = false});
 
   @override
   ConsumerState createState() => _ChatImagePageState();
@@ -71,8 +73,12 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ///查找出所有支持"dall-e-3"的模型
-
       ref.watch(currentGenerateImageModelProvider.notifier).state = supportedModels.first;
+      if (widget.showKeyboard) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+          _focusNode.requestFocus();
+        });
+      }
     });
   }
 
@@ -114,7 +120,6 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                 scrollController: ScrollController(),
                 itemBuilder: (context) {
                   return [
-
                     PullDownMenuTitle(
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 5, top: 5),
@@ -187,7 +192,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                           ),
                           delay: const Duration(milliseconds: 100),
                           context: rootContext,
-                          pixelRatio:  MediaQuery.of(rootContext).devicePixelRatio,
+                          pixelRatio: MediaQuery.of(rootContext).devicePixelRatio,
                         )
                             .then((value) async {
                           Uint8List imageFile;

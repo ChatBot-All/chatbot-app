@@ -1,4 +1,3 @@
-
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/components/common_dialog.dart';
 import 'package:ChatBot/base/theme.dart';
@@ -58,14 +57,15 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                   }
                   F
                       .push(ChatPage(
+                          showKeyboard: true,
                           localChatHistory: ChatParentItem(
-                    apiKey: getDefaultApiKey(),
-                    id: DateTime.now().millisecondsSinceEpoch,
-                    moduleName: getModelByApiKey("").model,
-                    moduleType: getSupportedModelByApiKey(""),
-                    temperature: HiveBox().temperature,
-                    title: S.current.new_chat,
-                  )))
+                            apiKey: getDefaultApiKey(),
+                            id: DateTime.now().millisecondsSinceEpoch,
+                            moduleName: getModelByApiKey("").model,
+                            moduleType: getSupportedModelByApiKey(""),
+                            temperature: HiveBox().temperature,
+                            title: S.current.new_chat,
+                          )))
                       .then((value) {
                     ref.read(chatParentListProvider.notifier).load();
                   });
@@ -89,8 +89,7 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Icon(
                     CupertinoIcons.add_circled,
-                    color:
-                        Theme.of(context).appBarTheme.actionsIconTheme?.color,
+                    color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
                     size: 22,
                   ),
                 ),
@@ -115,13 +114,14 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                           onTap: () {
                             F
                                 .push(ChatPage(
+                                    showKeyboard: true,
                                     localChatHistory: ChatParentItem(
-                              apiKey: e.apiKey ?? "",
-                              id: DateTime.now().millisecondsSinceEpoch,
-                              moduleName: e.model,
-                              moduleType: e.defaultModelType?.id ?? "gpt-4",
-                              title: S.current.new_chat,
-                            )))
+                                      apiKey: e.apiKey ?? "",
+                                      id: DateTime.now().millisecondsSinceEpoch,
+                                      moduleName: e.model,
+                                      moduleType: e.defaultModelType?.id ?? "gpt-4",
+                                      title: S.current.new_chat,
+                                    )))
                                 .then((value) {
                               ref.read(chatParentListProvider.notifier).load();
                             });
@@ -152,16 +152,13 @@ class _ChatPageState extends ConsumerState<ChatListPage> {
                     return b.id!.compareTo(a.id!);
                   }
                 });
-                data.sort((a, b) =>
-                    (b.pin ?? false ? 1 : 0).compareTo(a.pin ?? false ? 1 : 0));
+                data.sort((a, b) => (b.pin ?? false ? 1 : 0).compareTo(a.pin ?? false ? 1 : 0));
 
                 // 然后如果ChatItem不为空，那就以ChatItem的time排序，否则就以data的time排序
 
                 return ListView.builder(
                   padding: EdgeInsets.only(
-                      top: 0,
-                      bottom: MediaQuery.paddingOf(context).bottom +
-                          kBottomNavigationBarHeight),
+                      top: 0, bottom: MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight),
                   itemCount: data.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     if (index == 0) {
@@ -258,10 +255,8 @@ class ChatTranslateListItem extends ConsumerWidget {
               return;
             }
 
-            F.push(const ChatTranslatePage()).then((value){
-              ChatItemProvider()
-                  .deleteAll(specialGenerateTranslateChatParentItemTime);
-
+            F.push(const ChatTranslatePage()).then((value) {
+              ChatItemProvider().deleteAll(specialGenerateTranslateChatParentItemTime);
             });
           }),
           const Divider(
@@ -421,8 +416,7 @@ class ChatAudioChatListItem extends ConsumerWidget {
               return;
             }
             F.push(const ChatAudioPage()).then((value) {
-              ChatItemProvider()
-                  .deleteAll(specialGenerateAudioChatParentItemTime);
+              ChatItemProvider().deleteAll(specialGenerateAudioChatParentItemTime);
             });
           }),
           const Divider(
@@ -491,9 +485,8 @@ class ChatSpecialTextListItem extends ConsumerWidget {
               return;
             }
 
-            var chatItem = HiveBox().chatHistory.get(
-                specialGenerateTextChatParentItemTime.toString(),
-                defaultValue: null);
+            var chatItem =
+                HiveBox().chatHistory.get(specialGenerateTextChatParentItemTime.toString(), defaultValue: null);
             if (chatItem == null) {
               chatItem = ChatParentItem(
                 apiKey: getDefaultApiKey(),
@@ -502,8 +495,7 @@ class ChatSpecialTextListItem extends ConsumerWidget {
                 moduleType: getSupportedModelByApiKey(""),
                 title: S.current.new_chat,
               );
-              HiveBox().chatHistory.put(
-                  specialGenerateTextChatParentItemTime.toString(), chatItem);
+              HiveBox().chatHistory.put(specialGenerateTextChatParentItemTime.toString(), chatItem);
             }
             F.push(ChatPage(localChatHistory: chatItem));
           }),
@@ -524,9 +516,7 @@ class ChatListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return Container(
-      color: (item.pin ?? false)
-          ? ref.watch(themeProvider).pinedBgColor()
-          : ref.watch(themeProvider).unPinedBgColor(),
+      color: (item.pin ?? false) ? ref.watch(themeProvider).pinedBgColor() : ref.watch(themeProvider).unPinedBgColor(),
       child: Column(
         children: [
           Slidable(
@@ -540,9 +530,7 @@ class ChatListItem extends ConsumerWidget {
                   },
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
-                  icon: (item.pin ?? false)
-                      ? CupertinoIcons.pin_slash
-                      : CupertinoIcons.pin,
+                  icon: (item.pin ?? false) ? CupertinoIcons.pin_slash : CupertinoIcons.pin,
                 ),
                 SlidableAction(
                   onPressed: (context) {
@@ -595,44 +583,31 @@ class ChatListItem extends ConsumerWidget {
                                       item.title ?? '',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium
-                                          ?.copyWith(
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                             fontWeight: FontWeight.w600,
                                           ),
                                     ),
                                   ),
                                   Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10, right: 15),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 3, vertical: 1),
+                                    margin: const EdgeInsets.only(left: 10, right: 15),
+                                    padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(3),
-                                      border: Border.all(
-                                          color: Theme.of(context).primaryColor,
-                                          width: 1),
+                                      border: Border.all(color: Theme.of(context).primaryColor, width: 1),
                                     ),
                                     child: Text(
-                                      APIType.fromCode(item.moduleName ?? 1)
-                                          .name,
+                                      APIType.fromCode(item.moduleName ?? 1).name,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
-                                          ?.copyWith(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 10),
+                                          ?.copyWith(color: Theme.of(context).primaryColor, fontSize: 10),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                             Text(
-                              item.chatItem == null
-                                  ? (item.id?.toYMDHM() ?? "")
-                                  : item.chatItem!.time?.toYMDHM() ?? "",
+                              item.chatItem == null ? (item.id?.toYMDHM() ?? "") : item.chatItem!.time?.toYMDHM() ?? "",
                               style: TextStyle(
                                 color: ref.watch(themeProvider).timeColor(),
                                 fontSize: 12,
@@ -651,15 +626,10 @@ class ChatListItem extends ConsumerWidget {
                           Padding(
                             padding: const EdgeInsets.only(right: 15),
                             child: Text(
-                              item.chatItem == null
-                                  ? ""
-                                  : item.chatItem!.content?.toString() ?? "",
+                              item.chatItem == null ? "" : item.chatItem!.content?.toString() ?? "",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(fontSize: 14),
+                              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14),
                             ),
                           ),
                       ],
@@ -684,8 +654,7 @@ class ChatListItem extends ConsumerWidget {
               var model = getModelByApiKey(item.apiKey ?? "");
 
               var result = item.copyWith(
-                moduleType: getSupportedModelByApiKey(model.apiKey ?? "",
-                    preModelType: item.moduleType),
+                moduleType: getSupportedModelByApiKey(model.apiKey ?? "", preModelType: item.moduleType),
                 moduleName: model.model,
                 apiKey: model.apiKey,
               );

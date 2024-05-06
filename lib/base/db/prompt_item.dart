@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:ChatBot/base.dart';
+import 'package:ChatBot/utils/hive_box.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../theme.dart';
 
 const String tablePromptItem = 'prompt_item';
 const String columnTime = 'time';
@@ -127,9 +132,37 @@ create table $tablePromptItem (
     }
     List<Map<String, Object?>> maps = await db!.query(tablePromptItem,
         columns: [columnTime, columnAuthor, columnTitle, columnPrompt, columnHint, columnExtra]);
-    return List.generate(maps.length, (i) {
+    var list = List.generate(maps.length, (i) {
       return PromptItem.fromJson(maps[i]);
     });
+
+    //解析assets里的json文件
+
+    var languageCode = getLocaleByDefaultCode().languageCode;
+
+    String file = 'command.json';
+    if (languageCode == SupportedLanguage.zh.code) {
+      file = 'command.json';
+    } else if (languageCode == SupportedLanguage.en.code) {
+      file = 'command_en.json';
+    } else if (languageCode == SupportedLanguage.ja.code) {
+      file = 'command_ja.json';
+    } else if (languageCode == SupportedLanguage.ko.code) {
+      file = 'command_ko.json';
+    }
+
+    var json = await rootBundle.loadString('assets/$file');
+    var defaultPrompt = (jsonDecode(json) as List)
+        .map((e) => PromptItem(
+              title: e["title"],
+              prompt: e["content"],
+              time: 0,
+            ))
+        .toList();
+
+    list.addAll(defaultPrompt);
+
+    return list;
   }
 
   //delete

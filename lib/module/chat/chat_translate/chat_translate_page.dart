@@ -18,6 +18,7 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';
+import '../../../base/components/lottie_widget.dart';
 import '../../../base/providers.dart';
 import '../../../hive_bean/generate_content.dart';
 import '../../../hive_bean/openai_bean.dart';
@@ -34,6 +35,7 @@ class ChatTranslatePage extends ConsumerStatefulWidget {
 class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
   final fromTextController = TextEditingController();
   List<AllModelBean> supportedModels = [];
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -41,11 +43,10 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
 
     supportedModels = HiveBox().openAIConfig.values.toList();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (ref.watch(currentGenerateTranslateChatModelProvider.notifier).state ==
-          null) {
-        ref.watch(currentGenerateTranslateChatModelProvider.notifier).state =
-            supportedModels.first;
+      if (ref.watch(currentGenerateTranslateChatModelProvider.notifier).state == null) {
+        ref.watch(currentGenerateTranslateChatModelProvider.notifier).state = supportedModels.first;
       }
+      _focusNode.requestFocus();
     });
   }
 
@@ -61,8 +62,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
       return;
     }
     if (content.isEmpty) return;
-    var tts = await API()
-        .text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
+    var tts = await API().text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
 
     if (player.playing) {
       player.stop();
@@ -77,8 +77,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
 
   void startRecord() async {
     if (await record.hasPermission()) {
-      audioPath =
-          "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
+      audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
     } else {
       S.current.open_micro_permission.fail();
@@ -97,8 +96,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     } catch (e) {
       e.toString().fail();
     }
-    ref.watch(audioRecordingStateProvider.notifier).state =
-        AudioRecordingState.normal;
+    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
   }
 
   void stopRecord() async {
@@ -111,17 +109,14 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     if (!File(path).existsSync()) {
       return;
     }
-    ref.watch(audioRecordingStateProvider.notifier).state =
-        AudioRecordingState.sending;
+    ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
 
     S.current.loading.loading();
     try {
-      var model =
-          ref.watch(currentGenerateTranslateChatModelProvider.notifier).state;
+      var model = ref.watch(currentGenerateTranslateChatModelProvider.notifier).state;
 
       if (model == null) {
-        ref.watch(audioRecordingStateProvider.notifier).state =
-            AudioRecordingState.normal;
+        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
         S.current.no_module_use.fail();
         return;
       }
@@ -129,13 +124,11 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
       if (content != null && content.isNotEmpty) {
         sendMessage(model, content);
       } else {
-        ref.watch(audioRecordingStateProvider.notifier).state =
-            AudioRecordingState.normal;
+        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
         S.current.can_not_get_voice_content.fail();
       }
     } catch (e) {
-      ref.watch(audioRecordingStateProvider.notifier).state =
-          AudioRecordingState.normal;
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
       e.toString().fail();
     }
   }
@@ -199,14 +192,9 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                     .map<PullDownMenuItem>((e) => PullDownMenuItem(
                           title: e.alias ?? "",
                           iconColor: Theme.of(context).primaryColor,
-                          icon: e.alias != supportedModel.alias
-                              ? null
-                              : CupertinoIcons.checkmark_alt,
+                          icon: e.alias != supportedModel.alias ? null : CupertinoIcons.checkmark_alt,
                           onTap: () {
-                            ref
-                                .watch(currentGenerateTranslateChatModelProvider
-                                    .notifier)
-                                .state = e;
+                            ref.watch(currentGenerateTranslateChatModelProvider.notifier).state = e;
                           },
                         ))
                     .toList();
@@ -238,13 +226,12 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
               String translatedContent = ref.watch(translatedContentProvider);
 
               return Padding(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 16, bottom: 40),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      getLocaleLanguages()[fromLanguage]??"",
+                      getLocaleLanguages()[fromLanguage] ?? "",
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 16),
@@ -255,6 +242,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: TextField(
+                        focusNode: _focusNode,
                         controller: fromTextController,
                         maxLines: 15,
                         textInputAction: TextInputAction.send,
@@ -262,35 +250,31 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         onSubmitted: (value) {
                           _translate(supportedModel, value);
                         },
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontSize: 24,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontSize: 24,
+                            ),
                         decoration: InputDecoration(
                           hintText: S.current.input_text,
                           border: InputBorder.none,
-                          hintStyle:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontSize: 24,
-                                  ),
+                          hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                fontSize: 24,
+                              ),
                           contentPadding: const EdgeInsets.all(16),
                         ),
                       ),
                     ),
                     const SizedBox(height: 30),
                     const Divider(),
-                    if (translatedContent.isNotEmpty)
-                      const SizedBox(height: 30),
+                    if (translatedContent.isNotEmpty) const SizedBox(height: 30),
                     if (translatedContent.isNotEmpty)
                       Text(
-                        getLocaleLanguages()[toLanguage]??"",
+                        getLocaleLanguages()[toLanguage] ?? "",
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14,
                         ),
                       ),
-                    if (translatedContent.isNotEmpty)
-                      const SizedBox(height: 16),
+                    if (translatedContent.isNotEmpty) const SizedBox(height: 16),
                     if (translatedContent.isNotEmpty)
                       Text(
                         translatedContent,
@@ -299,8 +283,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                           fontSize: 24,
                         ),
                       ),
-                    if (translatedContent.isNotEmpty)
-                      const SizedBox(height: 15),
+                    if (translatedContent.isNotEmpty) const SizedBox(height: 15),
                     if (translatedContent.isNotEmpty)
                       ColorFiltered(
                         colorFilter: ColorFilter.mode(
@@ -315,8 +298,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                                 },
                           stopCall: () {
                             player.stop();
-                            ref.watch(playingAudioProvider.notifier).state =
-                                false;
+                            ref.watch(playingAudioProvider.notifier).state = false;
                           },
                           toClipboard: () {
                             translatedContent.toClipboard();
@@ -348,17 +330,13 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         var fromLanguage = ref.watch(fromLanguageProvider);
                         return PullDownButton(
                           scrollController: ScrollController(),
-                          itemBuilder: (context) => getLocaleLanguages().entries
+                          itemBuilder: (context) => getLocaleLanguages()
+                              .entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
-                                    enabled: e.key !=
-                                        ref
-                                            .watch(toLanguageProvider.notifier)
-                                            .value,
+                                    enabled: e.key != ref.watch(toLanguageProvider.notifier).value,
                                     onTap: () {
-                                      ref
-                                          .watch(fromLanguageProvider.notifier)
-                                          .change(e.key);
+                                      ref.watch(fromLanguageProvider.notifier).change(e.key);
                                     },
                                   ))
                               .toList(),
@@ -370,9 +348,8 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  getLocaleLanguages()[fromLanguage]??"",
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                  getLocaleLanguages()[fromLanguage] ?? "",
+                                  style: Theme.of(context).textTheme.titleMedium,
                                 ))),
                           ).click(() {
                             showMenu();
@@ -400,18 +377,13 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                         var toLanguage = ref.watch(toLanguageProvider);
                         return PullDownButton(
                           scrollController: ScrollController(),
-                          itemBuilder: (context) => getLocaleLanguages().entries
+                          itemBuilder: (context) => getLocaleLanguages()
+                              .entries
                               .map((e) => PullDownMenuItem(
                                     title: e.value,
-                                    enabled: e.key !=
-                                        ref
-                                            .watch(
-                                                fromLanguageProvider.notifier)
-                                            .value,
+                                    enabled: e.key != ref.watch(fromLanguageProvider.notifier).value,
                                     onTap: () {
-                                      ref
-                                          .watch(toLanguageProvider.notifier)
-                                          .change(e.key);
+                                      ref.watch(toLanguageProvider.notifier).change(e.key);
                                     },
                                   ))
                               .toList(),
@@ -423,7 +395,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                               ),
                               child: Center(
                                   child: Text(
-                                    getLocaleLanguages()[toLanguage]??"",
+                                getLocaleLanguages()[toLanguage] ?? "",
                                 style: Theme.of(context).textTheme.titleMedium,
                               )),
                             ),
@@ -436,21 +408,18 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                     const SizedBox(width: 16),
                   ],
                 ),
+                const SizedBox(height: 10),
                 if (supportedModel.getWhisperModels.isNotEmpty)
                   Listener(
                     behavior: HitTestBehavior.opaque,
                     onPointerDown: (event) async {
-                      ref.watch(audioRecordingStateProvider.notifier).state =
-                          AudioRecordingState.recording;
+                      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
                       audioOverlay.showAudio(context);
                       startRecord();
                     },
                     onPointerUp: (event) {
                       audioOverlay.removeAudio();
-                      if (ref
-                              .watch(audioRecordingStateProvider.notifier)
-                              .state ==
-                          AudioRecordingState.canceling) {
+                      if (ref.watch(audioRecordingStateProvider.notifier).state == AudioRecordingState.canceling) {
                         cancel();
                       } else {
                         stopRecord();
@@ -460,28 +429,23 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
                       //获取他相对于整个屏幕左上角的偏移
                       var offset = event.position;
 
-                      double paddingBottom =
-                          MediaQuery.of(context).size.height - offset.dy;
+                      double paddingBottom = MediaQuery.of(context).size.height - offset.dy;
 
                       if (paddingBottom < 200) {
-                        ref.watch(audioRecordingStateProvider.notifier).state =
-                            AudioRecordingState.recording;
+                        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
                       } else {
-                        ref.watch(audioRecordingStateProvider.notifier).state =
-                            AudioRecordingState.canceling;
+                        ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.canceling;
                       }
                       audioOverlay.update();
                     },
                     onPointerCancel: (event) {
                       audioOverlay.removeAudio();
-                      ref.watch(audioRecordingStateProvider.notifier).state =
-                          AudioRecordingState.normal;
+                      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
                     },
-                    child: Lottie.asset(
-                      "assets/lottie/audio.json",
+                    child: const LottieWidget(
+                      scale: 2.4,
+                      transformHitTests: false,
                       width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
                     ),
                   ),
               ],
@@ -522,8 +486,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     var generatedUserPrompt =
         "translate from ${ref.watch(fromLanguageProvider.notifier).value} to ${ref.watch(toLanguageProvider.notifier).value}";
 
-    if (detectTo == getLocaleLanguages()["wyw"] ||
-        detectTo == getLocaleLanguages()["yue"]) {
+    if (detectTo == getLocaleLanguages()["wyw"] || detectTo == getLocaleLanguages()["yue"]) {
       generatedUserPrompt = "翻译成$detectTo";
     }
     if (detectFrom == getLocaleLanguages()["wyw"] ||
@@ -559,15 +522,8 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
       status: MessageStatus.loading.index,
       parentID: specialGenerateTranslateChatParentItemTime,
       requestID: userItem.time,
-      moduleName: ref
-          .watch(currentGenerateTranslateChatModelProvider.notifier)
-          .state!
-          .model!,
-      moduleType: ref
-          .watch(currentGenerateTranslateChatModelProvider.notifier)
-          .state!
-          .defaultModelType!
-          .id,
+      moduleName: ref.watch(currentGenerateTranslateChatModelProvider.notifier).state!.model!,
+      moduleType: ref.watch(currentGenerateTranslateChatModelProvider.notifier).state!.defaultModelType!.id,
       time: DateTime.now().millisecondsSinceEpoch,
     );
     await Future.delayed(const Duration(milliseconds: 50));
@@ -576,11 +532,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
     _streamSubscription = (await API().streamGenerateContent(
       HiveBox().temperature,
       ref.watch(currentGenerateTranslateChatModelProvider.notifier).state!,
-      ref
-          .watch(currentGenerateTranslateChatModelProvider.notifier)
-          .state!
-          .defaultModelType!
-          .id!,
+      ref.watch(currentGenerateTranslateChatModelProvider.notifier).state!.defaultModelType!.id!,
       [promptItem, userItem],
       [],
       true,
@@ -641,34 +593,25 @@ class MoreFunctions extends ConsumerWidget {
       children: [
         const SizedBox(width: 5),
         if (speakCall != null && !playing)
-          Icon(CupertinoIcons.speaker_3,
-                  size: 20,
-                  color: Theme.of(context).textTheme.titleMedium?.color)
-              .click(
+          Icon(CupertinoIcons.speaker_3, size: 20, color: Theme.of(context).textTheme.titleMedium?.color).click(
             () {
               speakCall!();
             },
           ),
         if (playing)
-          Icon(CupertinoIcons.stop_circle,
-                  size: 20,
-                  color: Theme.of(context).textTheme.titleMedium?.color)
-              .click(
+          Icon(CupertinoIcons.stop_circle, size: 20, color: Theme.of(context).textTheme.titleMedium?.color).click(
             () {
               stopCall();
             },
           ),
         const Spacer(),
-        Icon(CupertinoIcons.doc_on_doc,
-                size: 20, color: Theme.of(context).textTheme.titleMedium?.color)
-            .click(
+        Icon(CupertinoIcons.doc_on_doc, size: 20, color: Theme.of(context).textTheme.titleMedium?.color).click(
           () {
             toClipboard();
           },
         ),
         const SizedBox(width: 30),
-        Icon(CupertinoIcons.arrowshape_turn_up_right,
-                size: 20, color: Theme.of(context).textTheme.titleMedium?.color)
+        Icon(CupertinoIcons.arrowshape_turn_up_right, size: 20, color: Theme.of(context).textTheme.titleMedium?.color)
             .click(
           () {
             toShare();
