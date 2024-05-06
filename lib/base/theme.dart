@@ -161,19 +161,19 @@ BaseTheme _getThemeByType(int themeType) {
 
 class ThemeViewModel extends StateNotifier<BaseTheme> {
   ThemeViewModel(super.state) {
-    int type = SpUtil.getInt("lightTheme", defValue: ThemeType.system.index);
+    int type = SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index);
     state = _getThemeByType(type);
   }
 
   ThemeType get type =>
-      ThemeType.getType(SpUtil.getInt("lightTheme", defValue: 2));
+      ThemeType.getType(SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index));
 
   void change(int t) {
     if (t == type.index) return;
 
     state = _getThemeByType(t);
     SpUtil.putInt(
-      "lightTheme",
+      spLightTheme,
       t,
     );
   }

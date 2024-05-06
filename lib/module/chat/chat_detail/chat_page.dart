@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:record/record.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:ChatBot/base.dart';
@@ -57,9 +58,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     Permission.microphone.request();
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
-        _scrollController.animateTo(0,
-            duration: const Duration(milliseconds: 100),
-            curve: Curves.easeInOut);
+        _scrollController.animateTo(0, duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
         if (ref.watch(sendButtonVisibleProvider.notifier).state == false) {
           ref.watch(sendButtonVisibleProvider.notifier).state = true;
         }
@@ -79,9 +78,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(milliseconds: 100), () {
-        ref
-            .watch(currentChatParentItemProvider.notifier)
-            .update((state) => widget.localChatHistory);
+        ref.watch(currentChatParentItemProvider.notifier).update((state) => widget.localChatHistory);
       });
     });
   }
@@ -121,9 +118,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
           var copyData = result?.copyWith(moduleType: realModel);
 
-          ref
-              .watch(currentChatParentItemProvider.notifier)
-              .update((state) => copyData);
+          ref.watch(currentChatParentItemProvider.notifier).update((state) => copyData);
         });
       }
 
@@ -135,15 +130,37 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       return Scaffold(
         appBar: AppBar(
           actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Icon(
-                CupertinoIcons.ellipsis,
-                color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
+            PullDownButton(
+              routeTheme: const PullDownMenuRouteTheme(
+                width: 200,
+                accessibilityWidth: 200,
               ),
-            ).click(() {
-              F.push(const ChatSettingPage());
-            }),
+              buttonBuilder: (context, showMenu) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Icon(
+                  CupertinoIcons.ellipsis,
+                  color: Theme.of(context).appBarTheme.actionsIconTheme?.color,
+                ),
+              ).click(() {
+                showMenu();
+              }),
+              itemBuilder: (BuildContext context) {
+                return [
+                  PullDownMenuItem(
+                    title: "截屏",
+                    onTap: () {
+                      F.push(const ChatSettingPage());
+                    },
+                  ),
+                  PullDownMenuItem(
+                    title: S.current.chat_setting,
+                    onTap: () {
+                      F.push(const ChatSettingPage());
+                    },
+                  ),
+                ];
+              },
+            ),
           ],
           title: Builder(builder: (context) {
             return PullDownButton(
@@ -187,68 +204,22 @@ class _ChatPageState extends ConsumerState<ChatPage> {
               }),
               itemBuilder: (BuildContext context) {
                 return supportedModel
-                    .where((element) =>
-                        element.id != null && element.id!.isNotEmpty)
+                    .where((element) => element.id != null && element.id!.isNotEmpty)
                     .map(
                       (e) => PullDownMenuItem(
                         onTap: () {
                           result.moduleType = e.id;
-                          ref
-                              .watch(currentChatParentItemProvider.notifier)
-                              .update((state) => result.copyWith(
-                                    moduleType: e.id,
-                                  ));
+                          ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
+                                moduleType: e.id,
+                              ));
                         },
                         title: e.id?.replaceFirst("models/", "") ?? "",
                         iconColor: Theme.of(context).primaryColor,
-                        icon: e.id != result.moduleType
-                            ? null
-                            : CupertinoIcons.checkmark_alt,
+                        icon: e.id != result.moduleType ? null : CupertinoIcons.checkmark_alt,
                       ),
                     )
                     .toList();
               },
-              //   .click(() {
-              // showPopover(
-              //   context: context,
-              //   backgroundColor: Theme.of(context).cardColor,
-              //   bodyBuilder: (context) => SingleChildScrollView(
-              //     child: Column(
-              //       children: [
-              //         ...supportedModel.where((element) => element.id != null && element.id!.isNotEmpty).map((e) {
-              //           return ListTile(
-              //             title: Text(e.id?.replaceFirst("models/", "") ?? ""),
-              //             trailing: e.id == result.moduleType
-              //                 ? Icon(
-              //                     CupertinoIcons.checkmark,
-              //                     color: Theme.of(context).primaryColor,
-              //                     size: 16,
-              //                   )
-              //                 : null,
-              //             onTap: () {
-              //               result.moduleType = e.id;
-              //               ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(
-              //                     moduleType: e.id,
-              //                   ));
-              //
-              //               Navigator.of(context).pop();
-              //             },
-              //           );
-              //         }),
-              //       ],
-              //     ),
-              //   ),
-              //   onPop: () {},
-              //   direction: PopoverDirection.top,
-              //   constraints: BoxConstraints(
-              //     maxWidth: 220,
-              //     maxHeight: min(supportedModel.length * 50, F.height / 2),
-              //   ),
-              //   arrowHeight: 8,
-              //   arrowWidth: 15,
-              // );
-              // }
-              // ),
             );
           }),
         ),
@@ -262,19 +233,13 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     result.title == S.current.new_chat &&
                     result.id != specialGenerateTextChatParentItemTime &&
                     ref.watch(isGeneratingContentProvider) == false &&
-                    ref.watch(autoGenerateTitleProvider.notifier).value ==
-                        true) {
+                    ref.watch(autoGenerateTitleProvider.notifier).value == true) {
                   //list里的前2条状态必须是成功
 
                   requestTitled = true;
-                  API().generateChatTitle(
-                      result.temperature ?? HiveBox().temperature,
-                      getModelByApiKey(result.apiKey ?? ""),
-                      result.moduleType!,
-                      list, []).then((value) {
-                    ref
-                        .watch(currentChatParentItemProvider.notifier)
-                        .update((state) => result.copyWith(title: value));
+                  API().generateChatTitle(result.temperature ?? HiveBox().temperature,
+                      getModelByApiKey(result.apiKey ?? ""), result.moduleType!, list, []).then((value) {
+                    ref.watch(currentChatParentItemProvider.notifier).update((state) => result.copyWith(title: value));
                   }).catchError((e) {
                     e.toString().fail();
                   });
@@ -340,32 +305,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                     ChatPanel(
                       focusNode: _focusNode,
                       supportImage: true,
-                      supportAudio: getModelByApiKey(result.apiKey ?? "")
-                          .getWhisperModels
-                          .isNotEmpty,
+                      supportAudio: getModelByApiKey(result.apiKey ?? "").getWhisperModels.isNotEmpty,
                       scrollToTop: () {
                         _scrollController.animateTo(0,
-                            duration: const Duration(milliseconds: 100),
-                            curve: Curves.easeInOut);
+                            duration: const Duration(milliseconds: 100), curve: Curves.easeInOut);
                       },
                       sendMessage: (content, images) async {
                         await sendMessage(result.id, content, images);
                       },
                       cancelSend: () {
                         _streamSubscription?.cancel();
-                        ref
-                            .watch(imagesProvider.notifier)
-                            .update((state) => []);
-                        ChatItem lastOne = ref
-                            .watch(chatProvider(result.id ?? 0).notifier)
-                            .chats
-                            .last;
+                        ref.watch(imagesProvider.notifier).update((state) => []);
+                        ChatItem lastOne = ref.watch(chatProvider(result.id ?? 0).notifier).chats.last;
                         lastOne.status = MessageStatus.canceled.index;
-                        ref
-                            .watch(chatProvider(result.id ?? 0).notifier)
-                            .update(lastOne);
-                        ref.watch(isGeneratingContentProvider.notifier).state =
-                            false;
+                        ref.watch(chatProvider(result.id ?? 0).notifier).update(lastOne);
+                        ref.watch(isGeneratingContentProvider.notifier).state = false;
                       },
                     ),
                   ],
@@ -378,8 +332,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   StreamSubscription<GenerateContentBean>? _streamSubscription;
 
-  Future<void> sendMessage(
-      int? id, String? text, List<String>? sendImages) async {
+  Future<void> sendMessage(int? id, String? text, List<String>? sendImages) async {
     ref.watch(isGeneratingContentProvider.notifier).state = true;
     var userChatItem = ChatItem(
       type: ChatType.user.index,
@@ -387,12 +340,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       status: MessageStatus.success.index,
       parentID: id,
       images: sendImages,
-      moduleName:
-          ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
+      moduleName: ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
       messageType: MessageType.common.index,
-      moduleType:
-          ref.watch(currentChatParentItemProvider.notifier).state?.moduleType ??
-              "",
+      moduleType: ref.watch(currentChatParentItemProvider.notifier).state?.moduleType ?? "",
       time: DateTime.now().millisecondsSinceEpoch,
     );
     await Future.delayed(const Duration(milliseconds: 50));
@@ -406,22 +356,18 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       status: MessageStatus.loading.index,
       parentID: id,
       requestID: userChatItem.time,
-      moduleName:
-          ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
-      moduleType:
-          ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
+      moduleName: ref.watch(currentChatParentItemProvider.notifier).state!.moduleName!,
+      moduleType: ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
       time: DateTime.now().millisecondsSinceEpoch,
     );
     ref.read(chatProvider(id).notifier).add(chatItem);
     await Future.delayed(const Duration(milliseconds: 50));
     ref.watch(imagesProvider.notifier).update((state) => []);
 
-    var chatParentItem =
-        ref.watch(currentChatParentItemProvider.notifier).state!;
+    var chatParentItem = ref.watch(currentChatParentItemProvider.notifier).state!;
     _streamSubscription = (await API().streamGenerateContent(
       chatParentItem.temperature ?? HiveBox().temperature,
-      getModelByApiKey(
-          ref.watch(currentChatParentItemProvider.notifier).state!.apiKey!),
+      getModelByApiKey(ref.watch(currentChatParentItemProvider.notifier).state!.apiKey!),
       ref.watch(currentChatParentItemProvider.notifier).state!.moduleType!,
       ref.watch(chatProvider(id).notifier).chats,
       [],
@@ -463,8 +409,7 @@ requestFailedException:\n
     if (bean.getTTSModels.isEmpty) {
       return;
     }
-    var tts = await API()
-        .text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
+    var tts = await API().text2TTS(bean, content, ref.watch(talkerProvider.notifier).state);
 
     if (player.playing) {
       player.stop();
@@ -485,8 +430,7 @@ requestFailedException:\n
   }
 }
 
-typedef SendMessageCall = Future<void> Function(
-    String content, List<String> images);
+typedef SendMessageCall = Future<void> Function(String content, List<String> images);
 typedef CancelSendCall = void Function();
 
 class ChatPanel extends ConsumerStatefulWidget {
@@ -520,8 +464,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 
   void startRecord() async {
     if (await record.hasPermission()) {
-      audioPath =
-          "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
+      audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
     } else {
       await Permission.microphone.request();
@@ -556,9 +499,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
     ref.watch(isGeneratingContentProvider.notifier).state = true;
 
     try {
-      AllModelBean bean = getModelByApiKey(
-          ref.watch(currentChatParentItemProvider.notifier).state?.apiKey ??
-              "");
+      AllModelBean bean = getModelByApiKey(ref.watch(currentChatParentItemProvider.notifier).state?.apiKey ?? "");
       var content = await API().tts2Text(bean, path);
       if (content != null && content.isNotEmpty) {
         _controller.text = content;
@@ -595,8 +536,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                   GridView.builder(
                     padding: const EdgeInsets.only(left: 16, right: 16),
                     shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 5,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -628,9 +568,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                                 size: 20,
                                 color: Color(0xffD0D0D0),
                               ).click(() {
-                                ref
-                                    .read(imagesProvider.notifier)
-                                    .update((state) {
+                                ref.read(imagesProvider.notifier).update((state) {
                                   return [...state..removeAt(index)];
                                 });
                               }),
@@ -669,18 +607,13 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                           ignoring: disableMode,
                           child: Listener(
                             onPointerDown: (event) async {
-                              ref
-                                  .watch(audioRecordingStateProvider.notifier)
-                                  .state = AudioRecordingState.recording;
+                              ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
                               audioOverlay.showAudio(context);
                               startRecord();
                             },
                             onPointerUp: (event) {
                               audioOverlay.removeAudio();
-                              if (ref
-                                      .watch(
-                                          audioRecordingStateProvider.notifier)
-                                      .state ==
+                              if (ref.watch(audioRecordingStateProvider.notifier).state ==
                                   AudioRecordingState.canceling) {
                                 cancel();
                               } else {
@@ -691,25 +624,17 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               //获取他相对于整个屏幕左上角的偏移
                               var offset = event.position;
 
-                              double paddingBottom =
-                                  MediaQuery.of(context).size.height -
-                                      offset.dy;
+                              double paddingBottom = MediaQuery.of(context).size.height - offset.dy;
 
                               if (paddingBottom < 200) {
-                                ref
-                                    .watch(audioRecordingStateProvider.notifier)
-                                    .state = AudioRecordingState.recording;
+                                ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
                               } else {
-                                ref
-                                    .watch(audioRecordingStateProvider.notifier)
-                                    .state = AudioRecordingState.canceling;
+                                ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.canceling;
                               }
                               audioOverlay.update();
                             },
                             onPointerCancel: (event) {
-                              ref
-                                  .watch(audioRecordingStateProvider.notifier)
-                                  .state = AudioRecordingState.normal;
+                              ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
                               audioOverlay.removeAudio();
                             },
                             child: Container(
@@ -721,12 +646,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               alignment: Alignment.center,
                               child: Text(
                                 S.current.hold_talk,
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.color,
-                                    fontSize: 16),
+                                style: TextStyle(color: Theme.of(context).textTheme.titleMedium?.color, fontSize: 16),
                               ),
                             ),
                           ),
@@ -740,40 +660,26 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                           minLines: 1,
                           cursorColor: Theme.of(context).primaryColor,
                           style: Theme.of(context).textTheme.titleMedium,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                           decoration: BoxDecoration(
                             color: ref.watch(themeProvider).inputPanelBg(),
                             borderRadius: BorderRadius.circular(5),
                           ),
                         ),
-                        crossFadeState: !inputMode
-                            ? CrossFadeState.showFirst
-                            : CrossFadeState.showSecond,
+                        crossFadeState: !inputMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                       ),
                     ),
                     const SizedBox(width: 15),
-                    !widget.supportImage
-                        ? Consumer(builder: (context, ref, _) {
-                            var visible = ref.watch(sendButtonVisibleProvider);
-                            if (!visible || disableMode == true) {
-                              return const SizedBox.shrink();
-                            }
-                            return sendButton(disableMode);
-                          })
-                        : Consumer(builder: (context, ref, _) {
-                            return AnimatedCrossFade(
-                              duration: const Duration(milliseconds: 100),
-                              firstChild: sendButton(disableMode),
-                              secondChild: addImage(),
-                              crossFadeState:
-                                  (ref.watch(sendButtonVisibleProvider) ==
-                                              true ||
-                                          disableMode == true)
-                                      ? CrossFadeState.showFirst
-                                      : CrossFadeState.showSecond,
-                            );
-                          }),
+                    Consumer(builder: (context, ref, _) {
+                      return AnimatedCrossFade(
+                        duration: const Duration(milliseconds: 100),
+                        firstChild: sendButton(disableMode),
+                        secondChild: addImage(widget.supportImage),
+                        crossFadeState: (ref.watch(sendButtonVisibleProvider) == true || disableMode == true)
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                      );
+                    }),
                   ],
                 );
               }),
@@ -795,8 +701,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
           size: 30,
         ),
       ).click(() {
-        ref.watch(inputModeProvider.notifier).state =
-            !ref.watch(inputModeProvider.notifier).state;
+        ref.watch(inputModeProvider.notifier).state = !ref.watch(inputModeProvider.notifier).state;
       });
     });
   }
@@ -825,7 +730,10 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
     );
   }
 
-  Widget addImage() {
+  Widget addImage(bool supportImage) {
+    if (!supportImage) {
+      return const SizedBox();
+    }
     return Builder(builder: (context) {
       return SizedBox(
         width: 30,
@@ -887,8 +795,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
       return;
     }
     if (_controller.text.endsWith("\n")) {
-      _controller.text =
-          _controller.text.substring(0, _controller.text.length - 1);
+      _controller.text = _controller.text.substring(0, _controller.text.length - 1);
     }
     await widget.sendMessage(_controller.text, sendImages);
     _controller.text = "";
@@ -903,13 +810,8 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
   }
 }
 
-List<PullDownMenuEntry> getMessageActions2(
-    BuildContext context,
-    WidgetRef ref,
-    ChatItem chatItem,
-    ResendMessage? resendMessage,
-    SendMessageAgain? sendMessageAgain,
-    TTSCallBack? ttsCallBack) {
+List<PullDownMenuEntry> getMessageActions2(BuildContext context, WidgetRef ref, ChatItem chatItem,
+    ResendMessage? resendMessage, SendMessageAgain? sendMessageAgain, TTSCallBack? ttsCallBack) {
   return [
     if (resendMessage != null)
       PullDownMenuItem(
@@ -963,9 +865,7 @@ List<PullDownMenuEntry> getMessageActions2(
             title: S.current.reminder,
             confirmText: S.current.delete,
             confirmCallback: () {
-              ref
-                  .read(chatProvider(chatItem.parentID ?? 0).notifier)
-                  .remove(chatItem);
+              ref.read(chatProvider(chatItem.parentID ?? 0).notifier).remove(chatItem);
             },
           );
         });
@@ -1006,9 +906,7 @@ class UserMessage extends ConsumerWidget {
             //重试
             if (chatItem.status == MessageStatus.failed.index)
               Consumer(builder: (context, ref, _) {
-                return const Icon(CupertinoIcons.exclamationmark_circle_fill,
-                        color: Colors.red, size: 20)
-                    .click(() {
+                return const Icon(CupertinoIcons.exclamationmark_circle_fill, color: Colors.red, size: 20).click(() {
                   showCommonDialog(
                     context,
                     title: S.current.reminder,
@@ -1034,8 +932,7 @@ class UserMessage extends ConsumerWidget {
                     ? null
                     : (content) {
                         ref
-                            .watch(
-                                chatProvider(chatItem.parentID ?? 0).notifier)
+                            .watch(chatProvider(chatItem.parentID ?? 0).notifier)
                             .remove(chatItem, connectOtherTimeID: true);
                         resendMessage(content);
                       },
@@ -1053,8 +950,7 @@ class UserMessage extends ConsumerWidget {
                     maxWidth: MediaQuery.of(context).size.width * 0.8,
                     minWidth: 10,
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor,
                     borderRadius: const BorderRadius.only(
@@ -1069,10 +965,7 @@ class UserMessage extends ConsumerWidget {
                     children: [
                       if (chatItem.images != null &&
                           chatItem.images!.isNotEmpty &&
-                          (chatItem.images!
-                                  .where((element) => element.isEmpty)
-                                  .length !=
-                              chatItem.images!.length))
+                          (chatItem.images!.where((element) => element.isEmpty).length != chatItem.images!.length))
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Wrap(
@@ -1081,9 +974,7 @@ class UserMessage extends ConsumerWidget {
                             runAlignment: WrapAlignment.end,
                             direction: Axis.horizontal,
                             children: [
-                              ...chatItem.images!
-                                  .where((element) => element.isNotEmpty)
-                                  .map((e) {
+                              ...chatItem.images!.where((element) => element.isNotEmpty).map((e) {
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.memory(
@@ -1100,10 +991,7 @@ class UserMessage extends ConsumerWidget {
                         ),
                       if (chatItem.images != null &&
                           chatItem.images!.isNotEmpty &&
-                          (chatItem.images!
-                                  .where((element) => element.isEmpty)
-                                  .length !=
-                              chatItem.images!.length))
+                          (chatItem.images!.where((element) => element.isEmpty).length != chatItem.images!.length))
                         const SizedBox(height: 10),
                       Text(
                         chatItem.content ?? "",
@@ -1140,14 +1028,12 @@ class BotMessage extends ConsumerWidget {
         children: [
           Text(
             chatItem.moduleType?.replaceFirst("models/", "") ?? "",
-            style:
-                TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
+            style: TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
           ),
           const SizedBox(height: 5),
           PullDownButton(
             scrollController: ScrollController(),
-            itemBuilder: (context) => getMessageActions2(
-                context, ref, chatItem, null, null, ttsCallBack),
+            itemBuilder: (context) => getMessageActions2(context, ref, chatItem, null, null, ttsCallBack),
             buttonBuilder: (context, showMenu) => GestureDetector(
               onLongPress: () {
                 showMenu();

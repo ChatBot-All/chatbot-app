@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import '../../base/components/common_dialog.dart';
 import '../../base/db/chat_item.dart';
 import '../../base/theme.dart';
+import '../../const.dart';
 import '../../hive_bean/openai_bean.dart';
 import '../chat/chat_list_view_model.dart';
 import '../prompt/prompt_page.dart';
@@ -37,6 +38,10 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
     super.didChangePlatformBrightness();
 
     var brightness = View.of(context).platformDispatcher.platformBrightness;
+
+    if (SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index) != ThemeType.system.index) {
+      return;
+    }
 
     if (brightness == Brightness.dark) {
       ref.read(themeProvider.notifier).change(ThemeType.dark.index);

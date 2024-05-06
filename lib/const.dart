@@ -8,6 +8,7 @@ bool productMode = false;
 const ttsModelKey = "tts-";
 const whisperModelKey = "whisper-";
 const dallModelKey = "dall-e-";
+const spLightTheme = "lightTheme";
 
 Map<String,String> supportedLanguages = <String,String>{
   'zh-Hans': '中文简体',
