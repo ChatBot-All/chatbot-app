@@ -215,6 +215,10 @@ class AudioAnimationBgPainter extends CustomPainter {
   }
 }
 
+final chatAudioMessageProvider = StateProvider.autoDispose<String>((ref) {
+  return "";
+});
+
 final audioRecordingStateProvider = StateProvider.autoDispose<AudioRecordingState>((ref) {
   return AudioRecordingState.normal;
 });
@@ -235,9 +239,11 @@ class AudioOverlay {
   }
 
   void showAudio(BuildContext context) {
-    overlayEntry = OverlayEntry(builder: (context) {
-      return const AudioPopOver();
-    },opaque: true);
+    overlayEntry = OverlayEntry(
+        builder: (context) {
+          return const AudioPopOver();
+        },
+        opaque: true);
     Overlay.of(context).insert(overlayEntry!);
   }
 
