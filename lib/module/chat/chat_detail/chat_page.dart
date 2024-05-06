@@ -215,7 +215,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       },
                     ),
                     PullDownMenuItem(
-                        title: "${S.current.share_to}ShareGPT",
+                        title: "${S.current.share_to} ShareGPT",
                         onTap: () async {
                           S.current.loading.loading();
                           var url = await API().share2ShareGPT(ref.watch(chatProvider(result.id ?? 0).notifier).chats);
