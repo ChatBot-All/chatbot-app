@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
@@ -20,6 +22,7 @@ class HiveBox {
   static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle'; //自动生成标题
   static const String cAppConfigFromLanguage = 'fromLanguage'; //翻译默认的语言
   static const String cAppConfigToLanguage = 'toLanguage'; //翻译默认的目标语言
+  static const String cAppConfigPrimaryColor = 'primaryColor'; //默认主色调
   static const String cAppConfigGlobalLanguageCode = 'globalLanguageCode'; //默认语言
 
   Box<String> get appConfig => _appConfig;
@@ -36,13 +39,16 @@ class HiveBox {
 
   String get fromLanguage =>
       _appConfig.get(cAppConfigFromLanguage, defaultValue: getLocaleLanguages()['zh-Hans']!) ??
-          getLocaleLanguages()['zh-Hans']!;
+      getLocaleLanguages()['zh-Hans']!;
+
+  String get primaryColor =>
+      _appConfig.get(cAppConfigPrimaryColor, defaultValue: const Color(0xff01C160).value.toRadixString(16)) ??
+      const Color(0xff01C160).value.toRadixString(16);
 
   String get toLanguage =>
       _appConfig.get(cAppConfigToLanguage, defaultValue: getLocaleLanguages()['en']!) ?? getLocaleLanguages()['en']!;
 
-  String get globalLanguageCode =>
-      _appConfig.get(cAppConfigGlobalLanguageCode, defaultValue: 'auto') ?? 'en';
+  String get globalLanguageCode => _appConfig.get(cAppConfigGlobalLanguageCode, defaultValue: 'auto') ?? 'en';
 
   late Box<String> _appConfig;
   late Box<String> _apiServerHistory;
@@ -68,5 +74,9 @@ class HiveBox {
     _openAIConfig = await Hive.openBox(cOpenAIConfig);
     _apiServerHistory = await Hive.openBox(cApiServerHistory);
     _geminiApiServerHistory = await Hive.openBox(cGeminiApiServerHistory);
+  }
+
+  void setPrimaryColor(Color color) {
+    _appConfig.put(cAppConfigPrimaryColor, color.value.toRadixString(16));
   }
 }

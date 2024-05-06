@@ -1,5 +1,6 @@
 import 'package:ChatBot/const.dart';
 import 'package:ChatBot/utils/hive_box.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,9 +36,8 @@ Locale getLocaleByDefaultCode() {
     }
   }
 
-  return S.delegate.supportedLocales.firstWhere(
-      (element) => element.languageCode == resultCode,
-      orElse: () => WidgetsBinding.instance.window.locale);
+  return S.delegate.supportedLocales
+      .firstWhere((element) => element.languageCode == resultCode, orElse: () => WidgetsBinding.instance.window.locale);
 }
 
 Locale getLocaleByCode(String code) {
@@ -53,9 +53,8 @@ Locale getLocaleByCode(String code) {
     }
   }
 
-  return S.delegate.supportedLocales.firstWhere(
-      (element) => element.languageCode == resultCode,
-      orElse: () => WidgetsBinding.instance.window.locale);
+  return S.delegate.supportedLocales
+      .firstWhere((element) => element.languageCode == resultCode, orElse: () => WidgetsBinding.instance.window.locale);
 }
 
 Map<String, String> getLocaleLanguages() {
@@ -97,8 +96,7 @@ String getLocaleNameByCode(String code) {
   return "English";
 }
 
-final globalLanguageProvider =
-    StateNotifierProvider<GlobalLanguageModel, String>((ref) {
+final globalLanguageProvider = StateNotifierProvider<GlobalLanguageModel, String>((ref) {
   return GlobalLanguageModel(HiveBox().globalLanguageCode);
 });
 
@@ -115,6 +113,22 @@ class GlobalLanguageModel extends StateNotifier<String> {
     HiveBox().appConfig.put(HiveBox.cAppConfigGlobalLanguageCode, t);
     S.load(getLocaleByCode(state));
   }
+}
+
+final primaryColorProvider = StateNotifierProvider<PrimaryColorNotify, Color>((ref) {
+  return PrimaryColorNotify(Color(int.parse(HiveBox().primaryColor, radix: 16)));
+});
+
+class PrimaryColorNotify extends StateNotifier<Color> {
+  PrimaryColorNotify(super.state);
+
+  void change(Color t) {
+    if (t == state) return;
+    state = t;
+    HiveBox().appConfig.put(HiveBox.cAppConfigPrimaryColor, t.value.toRadixString(16));
+  }
+
+  Color get color => state;
 }
 
 final themeProvider = StateNotifierProvider<ThemeViewModel, BaseTheme>((ref) {
@@ -147,8 +161,7 @@ BaseTheme _getThemeByType(int themeType) {
     case 1:
       return DarkTheme();
     case 2:
-      var brightness =
-          SchedulerBinding.instance.platformDispatcher.platformBrightness;
+      var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
       bool isDarkMode = brightness == Brightness.dark;
       if (isDarkMode) {
         return DarkTheme();
@@ -165,8 +178,7 @@ class ThemeViewModel extends StateNotifier<BaseTheme> {
     state = _getThemeByType(type);
   }
 
-  ThemeType get type =>
-      ThemeType.getType(SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index));
+  ThemeType get type => ThemeType.getType(SpUtil.getInt(spLightTheme, defValue: ThemeType.system.index));
 
   void change(int t) {
     if (t == type.index) return;
@@ -180,7 +192,7 @@ class ThemeViewModel extends StateNotifier<BaseTheme> {
 }
 
 abstract class BaseTheme {
-  ThemeData theme();
+  ThemeData theme(Color primaryColor);
 
   Color xff00ff();
 
@@ -207,26 +219,29 @@ abstract class BaseTheme {
 
 class LightTheme extends BaseTheme {
   @override
-  ThemeData theme() {
+  ThemeData theme(Color primaryColor) {
     return ThemeData.light().copyWith(
-      colorScheme: const ColorScheme.light(
-        primary: Color(0xff01C160),
-        secondary: Color(0xff01C160),
+      colorScheme:  ColorScheme.light(
+        primary: primaryColor,
+        secondary: primaryColor,
         surface: Colors.white,
-        background: Color(0xffEDEDED),
-        error: Color(0xffFF3B30),
+        background: const Color(0xffEDEDED),
+        error: const Color(0xffFF3B30),
         onPrimary: Colors.white,
         onSecondary: Colors.white,
-        onSurface: Color(0xff181818),
-        onBackground: Color(0xff181818),
+        onSurface: const Color(0xff181818),
+        onBackground: const Color(0xff181818),
         onError: Colors.white,
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: const Color(0xffEDEDED),
-      primaryColor: const Color(0xff01C160),
-      hoverColor: const Color(0xff01C160),
+      primaryColor: primaryColor,
+      hoverColor: primaryColor,
       cardColor: Colors.white,
       canvasColor: Colors.white,
+      cupertinoOverrideTheme:  CupertinoThemeData(
+        primaryColor: primaryColor,
+      ),
       textTheme: const TextTheme(
         titleSmall: TextStyle(
           color: Color(0xff091807),
@@ -288,23 +303,23 @@ class LightTheme extends BaseTheme {
       ),
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Color(0xffF6F6F7),
-        selectedItemColor: Color(0xff01C160),
-        unselectedItemColor: Color(0xff181818),
+      bottomNavigationBarTheme:  BottomNavigationBarThemeData(
+        backgroundColor: const Color(0xffF6F6F7),
+        selectedItemColor: primaryColor,
+        unselectedItemColor: const Color(0xff181818),
         selectedLabelStyle: TextStyle(
-          color: Color(0xff01C160),
+          color: primaryColor,
           fontSize: 12,
         ),
-        unselectedLabelStyle: TextStyle(
+        unselectedLabelStyle: const TextStyle(
           color: Color(0xff181818),
           fontSize: 12,
         ),
         selectedIconTheme: IconThemeData(
-          color: Color(0xff01C160),
+          color: primaryColor,
           size: 22,
         ),
-        unselectedIconTheme: IconThemeData(
+        unselectedIconTheme: const IconThemeData(
           color: Color(0xff181818),
           size: 22,
         ),
@@ -366,23 +381,23 @@ class LightTheme extends BaseTheme {
 
 class DarkTheme extends BaseTheme {
   @override
-  ThemeData theme() {
+  ThemeData theme(Color primaryColor) {
     return ThemeData.dark().copyWith(
-      colorScheme: const ColorScheme.dark(
-          primary: Color(0xff01C160),
-          secondary: Color(0xff01C160),
-          surface: Color(0xff2C2C2C),
-          background: Color(0xffEDEDED),
-          error: Color(0xffFF3B30),
+      colorScheme:  ColorScheme.dark(
+          primary: primaryColor,
+          secondary: primaryColor,
+          surface: const Color(0xff2C2C2C),
+          background: const Color(0xffEDEDED),
+          error: const Color(0xffFF3B30),
           onPrimary: Colors.white,
           onSecondary: Colors.white,
-          onSurface: Color(0xff1E201D),
-          onBackground: Color(0xff1E201D),
+          onSurface: const Color(0xff1E201D),
+          onBackground: const Color(0xff1E201D),
           onError: Colors.white,
           brightness: Brightness.dark),
       scaffoldBackgroundColor: const Color(0xff111111),
-      primaryColor: const Color(0xff01C160),
-      hoverColor: const Color(0xff01C160),
+      primaryColor: primaryColor,
+      hoverColor: primaryColor,
       cardColor: const Color(0xff2C2C2C),
       canvasColor: const Color(0xff2C2C2C),
       textTheme: const TextTheme(
@@ -449,23 +464,26 @@ class DarkTheme extends BaseTheme {
       ),
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Color(0xff1C1C1C),
-        selectedItemColor: Color(0xff01C160),
-        unselectedItemColor: Color(0xffCFCFCF),
+      cupertinoOverrideTheme: CupertinoThemeData(
+        primaryColor: primaryColor,
+      ),
+      bottomNavigationBarTheme:  BottomNavigationBarThemeData(
+        backgroundColor: const Color(0xff1C1C1C),
+        selectedItemColor: primaryColor,
+        unselectedItemColor: const Color(0xffCFCFCF),
         selectedLabelStyle: TextStyle(
-          color: Color(0xff01C160),
+          color: primaryColor,
           fontSize: 12,
         ),
-        unselectedLabelStyle: TextStyle(
+        unselectedLabelStyle: const TextStyle(
           color: Color(0xffCFCFCF),
           fontSize: 12,
         ),
         selectedIconTheme: IconThemeData(
-          color: Color(0xff01C160),
+          color: primaryColor,
           size: 22,
         ),
-        unselectedIconTheme: IconThemeData(
+        unselectedIconTheme: const IconThemeData(
           color: Color(0xffCFCFCF),
           size: 22,
         ),

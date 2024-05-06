@@ -64,9 +64,6 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
               const SizedBox(
                 height: 25,
               ),
-
-
-
             ],
           ),
         ),

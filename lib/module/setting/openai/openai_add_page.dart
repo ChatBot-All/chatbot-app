@@ -97,7 +97,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                     maxLine: 3,
                     color: Theme.of(context).canvasColor,
                     controller: controller,
-                    hintText: S.current.input_text),
+                    hintText: "sk-xxxxxx"),
               ),
               const SizedBox(height: 15),
               Container(

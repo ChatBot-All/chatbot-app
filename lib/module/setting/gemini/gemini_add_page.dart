@@ -84,7 +84,7 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
               SettingWithTitle(
                 label: "API Key",
                 widget: CommonTextField(
-                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: "请输入API Key"),
+                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: "API Key"),
               ),
               const SizedBox(height: 15),
               Container(

@@ -81,6 +81,7 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               padding: const EdgeInsets.symmetric(vertical: 5),
                               child: Consumer(builder: (context, ref, _) {
                                 return CupertinoSwitch(
+                                  applyTheme: true,
                                     value: ref.watch(autoGenerateTitleProvider),
                                     onChanged: (v) {
                                       ref

@@ -31,6 +31,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var globalLanguage = ref.watch(globalLanguageProvider);
+    var primaryColor = ref.watch(primaryColorProvider);
     return MaterialApp(
       key: ValueKey(globalLanguage),
       navigatorKey: F.navigatorKey,
@@ -42,7 +43,7 @@ class MyApp extends ConsumerWidget {
         return supportedLocales.first;
       },
       debugShowCheckedModeBanner: false,
-      theme: ref.watch(themeProvider).theme(),
+      theme: ref.watch(themeProvider).theme(primaryColor),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,

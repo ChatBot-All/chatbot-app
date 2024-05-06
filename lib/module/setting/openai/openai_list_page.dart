@@ -238,6 +238,8 @@ class OpenAIListItem extends ConsumerWidget {
                                                             ?.first.id)
                                                 ? CupertinoIcons.checkmark
                                                 : null,
+                                            iconColor:
+                                            Theme.of(context).primaryColor,
                                             onTap: () {
                                               ref
                                                   .watch(openAiListProvider
