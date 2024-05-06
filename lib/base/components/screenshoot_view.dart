@@ -24,7 +24,6 @@ class ScreenShootChatPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return Material(
-      borderRadius: BorderRadius.circular(10),
       child: Builder(builder: (context) {
         var items = list.map((e) {
           if (e.type == ChatType.user.index) {
@@ -138,7 +137,6 @@ class ScreenShootChatImagePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return Material(
-      borderRadius: BorderRadius.circular(10),
       child: Builder(builder: (context) {
         var items = list.map((e) {
           if (e.type == ChatType.user.index) {
