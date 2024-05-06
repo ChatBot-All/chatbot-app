@@ -156,6 +156,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 5, top: 5),
                         child: Text(
+                          S.current.chat_setting,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ),
+                    PullDownMenuItem(
+                      title: S.current.chat_setting,
+                      onTap: () {
+                        F.push(const ChatSettingPage());
+                      },
+                    ),
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5, top: 5),
+                        child: Text(
                           S.current.function,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
@@ -180,7 +195,7 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                                 ),
                                 delay: const Duration(milliseconds: 100),
                                 context: rootContext,
-                                pixelRatio: 5)
+                                pixelRatio: MediaQuery.of(rootContext).devicePixelRatio)
                             .then((value) async {
                           Uint8List imageFile;
 
@@ -217,21 +232,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             );
                           }
                         }),
-                    PullDownMenuTitle(
-                      title: Padding(
-                        padding: const EdgeInsets.only(bottom: 5, top: 5),
-                        child: Text(
-                          S.current.chat_setting,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ),
-                    ),
-                    PullDownMenuItem(
-                      title: S.current.chat_setting,
-                      onTap: () {
-                        F.push(const ChatSettingPage());
-                      },
-                    ),
                   ];
                 },
               ),
@@ -541,11 +541,14 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 
   final record = AudioRecorder();
   String? audioPath;
+  DateTime? startTime;
 
   void startRecord() async {
     if (await record.hasPermission()) {
+      startTime = null;
       audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
+      startTime = DateTime.now();
     } else {
       await Permission.microphone.request();
       S.current.open_micro_permission.toString();
@@ -555,6 +558,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 
   void cancel() {
     try {
+      startTime = null;
       record.cancel();
       if (audioPath != null && audioPath!.isNotEmpty) {
         if (File(audioPath!).existsSync()) {
@@ -567,6 +571,14 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
   }
 
   void stopRecord() async {
+    if (DateTime.now().millisecondsSinceEpoch -
+            (startTime?.millisecondsSinceEpoch ?? DateTime.now().millisecondsSinceEpoch) <
+        1000) {
+      S.current.record_time_too_short.fail();
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
+      await record.stop();
+      return;
+    }
     var path = await record.stop();
 
     if (path == null || path.isEmpty) {

@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("API Key cannot be repeated"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "appearance": MessageLookupByLibrary.simpleMessage("Appearance"),
         "author": MessageLookupByLibrary.simpleMessage("Author"),
         "auto_title":
             MessageLookupByLibrary.simpleMessage("Auto Generate Title"),
@@ -128,6 +129,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "org_notrequired":
             MessageLookupByLibrary.simpleMessage("Organization(optional)"),
         "other_set": MessageLookupByLibrary.simpleMessage("Other Settings"),
+        "primary_color": MessageLookupByLibrary.simpleMessage("Primary Color"),
+        "record_time_too_short":
+            MessageLookupByLibrary.simpleMessage("Recording time is too short"),
         "recording": MessageLookupByLibrary.simpleMessage("recording..."),
         "reminder": MessageLookupByLibrary.simpleMessage("Reminder"),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),

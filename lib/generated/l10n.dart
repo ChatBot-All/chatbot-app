@@ -1169,6 +1169,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Appearance`
+  String get appearance {
+    return Intl.message(
+      'Appearance',
+      name: 'appearance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary Color`
+  String get primary_color {
+    return Intl.message(
+      'Primary Color',
+      name: 'primary_color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recording time is too short`
+  String get record_time_too_short {
+    return Intl.message(
+      'Recording time is too short',
+      name: 'record_time_too_short',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

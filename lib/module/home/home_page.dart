@@ -6,6 +6,7 @@ import 'package:ChatBot/module/home/home_viewmodel.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../base/components/common_dialog.dart';
+import '../../base/components/lottie_widget.dart';
 import '../../base/db/chat_item.dart';
 import '../../base/theme.dart';
 import '../../const.dart';
@@ -127,13 +128,10 @@ class _HomePageState extends ConsumerState<HomePage> with WidgetsBindingObserver
                       });
                     },
                     behavior: HitTestBehavior.opaque,
-                    child: Transform.scale(
+                    child: const LottieWidget(
                       scale: 2.4,
                       transformHitTests: false,
-                      child: Lottie.asset(
-                        "assets/lottie/audio.json",
-                        width: 80,
-                      ),
+                      width: 80,
                     ),
                   ),
                   Expanded(

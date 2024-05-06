@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("ApiKey を繰り返すことはできません。"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "appearance": MessageLookupByLibrary.simpleMessage("外観"),
         "author": MessageLookupByLibrary.simpleMessage("作者"),
         "auto_title": MessageLookupByLibrary.simpleMessage("タイトルを自動生成"),
         "btn_add": MessageLookupByLibrary.simpleMessage("追加"),
@@ -123,6 +124,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "ChatGPT の API キーと API サーバーを設定します。"),
         "org_notrequired": MessageLookupByLibrary.simpleMessage("組織（任意）"),
         "other_set": MessageLookupByLibrary.simpleMessage("その他の設定"),
+        "primary_color": MessageLookupByLibrary.simpleMessage("プライマリカラー"),
+        "record_time_too_short":
+            MessageLookupByLibrary.simpleMessage("録音時間が短すぎます。"),
         "recording": MessageLookupByLibrary.simpleMessage("録音中..."),
         "reminder": MessageLookupByLibrary.simpleMessage("リマインダー"),
         "resend": MessageLookupByLibrary.simpleMessage("再送信"),

@@ -111,5 +111,8 @@
   "language": "言語",
   "function": "機能",
   "screenshoot": "スクリーンショット",
-  "share_to": "共有先"
+  "share_to": "共有先",
+  "appearance": "外観",
+  "primary_color": "プライマリカラー",
+  "record_time_too_short": "録音時間が短すぎます。"
 }

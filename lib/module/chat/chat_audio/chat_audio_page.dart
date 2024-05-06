@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../base/api.dart';
 import '../../../base/components/autio_popover.dart';
+import '../../../base/components/lottie_widget.dart';
 import '../../../base/db/chat_item.dart';
 import '../../../base/theme.dart';
 import 'package:just_audio/just_audio.dart';
@@ -57,10 +58,14 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
   final record = AudioRecorder();
   String? audioPath;
 
+  DateTime? startTime;
+
   void startRecord() async {
     if (await record.hasPermission()) {
+      startTime = null;
       audioPath = "${(await getApplicationDocumentsDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
       await record.start(const RecordConfig(), path: audioPath!);
+      startTime = DateTime.now();
     } else {
       S.current.open_micro_permission.fail();
       audioOverlay.removeAudio();
@@ -70,6 +75,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
 
   void cancel() {
     try {
+      startTime = null;
       record.cancel();
       if (audioPath != null && audioPath!.isNotEmpty) {
         if (File(audioPath!).existsSync()) {
@@ -83,6 +89,16 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
   }
 
   void stopRecord() async {
+    //判断时间
+    if (DateTime.now().millisecondsSinceEpoch -
+            (startTime?.millisecondsSinceEpoch ?? DateTime.now().millisecondsSinceEpoch) <
+        1000) {
+      S.current.record_time_too_short.fail();
+      ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
+      await record.stop();
+      return;
+    }
+
     var path = await record.stop();
 
     if (path == null || path.isEmpty) {
@@ -92,6 +108,7 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
     if (!File(path).existsSync()) {
       return;
     }
+
     ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.sending;
 
     try {
@@ -356,14 +373,10 @@ class _ChatAudioPageState extends ConsumerState<ChatAudioPage> {
                     audioOverlay.removeAudio();
                     ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.normal;
                   },
-                  child: Transform.translate(
-                    offset: const Offset(0, -40),
-                    child: Lottie.asset(
-                      "assets/lottie/audio.json",
-                      width: 130,
-                      height: 130,
-                      fit: BoxFit.cover,
-                    ),
+                  child: const LottieWidget(
+                    scale: 3,
+                    transformHitTests: false,
+                    width: 100,
                   ),
                 );
               }),

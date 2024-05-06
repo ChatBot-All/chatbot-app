@@ -111,5 +111,8 @@
   "language": "언어",
   "function": "기능",
   "screenshoot": "스크린샷",
-  "share_to": "공유"
+  "share_to": "공유",
+  "appearance": "외관",
+  "primary_color": "기본 색상",
+  "record_time_too_short": "녹음 시간이 너무 짧습니다"
 }

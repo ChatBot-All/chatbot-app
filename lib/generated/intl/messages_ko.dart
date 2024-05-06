@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "apikey_repeat":
             MessageLookupByLibrary.simpleMessage("ApiKey를 중복해서 사용할 수 없습니다"),
         "app_name": MessageLookupByLibrary.simpleMessage("ChatBot"),
+        "appearance": MessageLookupByLibrary.simpleMessage("외관"),
         "author": MessageLookupByLibrary.simpleMessage("저자"),
         "auto_title": MessageLookupByLibrary.simpleMessage("제목 자동 생성"),
         "btn_add": MessageLookupByLibrary.simpleMessage("추가"),
@@ -120,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ChatGPT의 API 키와 API 서버 설정"),
         "org_notrequired": MessageLookupByLibrary.simpleMessage("조직(선택 사항)"),
         "other_set": MessageLookupByLibrary.simpleMessage("기타 설정"),
+        "primary_color": MessageLookupByLibrary.simpleMessage("기본 색상"),
+        "record_time_too_short":
+            MessageLookupByLibrary.simpleMessage("녹음 시간이 너무 짧습니다"),
         "recording": MessageLookupByLibrary.simpleMessage("녹음 중..."),
         "reminder": MessageLookupByLibrary.simpleMessage("알림"),
         "resend": MessageLookupByLibrary.simpleMessage("다시 보내기"),

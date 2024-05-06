@@ -187,7 +187,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                           ),
                           delay: const Duration(milliseconds: 100),
                           context: rootContext,
-                          pixelRatio: 5,
+                          pixelRatio:  MediaQuery.of(rootContext).devicePixelRatio,
                         )
                             .then((value) async {
                           Uint8List imageFile;

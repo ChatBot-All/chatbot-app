@@ -42,8 +42,8 @@ class HiveBox {
       getLocaleLanguages()['zh-Hans']!;
 
   String get primaryColor =>
-      _appConfig.get(cAppConfigPrimaryColor, defaultValue: const Color(0xff01C160).value.toRadixString(16)) ??
-      const Color(0xff01C160).value.toRadixString(16);
+      _appConfig.get(cAppConfigPrimaryColor, defaultValue: const Color(0xff03DE75).value.toRadixString(16)) ??
+      const Color(0xff03DE75).value.toRadixString(16);
 
   String get toLanguage =>
       _appConfig.get(cAppConfigToLanguage, defaultValue: getLocaleLanguages()['en']!) ?? getLocaleLanguages()['en']!;

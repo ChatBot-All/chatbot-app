@@ -5,7 +5,6 @@ import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../../hive_bean/openai_bean.dart';
 import '../db/chat_item.dart';
 import '../theme.dart';
 import 'chat_markdown.dart';
