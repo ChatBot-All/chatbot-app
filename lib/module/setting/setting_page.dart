@@ -1,6 +1,7 @@
 import 'package:ChatBot/base.dart';
 import 'package:ChatBot/base/providers.dart';
 import 'package:ChatBot/base/theme.dart';
+import 'package:ChatBot/module/prompt/prompt_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_down_button/pull_down_button.dart';
@@ -36,7 +37,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
         physics: const AlwaysScrollableScrollPhysics(),
         child: Container(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.paddingOf(context).bottom + kBottomNavigationBarHeight,
+            bottom: MediaQuery.paddingOf(context).bottom +
+                kBottomNavigationBarHeight,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,7 +66,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                 padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Card(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 3, horizontal: 16),
                     child: Column(
                       children: [
                         Row(
@@ -82,7 +85,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                     applyTheme: true,
                                     value: ref.watch(autoGenerateTitleProvider),
                                     onChanged: (v) {
-                                      ref.read(autoGenerateTitleProvider.notifier).change(v);
+                                      ref
+                                          .read(autoGenerateTitleProvider
+                                              .notifier)
+                                          .change(v);
                                     });
                               }),
                             ),
@@ -101,37 +107,54 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               ),
                             ),
                             Consumer(builder: (context, ref, _) {
-                              var defaultTemperature = ref.watch(defaultTemperatureProvider);
+                              var defaultTemperature =
+                                  ref.watch(defaultTemperatureProvider);
 
                               return PullDownButton(
                                 scrollController: ScrollController(),
                                 itemBuilder: (BuildContext context) {
-                                  return List.generate(21, (index) => ((index) / 10).toString())
+                                  return List.generate(21,
+                                          (index) => ((index) / 10).toString())
                                       .map((item) => PullDownMenuItem(
                                             title: item,
                                             onTap: () {
-                                              ref.watch(defaultTemperatureProvider.notifier).change(item);
+                                              ref
+                                                  .watch(
+                                                      defaultTemperatureProvider
+                                                          .notifier)
+                                                  .change(item);
                                             },
-                                            iconColor: Theme.of(context).primaryColor,
-                                            icon: item != defaultTemperature ? null : CupertinoIcons.checkmark_alt,
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: item != defaultTemperature
+                                                ? null
+                                                : CupertinoIcons.checkmark_alt,
                                           ))
                                       .toList();
                                 },
-                                buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                                buttonBuilder: (BuildContext context,
+                                    Future<void> Function() showMenu) {
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
                                     child: Row(children: [
                                       Text(
                                         defaultTemperature,
                                         style: TextStyle(
-                                          color: Theme.of(context).textTheme.titleSmall?.color,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.color,
                                           fontSize: 15,
                                         ),
                                       ),
                                       const SizedBox(width: 5),
                                       Icon(
                                         CupertinoIcons.chevron_up_chevron_down,
-                                        color: Theme.of(context).textTheme.titleSmall?.color,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.color,
                                         size: 16,
                                       ),
                                     ]).click(showMenu),
@@ -154,39 +177,62 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               ),
                             ),
                             Consumer(builder: (context, ref, _) {
-                              var globalLanguage = ref.watch(globalLanguageProvider);
+                              var globalLanguage =
+                                  ref.watch(globalLanguageProvider);
 
                               return PullDownButton(
                                 scrollController: ScrollController(),
                                 itemBuilder: (BuildContext context) {
-                                  return [const Locale("auto"), ...S.delegate.supportedLocales]
+                                  return [
+                                    const Locale("auto"),
+                                    ...S.delegate.supportedLocales
+                                  ]
                                       .map((item) => PullDownMenuItem(
-                                            title: getLocaleNameByCode(item.languageCode),
+                                            title: getLocaleNameByCode(
+                                                item.languageCode),
                                             onTap: () {
-                                              ref.watch(globalLanguageProvider.notifier).change(item.languageCode);
+                                              ref
+                                                  .watch(globalLanguageProvider
+                                                      .notifier)
+                                                  .change(item.languageCode);
+
+                                              ref
+                                                  .watch(promptListProvider
+                                                      .notifier)
+                                                  .load();
                                             },
-                                            iconColor: Theme.of(context).primaryColor,
-                                            icon: item.languageCode != globalLanguage
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: item.languageCode !=
+                                                    globalLanguage
                                                 ? null
                                                 : CupertinoIcons.checkmark_alt,
                                           ))
                                       .toList();
                                 },
-                                buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                                buttonBuilder: (BuildContext context,
+                                    Future<void> Function() showMenu) {
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12),
                                     child: Row(children: [
                                       Text(
                                         getLocaleNameByCode(globalLanguage),
                                         style: TextStyle(
-                                          color: Theme.of(context).textTheme.titleSmall?.color,
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.color,
                                           fontSize: 15,
                                         ),
                                       ),
                                       const SizedBox(width: 5),
                                       Icon(
                                         CupertinoIcons.chevron_up_chevron_down,
-                                        color: Theme.of(context).textTheme.titleSmall?.color,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.color,
                                         size: 16,
                                       ),
                                     ]).click(showMenu),
@@ -225,7 +271,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -244,28 +291,46 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                       .map((item) => PullDownMenuItem(
                                             title: getNameByThemeType(item),
                                             onTap: () {
-                                              ref.watch(themeProvider.notifier).change(item);
+                                              ref
+                                                  .watch(themeProvider.notifier)
+                                                  .change(item);
                                             },
-                                            iconColor: Theme.of(context).primaryColor,
-                                            icon: item != ref.watch(themeProvider.notifier).type.index
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            icon: item !=
+                                                    ref
+                                                        .watch(themeProvider
+                                                            .notifier)
+                                                        .type
+                                                        .index
                                                 ? null
                                                 : CupertinoIcons.checkmark_alt,
                                           ))
                                       .toList();
                                 },
-                                buttonBuilder: (BuildContext context, Future<void> Function() showMenu) {
+                                buttonBuilder: (BuildContext context,
+                                    Future<void> Function() showMenu) {
                                   return Row(children: [
                                     Text(
-                                      getNameByThemeType(ref.watch(themeProvider.notifier).type.index),
+                                      getNameByThemeType(ref
+                                          .watch(themeProvider.notifier)
+                                          .type
+                                          .index),
                                       style: TextStyle(
-                                        color: Theme.of(context).textTheme.titleSmall?.color,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall
+                                            ?.color,
                                         fontSize: 15,
                                       ),
                                     ),
                                     const SizedBox(width: 5),
                                     Icon(
                                       CupertinoIcons.chevron_up_chevron_down,
-                                      color: Theme.of(context).textTheme.titleSmall?.color,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.color,
                                       size: 16,
                                     ),
                                   ]).click(showMenu);
@@ -277,7 +342,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       ),
                       const Divider(endIndent: 16),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
                         child: Row(
                           children: [
                             Expanded(
@@ -287,7 +353,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                               ),
                             ),
                             Consumer(builder: (context, ref, _) {
-                              var primaryColor = ref.watch(primaryColorProvider);
+                              var primaryColor =
+                                  ref.watch(primaryColorProvider);
                               return PullDownButton(
                                 buttonBuilder: (context, showMenu) => SizedBox(
                                   width: 30,
@@ -311,16 +378,23 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                     const Color(0xffFF9800),
                                     const Color(0xffFE2E55),
                                   ]
-                                      .map<PullDownMenuEntry>((e) => PullDownMenuItem.selectable(
-                                          onTap: () {
-                                            ref.watch(primaryColorProvider.notifier).change(e);
-                                          },
-                                          title: e.value == const Color(0xff03DE75).value
-                                              ? S.current.default1
-                                              : e.value.toRadixString(16),
-                                          selected: e.value == primaryColor.value,
-                                          icon: CupertinoIcons.circle_fill,
-                                          iconColor: e))
+                                      .map<PullDownMenuEntry>((e) =>
+                                          PullDownMenuItem.selectable(
+                                              onTap: () {
+                                                ref
+                                                    .watch(primaryColorProvider
+                                                        .notifier)
+                                                    .change(e);
+                                              },
+                                              title: e.value ==
+                                                      const Color(0xff03DE75)
+                                                          .value
+                                                  ? S.current.default1
+                                                  : e.value.toRadixString(16),
+                                              selected:
+                                                  e.value == primaryColor.value,
+                                              icon: CupertinoIcons.circle_fill,
+                                              iconColor: e))
                                       .toList();
                                 },
                               );
@@ -358,7 +432,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -369,7 +444,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ),
                             Icon(
                               CupertinoIcons.right_chevron,
-                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
                               size: 14,
                             ),
                           ],
@@ -378,7 +454,10 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                         final Uri emailLaunchUri = Uri(
                           scheme: 'mailto',
                           path: 'newtab12138@gmail.com',
-                          queryParameters: {'subject': 'Bug_Report', 'body': ''},
+                          queryParameters: {
+                            'subject': 'Bug_Report',
+                            'body': ''
+                          },
                         );
                         launchUrl(emailLaunchUri);
                       }),
@@ -387,7 +466,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                         endIndent: 15,
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
                         child: Row(
                           children: [
                             Expanded(
@@ -398,7 +478,8 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ),
                             Icon(
                               CupertinoIcons.right_chevron,
-                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              color:
+                                  Theme.of(context).textTheme.titleSmall?.color,
                               size: 14,
                             ),
                           ],
@@ -450,7 +531,8 @@ class SettingWithTitle extends StatelessWidget {
   final String label;
   final Widget widget;
 
-  const SettingWithTitle({super.key, required this.label, required this.widget});
+  const SettingWithTitle(
+      {super.key, required this.label, required this.widget});
 
   @override
   Widget build(BuildContext context) {
@@ -477,14 +559,20 @@ class SettingItem extends StatelessWidget {
   final String subTitle;
   final int count;
 
-  const SettingItem({super.key, required this.iconUrl, required this.title, required this.subTitle, this.count = 0});
+  const SettingItem(
+      {super.key,
+      required this.iconUrl,
+      required this.title,
+      required this.subTitle,
+      this.count = 0});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).cardColor,
       child: Padding(
-        padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -511,9 +599,10 @@ class SettingItem extends StatelessWidget {
                           title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                       if (count > 0)
@@ -533,7 +622,10 @@ class SettingItem extends StatelessWidget {
                     subTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 13),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontSize: 13),
                   ),
                 ],
               ),
