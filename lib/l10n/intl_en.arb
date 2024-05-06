@@ -108,5 +108,8 @@
   "loading": "Loading...",
   "main_language": "English",
   "translate": "Translate",
-  "language": "Language"
+  "language": "Language",
+  "function": "Function",
+  "screenshoot": "ScreenShoot",
+  "share_to": "Share to"
 }

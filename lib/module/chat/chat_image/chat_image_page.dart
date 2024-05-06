@@ -159,13 +159,13 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                       title: Padding(
                         padding: const EdgeInsets.only(bottom: 5, top: 5),
                         child: Text(
-                          "功能",
+                          S.current.function,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
                     ),
                     PullDownMenuItem(
-                      title: "截屏",
+                      title: S.current.screenshoot,
                       onTap: () {
                         S.current.loading.loading();
                         var list = ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).chats;

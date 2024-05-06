@@ -108,5 +108,8 @@
   "loading": "加载中...",
   "main_language": "简体中文",
   "translate": "翻译",
-  "language": "语言"
+  "language": "语言",
+  "function": "功能",
+  "screenshoot": "截图",
+  "share_to": "分享到"
 }

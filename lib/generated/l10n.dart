@@ -1139,6 +1139,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Function`
+  String get function {
+    return Intl.message(
+      'Function',
+      name: 'function',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ScreenShoot`
+  String get screenshoot {
+    return Intl.message(
+      'ScreenShoot',
+      name: 'screenshoot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share to`
+  String get share_to {
+    return Intl.message(
+      'Share to',
+      name: 'share_to',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

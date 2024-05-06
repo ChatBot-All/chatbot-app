@@ -51,7 +51,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
 
   final ScreenshotController _screenshotController = ScreenshotController();
 
-
   var player = AudioPlayer();
 
   bool isScrollManual = false;
@@ -153,27 +152,35 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                 }),
                 itemBuilder: (BuildContext context) {
                   return [
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5, top: 5),
+                        child: Text(
+                          S.current.function,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ),
                     PullDownMenuItem(
-                      title: "截屏",
+                      title: S.current.screenshoot,
                       onTap: () {
                         S.current.loading.loading();
                         var list = ref.watch(chatProvider(result.id ?? 0).notifier).chats;
                         _screenshotController
                             .captureFromLongWidget(
-                          InheritedTheme.captureAll(
-                            rootContext,
-                            ProviderScope(
-                              child: ScreenShootChatPage(
-                                list: list,
-                                rootContext: rootContext,
-                                result: result,
-                              ),
-                            ),
-                          ),
-                          delay: const Duration(milliseconds: 100),
-                          context: rootContext,
-                          pixelRatio: 5
-                        )
+                                InheritedTheme.captureAll(
+                                  rootContext,
+                                  ProviderScope(
+                                    child: ScreenShootChatPage(
+                                      list: list,
+                                      rootContext: rootContext,
+                                      result: result,
+                                    ),
+                                  ),
+                                ),
+                                delay: const Duration(milliseconds: 100),
+                                context: rootContext,
+                                pixelRatio: 5)
                             .then((value) async {
                           Uint8List imageFile;
 
@@ -193,8 +200,9 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                       },
                     ),
                     PullDownMenuItem(
-                        title: "分享到ShareGPT",
+                        title: "${S.current.share_to}ShareGPT",
                         onTap: () async {
+                          S.current.loading.loading();
                           var url = await API().share2ShareGPT(ref.watch(chatProvider(result.id ?? 0).notifier).chats);
                           if (url != null && context.mounted) {
                             showCommonDialog(
@@ -209,6 +217,15 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             );
                           }
                         }),
+                    PullDownMenuTitle(
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 5, top: 5),
+                        child: Text(
+                          S.current.chat_setting,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                    ),
                     PullDownMenuItem(
                       title: S.current.chat_setting,
                       onTap: () {

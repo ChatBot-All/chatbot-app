@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please enter the service first and configure the service provider"),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "feedback_question": MessageLookupByLibrary.simpleMessage("Feedback"),
+        "function": MessageLookupByLibrary.simpleMessage("Function"),
         "gemini_setting": MessageLookupByLibrary.simpleMessage("Gemini Server"),
         "gemini_setting_desc": MessageLookupByLibrary.simpleMessage(
             "Set the API key and API Server of Gemini"),
@@ -134,6 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("Save fail"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("Save to Gallery"),
         "save_success": MessageLookupByLibrary.simpleMessage("Save success"),
+        "screenshoot": MessageLookupByLibrary.simpleMessage("ScreenShoot"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "send_again": MessageLookupByLibrary.simpleMessage("Send again"),
@@ -141,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sending to server..."),
         "servers": MessageLookupByLibrary.simpleMessage("Server"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "share_to": MessageLookupByLibrary.simpleMessage("Share to"),
         "size": MessageLookupByLibrary.simpleMessage("Size"),
         "style": MessageLookupByLibrary.simpleMessage("Style"),
         "tempture": MessageLookupByLibrary.simpleMessage("Temperature"),

@@ -66,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "먼저 서비스를 입력하고 서비스 제공업체를 구성하세요."),
         "feedback": MessageLookupByLibrary.simpleMessage("피드백"),
         "feedback_question": MessageLookupByLibrary.simpleMessage("문제 피드백"),
+        "function": MessageLookupByLibrary.simpleMessage("기능"),
         "gemini_setting":
             MessageLookupByLibrary.simpleMessage("Gemini 서비스 제공업체"),
         "gemini_setting_desc":
@@ -126,12 +127,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("저장 실패"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("사진첩에 저장"),
         "save_success": MessageLookupByLibrary.simpleMessage("저장 성공"),
+        "screenshoot": MessageLookupByLibrary.simpleMessage("스크린샷"),
         "select": MessageLookupByLibrary.simpleMessage("선택하세요"),
         "send": MessageLookupByLibrary.simpleMessage("보내기"),
         "send_again": MessageLookupByLibrary.simpleMessage("다시 보내기"),
         "sending_server": MessageLookupByLibrary.simpleMessage("서버로 전송 중..."),
         "servers": MessageLookupByLibrary.simpleMessage("서비스 제공업체"),
         "share": MessageLookupByLibrary.simpleMessage("공유"),
+        "share_to": MessageLookupByLibrary.simpleMessage("공유"),
         "size": MessageLookupByLibrary.simpleMessage("크기"),
         "style": MessageLookupByLibrary.simpleMessage("스타일"),
         "tempture": MessageLookupByLibrary.simpleMessage("온도 매개변수"),

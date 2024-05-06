@@ -204,6 +204,7 @@ abstract class APIImpl {
 
   Future<String?> share2ShareGPT(List<ChatItem> chatItem) async {
     if (chatItem.isEmpty) {
+      eDismiss();
       return null;
     }
     try {
@@ -222,16 +223,16 @@ abstract class APIImpl {
               })
           .toList();
 
-
       if (params.isEmpty) {
+        eDismiss();
         return null;
       }
       var resultParams = {
         "avatarUrl": null,
         "items": params,
       };
-
       var result = await dio.post("https://sharegpt.com/api/conversations", data: resultParams);
+      eDismiss();
       if (result.statusCode == 200) {
         return "https://shareg.pt/${result.data["id"]}";
       } else {

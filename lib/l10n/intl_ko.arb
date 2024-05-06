@@ -108,5 +108,8 @@
   "loading": "로딩 중...",
   "main_language": "한국인",
   "translate": "번역",
-  "language": "언어"
+  "language": "언어",
+  "function": "기능",
+  "screenshoot": "스크린샷",
+  "share_to": "공유"
 }
