@@ -41,10 +41,6 @@ class _CommandPageState extends ConsumerState<PromptPage> {
         ],
       ),
       body: Consumer(builder: (context, ref, _) {
-        var language = ref.watch(globalLanguageProvider);
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          ref.watch(promptListProvider.notifier).load();
-        });
         return MultiStateWidget<List<PromptItem>>(
             value: ref.watch(promptListProvider),
             data: (data) {

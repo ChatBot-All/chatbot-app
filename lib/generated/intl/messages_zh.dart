@@ -117,7 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("保存失败"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("保存到相册"),
         "save_success": MessageLookupByLibrary.simpleMessage("保存成功"),
-        "screenshoot": MessageLookupByLibrary.simpleMessage("截图"),
+        "screenshot": MessageLookupByLibrary.simpleMessage("截图"),
         "select": MessageLookupByLibrary.simpleMessage("请选择"),
         "send": MessageLookupByLibrary.simpleMessage("发送"),
         "send_again": MessageLookupByLibrary.simpleMessage("再次发送"),

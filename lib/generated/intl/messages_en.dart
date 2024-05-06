@@ -139,7 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("Save fail"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("Save to Gallery"),
         "save_success": MessageLookupByLibrary.simpleMessage("Save success"),
-        "screenshoot": MessageLookupByLibrary.simpleMessage("ScreenShoot"),
+        "screenshot": MessageLookupByLibrary.simpleMessage("Screenshot"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "send_again": MessageLookupByLibrary.simpleMessage("Send again"),

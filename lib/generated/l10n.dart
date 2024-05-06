@@ -1150,11 +1150,11 @@ class S {
     );
   }
 
-  /// `ScreenShoot`
-  String get screenshoot {
+  /// `Screenshot`
+  String get screenshot {
     return Intl.message(
-      'ScreenShoot',
-      name: 'screenshoot',
+      'Screenshot',
+      name: 'screenshot',
       desc: '',
       args: [],
     );

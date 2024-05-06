@@ -131,7 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("저장 실패"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("사진첩에 저장"),
         "save_success": MessageLookupByLibrary.simpleMessage("저장 성공"),
-        "screenshoot": MessageLookupByLibrary.simpleMessage("스크린샷"),
+        "screenshot": MessageLookupByLibrary.simpleMessage("스크린샷"),
         "select": MessageLookupByLibrary.simpleMessage("선택하세요"),
         "send": MessageLookupByLibrary.simpleMessage("보내기"),
         "send_again": MessageLookupByLibrary.simpleMessage("다시 보내기"),

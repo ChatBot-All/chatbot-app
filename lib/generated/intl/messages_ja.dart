@@ -134,7 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "save_fail": MessageLookupByLibrary.simpleMessage("保存に失敗しました。"),
         "save_gallary": MessageLookupByLibrary.simpleMessage("ギャラリーに保存"),
         "save_success": MessageLookupByLibrary.simpleMessage("保存に成功しました。"),
-        "screenshoot": MessageLookupByLibrary.simpleMessage("スクリーンショット"),
+        "screenshot": MessageLookupByLibrary.simpleMessage("スクリーンショット"),
         "select": MessageLookupByLibrary.simpleMessage("選択してください。"),
         "send": MessageLookupByLibrary.simpleMessage("送信"),
         "send_again": MessageLookupByLibrary.simpleMessage("もう一度送信"),

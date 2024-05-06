@@ -9,12 +9,126 @@ import '../db/chat_item.dart';
 import '../theme.dart';
 import 'chat_markdown.dart';
 
-class ScreenShootChatPage extends ConsumerWidget {
+class ScreenShotChatPage extends ConsumerWidget {
   final List<ChatItem> list;
   final BuildContext rootContext;
   final ChatParentItem result;
 
-  const ScreenShootChatPage({
+  const ScreenShotChatPage({
+    super.key,
+    required this.list,
+    required this.rootContext,
+    required this.result,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return Material(
+      clipBehavior: Clip.antiAlias,
+      child: Builder(builder: (context) {
+        var items = list.map((e) {
+          if (e.type == ChatType.user.index) {
+            return ScreenShotUserMessage(
+              chatItem: e,
+            );
+          } else if (e.type == ChatType.bot.index) {
+            return ScreenShotBotMessage(
+              chatItem: e,
+            );
+          } else {
+            return ScreenShotAssistMessage(chatItem: e);
+          }
+        }).toList();
+
+        return MediaQuery(
+          data: MediaQuery.of(rootContext),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: kToolbarHeight,
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                    alignment: Alignment.center,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: F.width * 0.8,
+                      ),
+                      child: Text(
+                        result.title ?? "",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).appBarTheme.titleTextStyle,
+                      ),
+                    ),
+                  ),
+                  ...items,
+                  Container(
+                    width: F.width,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      color: ref.watch(themeProvider).xffF6F6F6(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            "assets/images/logo.jpg",
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Made by CChatBot",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18,
+                              ),
+                            ),
+                            Text(
+                              DateUtil.formatDateMs(DateTime.now().millisecondsSinceEpoch,
+                                  format: DateFormats.y_mo_d_h_m),
+                              style: TextStyle(
+                                color: Theme.of(context).textTheme.bodyMedium?.color,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+
+class ScreenShotChatImagePage extends ConsumerWidget {
+  final List<ChatItem> list;
+  final BuildContext rootContext;
+  final ChatParentItem result;
+
+  const ScreenShotChatImagePage({
     super.key,
     required this.list,
     required this.rootContext,
@@ -27,15 +141,15 @@ class ScreenShootChatPage extends ConsumerWidget {
       child: Builder(builder: (context) {
         var items = list.map((e) {
           if (e.type == ChatType.user.index) {
-            return ScreenShootUserMessage(
+            return ScreenShotUserMessage(
               chatItem: e,
             );
           } else if (e.type == ChatType.bot.index) {
-            return ScreenShootBotMessage(
+            return ScreenShotBotImageMessage(
               chatItem: e,
             );
           } else {
-            return ScreenShootAssistMessage(chatItem: e);
+            return ScreenShotAssistMessage(chatItem: e);
           }
         }).toList();
 
@@ -119,123 +233,10 @@ class ScreenShootChatPage extends ConsumerWidget {
   }
 }
 
-
-
-
-class ScreenShootChatImagePage extends ConsumerWidget {
-  final List<ChatItem> list;
-  final BuildContext rootContext;
-  final ChatParentItem result;
-
-  const ScreenShootChatImagePage({
-    super.key,
-    required this.list,
-    required this.rootContext,
-    required this.result,
-  });
-
-  @override
-  Widget build(BuildContext context, ref) {
-    return Material(
-      child: Builder(builder: (context) {
-        var items = list.map((e) {
-          if (e.type == ChatType.user.index) {
-            return ScreenShootUserMessage(
-              chatItem: e,
-            );
-          } else if (e.type == ChatType.bot.index) {
-            return ScreenShootBotImageMessage(
-              chatItem: e,
-            );
-          } else {
-            return ScreenShootAssistMessage(chatItem: e);
-          }
-        }).toList();
-
-        return MediaQuery(
-          data: MediaQuery.of(rootContext).copyWith(size: Size(F.width, F.height)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: kToolbarHeight,
-                    color: Theme.of(context).appBarTheme.backgroundColor,
-                    alignment: Alignment.center,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: F.width * 0.8,
-                      ),
-                      child: Text(
-                        result.title ?? "",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).appBarTheme.titleTextStyle,
-                      ),
-                    ),
-                  ),
-                  ...items,
-                  Container(
-                    width: F.width,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: BoxDecoration(
-                      color: ref.watch(themeProvider).xffF6F6F6(),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "assets/images/logo.jpg",
-                            width: 50,
-                            height: 50,
-                          ),
-                        ),
-                        const SizedBox(width: 15),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Made by CChatBot",
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 18,
-                              ),
-                            ),
-                            Text(
-                              DateUtil.formatDateMs(DateTime.now().millisecondsSinceEpoch,
-                                  format: DateFormats.y_mo_d_h_m),
-                              style: TextStyle(
-                                color: Theme.of(context).textTheme.bodyMedium?.color,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
-}
-
-class ScreenShootUserMessage extends StatelessWidget {
+class ScreenShotUserMessage extends StatelessWidget {
   final ChatItem chatItem;
 
-  const ScreenShootUserMessage({super.key, required this.chatItem});
+  const ScreenShotUserMessage({super.key, required this.chatItem});
 
   @override
   Widget build(BuildContext context) {
@@ -306,10 +307,10 @@ class ScreenShootUserMessage extends StatelessWidget {
   }
 }
 
-class ScreenShootBotMessage extends ConsumerWidget {
+class ScreenShotBotMessage extends ConsumerWidget {
   final ChatItem chatItem;
 
-  const ScreenShootBotMessage({super.key, required this.chatItem});
+  const ScreenShotBotMessage({super.key, required this.chatItem});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -406,10 +407,10 @@ class ScreenShootBotMessage extends ConsumerWidget {
   }
 }
 
-class ScreenShootAssistMessage extends StatelessWidget {
+class ScreenShotAssistMessage extends StatelessWidget {
   final ChatItem chatItem;
 
-  const ScreenShootAssistMessage({super.key, required this.chatItem});
+  const ScreenShotAssistMessage({super.key, required this.chatItem});
 
   @override
   Widget build(BuildContext context) {
@@ -432,10 +433,10 @@ class ScreenShootAssistMessage extends StatelessWidget {
   }
 }
 
-class ScreenShootBotImageMessage extends ConsumerWidget {
+class ScreenShotBotImageMessage extends ConsumerWidget {
   final ChatItem chatItem;
 
-  const ScreenShootBotImageMessage({super.key, required this.chatItem});
+  const ScreenShotBotImageMessage({super.key, required this.chatItem});
 
   @override
   Widget build(BuildContext context, ref) {

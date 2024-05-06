@@ -21,7 +21,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../base/api.dart';
-import '../../../base/components/screenshoot_view.dart';
+import '../../../base/components/screenshot_view.dart';
 import '../../../base/db/chat_item.dart';
 
 class ChatImagePage extends ConsumerStatefulWidget {
@@ -170,7 +170,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                       ),
                     ),
                     PullDownMenuItem(
-                      title: S.current.screenshoot,
+                      title: S.current.screenshot,
                       onTap: () {
                         S.current.loading.loading();
                         var list = ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).chats;
@@ -179,7 +179,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                           InheritedTheme.captureAll(
                             rootContext,
                             ProviderScope(
-                              child: ScreenShootChatImagePage(
+                              child: ScreenShotChatImagePage(
                                 list: list,
                                 rootContext: rootContext,
                                 result: ChatParentItem(
@@ -192,7 +192,7 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                           ),
                           delay: const Duration(milliseconds: 100),
                           context: rootContext,
-                          pixelRatio: MediaQuery.of(rootContext).devicePixelRatio,
+                          pixelRatio: 2,
                         )
                             .then((value) async {
                           Uint8List imageFile;
@@ -475,7 +475,7 @@ List<PullDownMenuItem> getImageMessageActions2(BuildContext context, WidgetRef r
         Future.delayed(const Duration(milliseconds: 100), () {
           showCommonDialog(
             context,
-            content: S.current.delete_config_reminder,
+            content: S.current.delete_reminder,
             title: S.current.reminder,
             confirmText: S.current.delete,
             confirmCallback: () {
