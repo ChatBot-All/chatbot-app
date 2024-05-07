@@ -111,6 +111,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_support_tts": MessageLookupByLibrary.simpleMessage(
             "추가한 서비스 제공업체는 음성 채팅을 지원하지 않습니다"),
         "official": MessageLookupByLibrary.simpleMessage("공식"),
+        "ollama_setting":
+            MessageLookupByLibrary.simpleMessage("Ollama 서비스 제공업체"),
+        "ollama_setting_desc":
+            MessageLookupByLibrary.simpleMessage("Ollama의 API 서버 설정"),
         "only_support_dalle3": MessageLookupByLibrary.simpleMessage(
             "현재 이미지 생성은 dall-e-3 모델만 지원합니다. 추가한 서비스 제공업체는 모두 해당 모델을 지원하지 않습니다"),
         "open_micro_permission":

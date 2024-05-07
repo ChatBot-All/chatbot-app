@@ -99,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_support_tts":
             MessageLookupByLibrary.simpleMessage("您所添加的服务商不支持语音聊天"),
         "official": MessageLookupByLibrary.simpleMessage("官方"),
+        "ollama_setting": MessageLookupByLibrary.simpleMessage("Ollama 服务商"),
+        "ollama_setting_desc":
+            MessageLookupByLibrary.simpleMessage("设置 Ollama 的 API Server"),
         "only_support_dalle3": MessageLookupByLibrary.simpleMessage(
             "目前生成图片仅支持 dall-e-3 模型,您所添加的服务商均不支持该模型"),
         "open_micro_permission":

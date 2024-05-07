@@ -6,6 +6,7 @@ import 'package:ChatBot/base/theme.dart';
 import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/module/chat/chat_detail/chat_setting_page.dart';
 import 'package:ChatBot/utils/hive_box.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gal/gal.dart';
@@ -271,16 +272,21 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   children: [
                     ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: F.width * 0.8,
+                        maxWidth: F.width * 0.5,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            result.title ?? "",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).appBarTheme.titleTextStyle,
+                          ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: F.width * 0.5,
+                            ),
+                            child: Text(
+                              result.title ?? "",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).appBarTheme.titleTextStyle,
+                            ),
                           ),
                           Text(
                             "(${getModelByApiKey(result.apiKey ?? "").alias.toString()})${result.moduleType?.replaceFirst("models/", "").toString() ?? ""}",

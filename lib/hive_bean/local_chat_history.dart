@@ -6,13 +6,15 @@ part 'local_chat_history.g.dart';
 
 ///moduleName 1是OPENAI， 2是gemini
 enum APIType {
-  openAI(1, "ChatGPT"),
-  gemini(2, "Gemini");
+  openAI(1, "ChatGPT","api.openai.com"),
+  gemini(2, "Gemini","generativelanguage.googleapis.com"),
+  ollama(3, "Ollama","");
 
   final int code;
   final String name;
+  final String host;
 
-  const APIType(this.code, this.name);
+  const APIType(this.code, this.name,this.host);
 
   static APIType fromCode(int code) {
     switch (code) {

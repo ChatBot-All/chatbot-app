@@ -11,6 +11,8 @@
   "openai_setting_desc": "Set the API key and API Server of ChatGPT",
   "gemini_setting": "Gemini Server",
   "gemini_setting_desc": "Set the API key and API Server of Gemini",
+  "ollama_setting": "Ollama Server",
+  "ollama_setting_desc": "Set the API Server of Ollama",
   "official": "Official",
   "third_party": "Third",
   "btn_add": "Add",

@@ -3,6 +3,7 @@ import 'package:ChatBot/hive_bean/openai_bean.dart';
 import '../../../base.dart';
 import '../../../hive_bean/local_chat_history.dart';
 import '../../../utils/hive_box.dart';
+import '../gemini/gemini_viewmodel.dart';
 
 final apiServerHistoryProvider = StateNotifierProvider.autoDispose<ApiServerHistoryNotify, List<String>>((ref) {
   return ApiServerHistoryNotify();
@@ -69,14 +70,16 @@ class ApiServerHistoryNotify extends StateNotifier<List<String>> {
   }
 }
 
-final openAiListProvider = StateNotifierProvider.autoDispose<OpenAIListNotify, AsyncValue<List<AllModelBean>>>((ref) {
-  return OpenAIListNotify(ref);
+final openAiListProvider =
+    StateNotifierProvider.family.autoDispose<OpenAIListNotify, AsyncValue<List<AllModelBean>>, APIType>((ref, apiType) {
+  return OpenAIListNotify(ref, apiType);
 });
 
 class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
   final AutoDisposeStateNotifierProviderRef ref;
+  final APIType apiType;
 
-  OpenAIListNotify(this.ref) : super(const AsyncValue.loading()) {
+  OpenAIListNotify(this.ref, this.apiType) : super(const AsyncValue.loading()) {
     load();
   }
 
@@ -128,13 +131,13 @@ class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
 
   Future<void> load() async {
     state = await AsyncValue.guard(() async {
-      var list = HiveBox().openAIConfig.values.where((element) => element.model == APIType.openAI.code).toList();
-      ref.watch(openAICountProvider.notifier).state = list.length;
+      var list = HiveBox().openAIConfig.values.where((element) => element.model == apiType.code).toList();
+      ref.watch(specialModelCountProvider(apiType).notifier).state = list.length;
       return list;
     });
   }
 }
 
-final openAICountProvider = StateProvider<int>((ref) {
-  return HiveBox().openAIConfig.values.where((element) => element.model == APIType.openAI.code).length;
+final specialModelCountProvider = StateProvider.family<int, APIType>((ref, type) {
+  return HiveBox().openAIConfig.values.where((element) => element.model == type.code).length;
 });

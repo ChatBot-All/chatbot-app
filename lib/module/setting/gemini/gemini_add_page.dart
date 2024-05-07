@@ -1,5 +1,6 @@
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base.dart';
@@ -325,9 +326,9 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 }
                 bool result;
                 if (widget.openAi?.time != null) {
-                  result = ref.read(geminiListProvider.notifier).update(openAi);
+                  result = ref.read(openAiListProvider(APIType.gemini).notifier).update(openAi);
                 } else {
-                  result = ref.read(geminiListProvider.notifier).add(openAi);
+                  result = ref.read(openAiListProvider(APIType.gemini).notifier).add(openAi);
                 }
                 if (result) {
                   S.current.save_success.success();

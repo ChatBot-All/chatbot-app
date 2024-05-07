@@ -1,4 +1,3 @@
-
 import 'package:ChatBot/base.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -102,9 +101,13 @@ class ChatItem {
 }
 
 enum ChatType {
-  user,
-  bot,
-  system,
+  user(0),
+  bot(1),
+  system(2);
+
+  final int code;
+
+  const ChatType(this.code);
 }
 
 enum MessageType {

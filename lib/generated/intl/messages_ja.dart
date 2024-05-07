@@ -114,6 +114,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_support_tts": MessageLookupByLibrary.simpleMessage(
             "追加したプロバイダーは音声チャットをサポートしていません。"),
         "official": MessageLookupByLibrary.simpleMessage("公式"),
+        "ollama_setting": MessageLookupByLibrary.simpleMessage("Ollama プロバイダー"),
+        "ollama_setting_desc":
+            MessageLookupByLibrary.simpleMessage("Ollama の API サーバーのセットアップ。"),
         "only_support_dalle3": MessageLookupByLibrary.simpleMessage(
             "現時点では、画像の生成は dall-e-3 モデルのみをサポートしています。追加したプロバイダーはいずれもこのモデルをサポートしていません。"),
         "open_micro_permission":
