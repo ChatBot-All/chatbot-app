@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">ChatBot</h1>
+<h1 align="center">CChatBot</h1>
 
 mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & ollama (coming soon) models. [How to Use](./USAGE.md)
 
