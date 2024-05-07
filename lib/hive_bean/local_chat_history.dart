@@ -17,14 +17,7 @@ enum APIType {
   const APIType(this.code, this.name,this.host);
 
   static APIType fromCode(int code) {
-    switch (code) {
-      case 1:
-        return APIType.openAI;
-      case 2:
-        return APIType.gemini;
-      default:
-        return APIType.openAI;
-    }
+    return APIType.values.firstWhere((element) => element.code == code,orElse: () => APIType.openAI);
   }
 }
 

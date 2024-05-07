@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ChatBot/base.dart';
@@ -15,17 +16,19 @@ class OllamaImpl extends APIImpl {
   @override
   Future<String> generateChatTitle(String temperature, AllModelBean bean, String modelType,
       List<ChatItem> originalChatItem, List<RequestParams> chatItems) async {
-    var list = generateChatTitleListParams(originalChatItem);
     Dio dio = initOllama(bean);
 
     var response = await dio.post("/api/chat", data: {
       "model": modelType,
-      "messages": list
-          .map((e) => {
-                "role": e.role == ChatType.bot.index ? "assistant" : "user",
-                "content": e.content.join(","),
-              })
-          .toList(),
+      "messages": [
+        ...chatItems
+            .map((e) => {
+                  "role": e.role == ChatType.bot.index ? "assistant" : "user",
+                  "content": e.content.join(","),
+                })
+            .toList(),
+        {"role": "user", "content": S.current.title_promot},
+      ],
       "stream": false,
       "options": {
         "seed": 101,
@@ -43,12 +46,11 @@ class OllamaImpl extends APIImpl {
   @override
   Future<GenerateContentBean> generateContent(double temperature, AllModelBean bean, String modelType,
       List<ChatItem> originalChatItem, List<RequestParams> chatItems) async {
-    var list = generateChatTitleListParams(originalChatItem);
     Dio dio = initOllama(bean);
 
     var response = await dio.post("/api/chat", data: {
       "model": modelType,
-      "messages": list
+      "messages": chatItems
           .map((e) => {
                 "role": e.role == ChatType.bot.index ? "assistant" : "user",
                 "content": e.content.join(","),
@@ -110,38 +112,79 @@ class OllamaImpl extends APIImpl {
   @override
   Future<Stream<GenerateContentBean>> streamGenerateContent(String temperature, AllModelBean bean, String modelType,
       List<ChatItem> originalChatItem, List<RequestParams> chatItems, bool withoutHistoryMessage) async {
-    try {
-      var list = generateChatHistory(originalChatItem, withoutHistoryMessage);
-      Dio dio = initOllama(bean,stream: true);
+    return _streamGenerateContent(temperature, bean, modelType, originalChatItem, chatItems, withoutHistoryMessage);
+  }
 
-      var response = await dio.post("/api/chat", data: {
-        "model": modelType,
-        "messages": list
-            .map((e) => {
-                  "role": e.role == ChatType.bot.index ? "assistant" : "user",
-                  "content": e.content.join(","),
-                })
-            .toList(),
-        "stream": true,
-        "options": {
-          "seed": 101,
-          "temperature": double.tryParse(temperature) ?? 0.5,
-        }
-      });
+  final splitter = const LineSplitter();
 
-      if (response.statusCode == 200) {
-        return response.data.stream.map((event) {
-          return GenerateContentBean(content: event["message"]["content"] ?? "");
-        });
-      } else {
-        return Stream.error(Exception("result is empty"));
+  Stream<GenerateContentBean> _streamGenerateContent(String temperature, AllModelBean bean, String modelType,
+      List<ChatItem> originalChatItem, List<RequestParams> chatItems, bool withoutHistoryMessage) async* {
+    Dio dio = initOllama(bean, stream: true);
+
+    var response = await dio.post("/api/chat", data: {
+      "model": modelType,
+      "messages": chatItems
+          .map((e) => {
+                "role": e.role == ChatType.bot.index ? "assistant" : "user",
+                "content": e.content.join(","),
+              })
+          .toList(),
+      "stream": true,
+      "options": {
+        "seed": 101,
+        "temperature": double.tryParse(temperature) ?? 0.5,
       }
-    } on DioException catch (e) {
-      e.message.fail();
-      return Stream.error(e);
-    } catch (e) {
-      e.toString().fail();
-      return Stream.error(e);
+    });
+
+    if (response.statusCode == 200) {
+      final ResponseBody rb = response.data;
+      int index = 0;
+      String modelStr = '';
+      List<int> cacheUnits = [];
+      List<int> list = [];
+
+      await for (final itemList in rb.stream) {
+        list = cacheUnits + itemList;
+
+        cacheUnits.clear();
+
+        String res = "";
+        try {
+          res = utf8.decode(list);
+        } catch (e) {
+          cacheUnits = list;
+          continue;
+        }
+
+        res = res.trim();
+
+        if (index == 0 && res.startsWith("[")) {
+          res = res.replaceFirst('[', '');
+        }
+        if (res.startsWith(',')) {
+          res = res.replaceFirst(',', '');
+        }
+        if (res.endsWith(']')) {
+          res = res.substring(0, res.length - 1);
+        }
+
+        res = res.trim();
+
+        for (final line in splitter.convert(res)) {
+          if (modelStr == '' && line == ',') {
+            continue;
+          }
+          modelStr += line;
+          try {
+            final content = (jsonDecode(modelStr)["message"]["content"]);
+            yield GenerateContentBean(content: content);
+            modelStr = '';
+          } catch (e) {
+            continue;
+          }
+        }
+        index++;
+      }
     }
   }
 
