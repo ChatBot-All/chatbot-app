@@ -59,7 +59,13 @@ mobile private ChatGPT application, supporting GPT3, GPT4 & Gemini Pro models. [
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG" width="200" /></center></td>
 
 </tr>
+<tr>
 
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" width="200" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG" width="200" /></center></td>
+
+</tr>
 </table>
 
 ## Roadmap
