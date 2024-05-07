@@ -41,6 +41,7 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & ollama (
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS TestFlight: [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
 >* iOS AppStore[($0.99 Why)](./WHY.md): [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
+如果你没有支付方式，并且TestFlight申请已经满员的话，可以通过邮件联系我赠送兑换码 邮箱:(newtab12138#gmail.com #=> @)
 
 <table>
 
