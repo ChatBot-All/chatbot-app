@@ -58,7 +58,6 @@ class OllamaImpl extends APIImpl {
           .toList(),
       "stream": false,
       "options": {
-        "seed": 101,
         "temperature": temperature,
       }
     });
@@ -131,7 +130,6 @@ class OllamaImpl extends APIImpl {
           .toList(),
       "stream": true,
       "options": {
-        "seed": 101,
         "temperature": double.tryParse(temperature) ?? 0.5,
       }
     });
