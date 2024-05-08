@@ -8,7 +8,7 @@ part 'local_chat_history.g.dart';
 enum APIType {
   openAI(1, "ChatGPT","api.openai.com"),
   gemini(2, "Gemini","generativelanguage.googleapis.com"),
-  ollama(3, "Ollama","");
+  ollama(3, "Ollama","/");
 
   final int code;
   final String name;
