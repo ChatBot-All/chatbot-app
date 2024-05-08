@@ -695,38 +695,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  in_app_purchase:
-    dependency: "direct main"
-    description:
-      name: in_app_purchase
-      sha256: "960f26a08d9351fb8f89f08901f8a829d41b04d45a694b8f776121d9e41dcad6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.0"
-  in_app_purchase_android:
-    dependency: transitive
-    description:
-      name: in_app_purchase_android
-      sha256: "25b4bc74d4d990c18a889ea9486cb9029285955f38ca81ff335c8936edf9e66d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.5"
-  in_app_purchase_platform_interface:
-    dependency: transitive
-    description:
-      name: in_app_purchase_platform_interface
-      sha256: "1d353d38251da5b9fea6635c0ebfc6bb17a2d28d0e86ea5e083bf64244f1fb4c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
-  in_app_purchase_storekit:
-    dependency: transitive
-    description:
-      name: in_app_purchase_storekit
-      sha256: c13e4fee493dff3e956ebd24f80656f5ddbf876a8d12817d6fbe52d90e7c2068
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.15"
   intl:
     dependency: "direct main"
     description:
@@ -1039,14 +1007,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.1"
-  popover:
-    dependency: "direct main"
-    description:
-      name: popover
-      sha256: ca3bef9d88ebf5c5c3823946a5de3ce8360018fbb6a3e25819586a7d5a203db2
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   pretty_dio_logger:
     dependency: "direct main"
     description:
