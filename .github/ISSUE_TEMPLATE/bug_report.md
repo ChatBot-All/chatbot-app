@@ -7,11 +7,10 @@ assignees: ''
 
 ---
 
-**你的APP版本/手机型号和版本**
+**APP Version/Mobile Platform**
 
 
-**描述一下你的bug**
+**Content**
 
-**截图**
+**Screenshot**
 
-**期望结果**
