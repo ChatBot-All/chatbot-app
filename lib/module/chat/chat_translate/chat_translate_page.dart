@@ -483,8 +483,7 @@ class _ChatTranslatePageState extends ConsumerState<ChatTranslatePage> {
 
     var detectFrom = ref.watch(fromLanguageProvider.notifier).value;
     String detectTo = ref.watch(toLanguageProvider.notifier).value;
-    var generatedUserPrompt =
-        "translate from ${ref.watch(fromLanguageProvider.notifier).value} to ${ref.watch(toLanguageProvider.notifier).value}";
+    var generatedUserPrompt = "translate from ${getLocaleLanguages()[detectFrom]} to ${getLocaleLanguages()[detectTo]}";
 
     if (detectTo == getLocaleLanguages()["wyw"] || detectTo == getLocaleLanguages()["yue"]) {
       generatedUserPrompt = "翻译成$detectTo";

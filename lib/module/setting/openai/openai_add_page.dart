@@ -94,10 +94,7 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
               SettingWithTitle(
                 label: "API Key",
                 widget: CommonTextField(
-                    maxLine: 3,
-                    color: Theme.of(context).canvasColor,
-                    controller: controller,
-                    hintText: "sk-xxxxxx"),
+                    maxLine: 3, color: Theme.of(context).canvasColor, controller: controller, hintText: "sk-xxxxxx"),
               ),
               const SizedBox(height: 15),
               Container(
@@ -334,9 +331,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
 
                   bool result;
                   if (widget.openAi?.time != null) {
-                    result = ref.read(openAiListProvider.notifier).update(openAi);
+                    result = ref.read(openAiListProvider(APIType.openAI).notifier).update(openAi);
                   } else {
-                    result = ref.read(openAiListProvider.notifier).add(openAi);
+                    result = ref.read(openAiListProvider(APIType.openAI).notifier).add(openAi);
                   }
                   if (result) {
                     S.current.save_success.success();

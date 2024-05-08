@@ -11,6 +11,8 @@
   "openai_setting_desc": "ChatGPT의 API 키와 API 서버 설정",
   "gemini_setting": "Gemini 서비스 제공업체",
   "gemini_setting_desc": "Gemini의 API 키와 API 서버 설정",
+  "ollama_setting": "Ollama 서비스 제공업체",
+  "ollama_setting_desc": "Ollama의 API 서버 설정",
   "official": "공식",
   "third_party": "타사",
   "btn_add": "추가",

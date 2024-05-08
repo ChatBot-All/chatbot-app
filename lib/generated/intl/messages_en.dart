@@ -118,6 +118,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "not_support_tts": MessageLookupByLibrary.simpleMessage(
             "The current model does not support TTS"),
         "official": MessageLookupByLibrary.simpleMessage("Official"),
+        "ollama_setting": MessageLookupByLibrary.simpleMessage("Ollama Server"),
+        "ollama_setting_desc": MessageLookupByLibrary.simpleMessage(
+            "Set the API Server of Ollama"),
         "only_support_dalle3":
             MessageLookupByLibrary.simpleMessage("Only support DALL-E 3"),
         "open_micro_permission": MessageLookupByLibrary.simpleMessage(

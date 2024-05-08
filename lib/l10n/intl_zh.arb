@@ -11,6 +11,8 @@
   "openai_setting_desc": "设置 ChatGPT 的 API key 和 API Server",
   "gemini_setting": "Gemini 服务商",
   "gemini_setting_desc": "设置 Gemini 的 API key 和 API Server",
+  "ollama_setting": "Ollama 服务商",
+  "ollama_setting_desc": "设置 Ollama 的 API Server",
   "official": "官方",
   "third_party": "第三方",
   "btn_add": "添加",

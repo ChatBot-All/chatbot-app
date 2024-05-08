@@ -11,6 +11,8 @@
   "openai_setting_desc": "ChatGPT の API キーと API サーバーを設定します。",
   "gemini_setting": "Gemini プロバイダー",
   "gemini_setting_desc": "Gemini の API キーと API サーバーを設定します。",
+  "ollama_setting": "Ollama プロバイダー",
+  "ollama_setting_desc": "Ollama の API サーバーのセットアップ。",
   "official": "公式",
   "third_party": "サードパーティ",
   "btn_add": "追加",

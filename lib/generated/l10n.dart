@@ -160,6 +160,26 @@ class S {
     );
   }
 
+  /// `Ollama Server`
+  String get ollama_setting {
+    return Intl.message(
+      'Ollama Server',
+      name: 'ollama_setting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set the API Server of Ollama`
+  String get ollama_setting_desc {
+    return Intl.message(
+      'Set the API Server of Ollama',
+      name: 'ollama_setting_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Official`
   String get official {
     return Intl.message(

@@ -1,9 +1,10 @@
-
 import 'package:ChatBot/base.dart';
+import 'package:ChatBot/base/api_impl/ollama_impl.dart';
 import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:ChatBot/module/setting/ollama/ollama_add_page.dart';
 import 'package:dart_openai/dart_openai.dart';
 
 import 'api_impl/api_impl.dart';
@@ -35,6 +36,7 @@ class API extends APIImpl {
   final Map<int, APIImpl> _apiImpl = {
     APIType.openAI.code: ChatGPTImpl(),
     APIType.gemini.code: GeminiImpl(),
+    APIType.ollama.code: OllamaImpl(),
   };
 
   @override
@@ -42,7 +44,8 @@ class API extends APIImpl {
       List<ChatItem> originalChatItem, List<RequestParams> chatItems) async {
     var list = generateChatTitleListParams(originalChatItem);
 
-    return _apiImpl[bean.model ?? APIType.openAI.code]!.generateChatTitle(temperature, bean, modelType, originalChatItem, list);
+    return _apiImpl[bean.model ?? APIType.openAI.code]!
+        .generateChatTitle(temperature, bean, modelType, originalChatItem, list);
   }
 
   @override
@@ -50,7 +53,8 @@ class API extends APIImpl {
       List<ChatItem> originalChatItem, List<RequestParams> chatItems) {
     var requestParams = generateChatHistory(originalChatItem, false);
 
-    return _apiImpl[bean.model ?? APIType.openAI.code]!.generateContent(temperature, bean, modelType, originalChatItem, requestParams);
+    return _apiImpl[bean.model ?? APIType.openAI.code]!
+        .generateContent(temperature, bean, modelType, originalChatItem, requestParams);
   }
 
   @override
@@ -71,7 +75,7 @@ class API extends APIImpl {
 
   @override
   Future<Stream<GenerateContentBean>> streamGenerateContent(
-      String temperature,
+    String temperature,
     AllModelBean bean,
     String modelType,
     List<ChatItem> originalChatItem,

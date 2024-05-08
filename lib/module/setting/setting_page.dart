@@ -1,4 +1,5 @@
 import 'package:ChatBot/base.dart';
+import 'package:ChatBot/base/components/screenshot_view.dart';
 import 'package:ChatBot/base/providers.dart';
 import 'package:ChatBot/base/theme.dart';
 import 'package:ChatBot/module/prompt/prompt_viewmodel.dart';
@@ -579,11 +580,14 @@ class SettingItem extends StatelessWidget {
             SizedBox(
               width: 50,
               height: 50,
-              child: Image.asset(
-                iconUrl,
-                width: 40,
-                height: 40,
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  iconUrl,
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             const SizedBox(width: 15),
