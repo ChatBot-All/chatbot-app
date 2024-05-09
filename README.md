@@ -68,6 +68,13 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama (
 </tr>
 </table>
 
+
+## Warning
+Please do not download from other channels to prevent key theft.
+
+## 警告
+请勿从其他渠道下载，防止 key 被盗
+
 ## Roadmap
 >* support more languages
 >* support more models
