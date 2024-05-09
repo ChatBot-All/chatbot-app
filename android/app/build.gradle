@@ -49,7 +49,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("/Users/admin/jiangyuesong.keystore")
+            storeFile file("/Users/newtab/jiangyuesong.keystore")
             storePassword "JiangYueSong2015"
             keyAlias "chatbot"
             keyPassword "chatbot"

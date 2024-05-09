@@ -360,7 +360,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                           .watch(currentChatParentItemProvider.notifier)
                           .update((state) => result.copyWith(title: value));
                     }).catchError((e) {
-                      e.toString().fail();
                     });
                   }
                   return Column(
