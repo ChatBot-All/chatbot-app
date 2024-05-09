@@ -76,7 +76,7 @@
   "alias_maxlength": "别名最大10个字符",
   "cannot_empty": "不能为空",
   "is_getting_modules": "正在获取模型...",
-  "getmodules_fail": "获取模型失败",
+  "getmodules_fail": "获取模型失败,如果确定你的Key可以使用，请直接点击保存",
   "org_notrequired": "组织(选填)",
   "canVoice": "可语音",
   "canTalk": "可对话",
@@ -116,5 +116,6 @@
   "share_to": "分享到",
   "appearance": "外观",
   "primary_color": "主题色",
-  "record_time_too_short": "录音时间太短"
+  "record_time_too_short": "录音时间太短",
+  "set_default_models": "未获取到任何模型，已经为它添加系统默认模型。"
 }

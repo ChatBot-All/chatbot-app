@@ -75,7 +75,7 @@
   "alias_maxlength": "Alias cannot exceed 10 characters",
   "cannot_empty": "Cannot be empty",
   "is_getting_modules": "Getting models...",
-  "getmodules_fail": "Failed to get models",
+  "getmodules_fail": "Failed to obtain the model. If you are sure that your Key can be used, please click Save directly.",
   "org_notrequired": "Organization(optional)",
   "canVoice": "voice",
   "canTalk": "talk",
@@ -116,5 +116,6 @@
   "share_to": "Share to",
   "appearance": "Appearance",
   "primary_color": "Primary Color",
-  "record_time_too_short": "Recording time is too short"
+  "record_time_too_short": "Recording time is too short",
+  "set_default_models": "No model was obtained, and the system default model has been added to it."
 }

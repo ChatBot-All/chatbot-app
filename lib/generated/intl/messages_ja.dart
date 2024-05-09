@@ -77,8 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "generate_image": MessageLookupByLibrary.simpleMessage("画像を生成"),
         "generate_image_fail":
             MessageLookupByLibrary.simpleMessage("画像の生成に失敗しました。"),
-        "getmodules_fail":
-            MessageLookupByLibrary.simpleMessage("モデルの取得に失敗しました。"),
+        "getmodules_fail": MessageLookupByLibrary.simpleMessage(
+            "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요."),
         "has_reduce": MessageLookupByLibrary.simpleMessage("オンにすると一部が損失します。"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("サーバーアドレスを入力してください。"),
@@ -143,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "send_again": MessageLookupByLibrary.simpleMessage("もう一度送信"),
         "sending_server": MessageLookupByLibrary.simpleMessage("サーバーに送信中..."),
         "servers": MessageLookupByLibrary.simpleMessage("プロバイダー"),
+        "set_default_models": MessageLookupByLibrary.simpleMessage(
+            "モデルが取得されなかったため、システムのデフォルト モデルが追加されました。"),
         "share": MessageLookupByLibrary.simpleMessage("共有"),
         "share_to": MessageLookupByLibrary.simpleMessage("共有先"),
         "size": MessageLookupByLibrary.simpleMessage("サイズ"),

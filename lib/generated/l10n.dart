@@ -800,10 +800,10 @@ class S {
     );
   }
 
-  /// `Failed to get models`
+  /// `Failed to obtain the model. If you are sure that your Key can be used, please click Save directly.`
   String get getmodules_fail {
     return Intl.message(
-      'Failed to get models',
+      'Failed to obtain the model. If you are sure that your Key can be used, please click Save directly.',
       name: 'getmodules_fail',
       desc: '',
       args: [],
@@ -1215,6 +1215,16 @@ class S {
     return Intl.message(
       'Recording time is too short',
       name: 'record_time_too_short',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No model was obtained, and the system default model has been added to it.`
+  String get set_default_models {
+    return Intl.message(
+      'No model was obtained, and the system default model has been added to it.',
+      name: 'set_default_models',
       desc: '',
       args: [],
     );

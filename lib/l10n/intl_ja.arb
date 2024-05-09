@@ -75,7 +75,7 @@
   "alias_maxlength": "エイリアスの最大文字数は 10 文字です。",
   "cannot_empty": "空にすることはできません。",
   "is_getting_modules": "モデルを取得しています...",
-  "getmodules_fail": "モデルの取得に失敗しました。",
+  "getmodules_fail": "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요.",
   "org_notrequired": "組織（任意）",
   "canVoice": "音声可能",
   "canTalk": "会話可能",
@@ -116,5 +116,6 @@
   "share_to": "共有先",
   "appearance": "外観",
   "primary_color": "プライマリカラー",
-  "record_time_too_short": "録音時間が短すぎます。"
+  "record_time_too_short": "録音時間が短すぎます。",
+  "set_default_models": "モデルが取得されなかったため、システムのデフォルト モデルが追加されました。"
 }

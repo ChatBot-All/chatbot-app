@@ -77,7 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "generate_image": MessageLookupByLibrary.simpleMessage("이미지 생성"),
         "generate_image_fail":
             MessageLookupByLibrary.simpleMessage("이미지 생성 실패"),
-        "getmodules_fail": MessageLookupByLibrary.simpleMessage("모델 가져오기 실패"),
+        "getmodules_fail": MessageLookupByLibrary.simpleMessage(
+            "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요."),
         "has_reduce": MessageLookupByLibrary.simpleMessage("켜면 일부 손실이 발생합니다"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("서버 주소를 입력하세요"),
@@ -141,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "send_again": MessageLookupByLibrary.simpleMessage("다시 보내기"),
         "sending_server": MessageLookupByLibrary.simpleMessage("서버로 전송 중..."),
         "servers": MessageLookupByLibrary.simpleMessage("서비스 제공업체"),
+        "set_default_models": MessageLookupByLibrary.simpleMessage(
+            "모델을 얻지 못했고 시스템 기본 모델이 추가되었습니다."),
         "share": MessageLookupByLibrary.simpleMessage("공유"),
         "share_to": MessageLookupByLibrary.simpleMessage("공유"),
         "size": MessageLookupByLibrary.simpleMessage("크기"),

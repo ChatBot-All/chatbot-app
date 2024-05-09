@@ -81,8 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Generate Image"),
         "generate_image_fail":
             MessageLookupByLibrary.simpleMessage("Generate image fail"),
-        "getmodules_fail":
-            MessageLookupByLibrary.simpleMessage("Failed to get models"),
+        "getmodules_fail": MessageLookupByLibrary.simpleMessage(
+            "Failed to obtain the model. If you are sure that your Key can be used, please click Save directly."),
         "has_reduce": MessageLookupByLibrary.simpleMessage("Has been reduced"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("Type server address"),
@@ -149,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sending_server":
             MessageLookupByLibrary.simpleMessage("Sending to server..."),
         "servers": MessageLookupByLibrary.simpleMessage("Server"),
+        "set_default_models": MessageLookupByLibrary.simpleMessage(
+            "No model was obtained, and the system default model has been added to it."),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "share_to": MessageLookupByLibrary.simpleMessage("Share to"),
         "size": MessageLookupByLibrary.simpleMessage("Size"),

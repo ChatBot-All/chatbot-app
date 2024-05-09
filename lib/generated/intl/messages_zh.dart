@@ -69,7 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("生成内容为空"),
         "generate_image": MessageLookupByLibrary.simpleMessage("生成图片"),
         "generate_image_fail": MessageLookupByLibrary.simpleMessage("图片生成失败"),
-        "getmodules_fail": MessageLookupByLibrary.simpleMessage("获取模型失败"),
+        "getmodules_fail": MessageLookupByLibrary.simpleMessage(
+            "获取模型失败,如果确定你的Key可以使用，请直接点击保存"),
         "has_reduce": MessageLookupByLibrary.simpleMessage("开启后会有部分损耗"),
         "hint_addServerDesc": MessageLookupByLibrary.simpleMessage("请输入服务器地址"),
         "hold_micro_phone_talk":
@@ -126,6 +127,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "send_again": MessageLookupByLibrary.simpleMessage("再次发送"),
         "sending_server": MessageLookupByLibrary.simpleMessage("正在发送到服务器..."),
         "servers": MessageLookupByLibrary.simpleMessage("服务商"),
+        "set_default_models":
+            MessageLookupByLibrary.simpleMessage("未获取到任何模型，已经为它添加系统默认模型。"),
         "share": MessageLookupByLibrary.simpleMessage("分享"),
         "share_to": MessageLookupByLibrary.simpleMessage("分享到"),
         "size": MessageLookupByLibrary.simpleMessage("尺寸"),

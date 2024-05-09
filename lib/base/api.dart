@@ -4,7 +4,6 @@ import 'package:ChatBot/hive_bean/generate_content.dart';
 import 'package:ChatBot/hive_bean/local_chat_history.dart';
 import 'package:ChatBot/hive_bean/openai_bean.dart';
 import 'package:ChatBot/hive_bean/supported_models.dart';
-import 'package:ChatBot/module/setting/ollama/ollama_add_page.dart';
 import 'package:dart_openai/dart_openai.dart';
 
 import 'api_impl/api_impl.dart';

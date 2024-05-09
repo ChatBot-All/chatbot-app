@@ -102,16 +102,22 @@ class ChatGPTImpl extends APIImpl {
         temperature: double.tryParse(temperature) ?? 1.0,
       )
           .map((event) {
-        List<OpenAIChatCompletionChoiceMessageContentItemModel?>? content = event.choices.first.delta.content;
-
         var result = "";
-        content?.forEach((element) {
-          if (element?.type == "text") {
-            result += element?.text ?? "";
-          } else if (element?.type == "image_url") {
-            result += "![${element?.imageUrl}](${element?.imageUrl})";
+
+        try {
+          if (event.choices.isNotEmpty && event.choices.first.delta.content != null) {
+            List<OpenAIChatCompletionChoiceMessageContentItemModel?>? content = event.choices.first.delta.content;
+            content?.forEach((element) {
+              try {
+                if (element?.type == "text") {
+                  result += element?.text ?? "";
+                } else if (element?.type == "image_url") {
+                  result += "![${element?.imageUrl}](${element?.imageUrl})";
+                }
+              } catch (e) {}
+            });
           }
-        });
+        } catch (e) {}
         return GenerateContentBean(content: result);
       });
     } on RequestFailedException catch (e) {
@@ -170,6 +176,7 @@ class ChatGPTImpl extends APIImpl {
       if (models.isNotEmpty) {
         return true;
       }
+      S.current.getmodules_fail.fail();
       return false;
     } on RequestFailedException catch (e) {
       e.message.fail();

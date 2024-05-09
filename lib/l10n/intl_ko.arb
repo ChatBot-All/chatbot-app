@@ -75,7 +75,7 @@
   "alias_maxlength": "별칭은 최대 10자입니다",
   "cannot_empty": "비워둘 수 없습니다",
   "is_getting_modules": "모델을 가져오는 중...",
-  "getmodules_fail": "모델 가져오기 실패",
+  "getmodules_fail": "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요.",
   "org_notrequired": "조직(선택 사항)",
   "canVoice": "음성 가능",
   "canTalk": "대화 가능",
@@ -116,5 +116,6 @@
   "share_to": "공유",
   "appearance": "외관",
   "primary_color": "기본 색상",
-  "record_time_too_short": "녹음 시간이 너무 짧습니다"
+  "record_time_too_short": "녹음 시간이 너무 짧습니다",
+  "set_default_models": "모델을 얻지 못했고 시스템 기본 모델이 추가되었습니다."
 }
