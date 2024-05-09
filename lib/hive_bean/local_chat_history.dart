@@ -94,12 +94,14 @@ class ChatParentItem {
     int? historyMessageCount,
     ChatItem? chatItem,
     int? chatParentType,
+    bool? pin,
   }) {
     return ChatParentItem(
       moduleType: moduleType ?? this.moduleType,
       id: id ?? this.id,
       moduleName: moduleName ?? this.moduleName,
       title: title ?? this.title,
+      pin: pin ?? this.pin,
       chatItem: chatItem ?? this.chatItem,
       apiKey: apiKey ?? this.apiKey,
       temperature: temperature?.toString() ?? this.temperature,
