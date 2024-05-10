@@ -1,6 +1,6 @@
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
-import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
+import 'package:chat_bot/module/setting/openai/openai_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base.dart';
@@ -56,7 +56,9 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
       behavior: HitTestBehavior.opaque,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.openAi?.time != null ? "${S.current.edit} Gemini ${S.current.servers}" : "${S.current.btn_add} Gemini ${S.current.servers}"),
+          title: Text(widget.openAi?.time != null
+              ? "${S.current.edit} Gemini ${S.current.servers}"
+              : "${S.current.btn_add} Gemini ${S.current.servers}"),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -66,8 +68,10 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
               SettingWithTitle(
                 label: S.current.alias_required,
                 widget: CommonTextField(
-                  maxLength: 10,
-                    color: Theme.of(context).canvasColor, controller: aliasController, hintText: S.current.input_text),
+                    maxLength: 10,
+                    color: Theme.of(context).canvasColor,
+                    controller: aliasController,
+                    hintText: S.current.input_text),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -157,6 +161,10 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                                             style: const TextStyle(color: Colors.white, fontSize: 16),
                                           ),
                                         ).click(() {
+                                          if (serverNameController.text.trim().isEmpty) {
+                                            ("API Server ${S.current.cannot_empty}").fail();
+                                            return;
+                                          }
                                           ref
                                               .read(geminiApiServerHistoryProvider.notifier)
                                               .add(serverNameController.text);
@@ -245,9 +253,9 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child:  Text(
+                child: Text(
                   S.current.validate,
-                  style:const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 AllModelBean openAi = AllModelBean();
@@ -269,9 +277,9 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 ),
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child:  Text(
+                child: Text(
                   S.current.save,
-                  style:const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ).click(() async {
                 if (aliasController.text.isEmpty) {
@@ -309,16 +317,13 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 try {
                   var result = await API().getSupportModules(openAi);
                   supportedModels = result.map((e) => SupportedModels(id: e.id, ownedBy: e.ownedBy)).toList();
-                } catch (e) {
-                }
+                } catch (e) {}
 
                 if (supportedModels.isEmpty) {
                   return;
                 }
 
-
                 openAi.supportedModels = supportedModels;
-
 
                 if (supportedModels.where((element) => element.id?.contains("gemini-pro") == true).isNotEmpty) {
                   openAi.defaultModelType =

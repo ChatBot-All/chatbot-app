@@ -1,4 +1,4 @@
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
 
 import '../../../base.dart';
 import '../../../utils/hive_box.dart';

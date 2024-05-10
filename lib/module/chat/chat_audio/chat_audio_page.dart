@@ -1,5 +1,5 @@
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -7,9 +7,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:record/record.dart';
 
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
-import 'package:ChatBot/module/chat/chat_list_view_model.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/module/chat/chat_detail/chat_viewmodel.dart';
+import 'package:chat_bot/module/chat/chat_list_view_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base/api.dart';

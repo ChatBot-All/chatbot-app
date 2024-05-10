@@ -1,8 +1,8 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/version_check.dart';
-import 'package:ChatBot/module/chat/chat_audio/chat_audio_page.dart';
-import 'package:ChatBot/module/chat/chat_list_page.dart';
-import 'package:ChatBot/module/home/home_viewmodel.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/version_check.dart';
+import 'package:chat_bot/module/chat/chat_audio/chat_audio_page.dart';
+import 'package:chat_bot/module/chat/chat_list_page.dart';
+import 'package:chat_bot/module/home/home_viewmodel.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../base/components/common_dialog.dart';

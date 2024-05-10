@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:ChatBot/base/api.dart';
-import 'package:ChatBot/base/api_impl/api_impl.dart';
-import 'package:ChatBot/hive_bean/generate_content.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:chat_bot/base/api.dart';
+import 'package:chat_bot/base/api_impl/api_impl.dart';
+import 'package:chat_bot/hive_bean/generate_content.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 

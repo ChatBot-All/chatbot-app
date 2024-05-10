@@ -1,9 +1,9 @@
-import 'package:ChatBot/base/components/common_dialog.dart';
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/module/setting/gemini/gemini_add_page.dart';
-import 'package:ChatBot/module/setting/ollama/ollama_add_page.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/base/components/common_dialog.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/module/setting/gemini/gemini_add_page.dart';
+import 'package:chat_bot/module/setting/ollama/ollama_add_page.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

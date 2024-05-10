@@ -1,6 +1,6 @@
-import 'package:ChatBot/const.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/const.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:hive/hive.dart';
 
 part 'openai_bean.g.dart';

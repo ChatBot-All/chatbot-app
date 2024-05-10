@@ -1,10 +1,10 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/components/common_dialog.dart';
-import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/module/chat/chat_audio/chat_audio_page.dart';
-import 'package:ChatBot/module/chat/chat_image/chat_image_page.dart';
-import 'package:ChatBot/module/chat/chat_translate/chat_translate_page.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/components/common_dialog.dart';
+import 'package:chat_bot/base/theme.dart';
+import 'package:chat_bot/module/chat/chat_audio/chat_audio_page.dart';
+import 'package:chat_bot/module/chat/chat_image/chat_image_page.dart';
+import 'package:chat_bot/module/chat/chat_translate/chat_translate_page.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull_down_button/pull_down_button.dart';

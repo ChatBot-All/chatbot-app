@@ -1,4 +1,4 @@
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 
 import 'base.dart';
 

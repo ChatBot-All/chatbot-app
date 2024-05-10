@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import '../base/theme.dart';

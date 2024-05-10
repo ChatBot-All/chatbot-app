@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

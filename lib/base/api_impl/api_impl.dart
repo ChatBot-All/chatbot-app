@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:dio/dio.dart';
 

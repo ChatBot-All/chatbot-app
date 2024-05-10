@@ -1,5 +1,5 @@
-import 'package:ChatBot/module/splash_page.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/module/splash_page.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'base.dart';

@@ -1,4 +1,4 @@
-import 'package:ChatBot/base.dart';
+import 'package:chat_bot/base.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

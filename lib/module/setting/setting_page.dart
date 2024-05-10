@@ -1,8 +1,8 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/components/screenshot_view.dart';
-import 'package:ChatBot/base/providers.dart';
-import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/module/prompt/prompt_viewmodel.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/components/screenshot_view.dart';
+import 'package:chat_bot/base/providers.dart';
+import 'package:chat_bot/base/theme.dart';
+import 'package:chat_bot/module/prompt/prompt_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_down_button/pull_down_button.dart';

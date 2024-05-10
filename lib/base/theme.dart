@@ -1,5 +1,5 @@
-import 'package:ChatBot/const.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/const.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -286,6 +286,7 @@ class LightTheme extends BaseTheme {
           color: Color(0xff181818),
           size: 18,
         ),
+        scrolledUnderElevation: 0,
         backgroundColor: Color(0xffEDEDED),
         titleTextStyle: TextStyle(
           color: Color(0xff181818),
@@ -447,6 +448,7 @@ class DarkTheme extends BaseTheme {
           color: Color(0xffCFCFCF),
           size: 18,
         ),
+        scrolledUnderElevation: 0,
         backgroundColor: Color(0xff1C1C1C),
         titleTextStyle: TextStyle(
           color: Color(0xffCFCFCF),

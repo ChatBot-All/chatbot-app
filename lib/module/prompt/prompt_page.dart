@@ -1,11 +1,11 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/components/common_loading.dart';
-import 'package:ChatBot/base/components/components.dart';
-import 'package:ChatBot/base/db/chat_item.dart';
-import 'package:ChatBot/base/db/prompt_item.dart';
-import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/module/prompt/prompt_add_page.dart';
-import 'package:ChatBot/module/prompt/prompt_viewmodel.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/components/common_loading.dart';
+import 'package:chat_bot/base/components/components.dart';
+import 'package:chat_bot/base/db/chat_item.dart';
+import 'package:chat_bot/base/db/prompt_item.dart';
+import 'package:chat_bot/base/theme.dart';
+import 'package:chat_bot/module/prompt/prompt_add_page.dart';
+import 'package:chat_bot/module/prompt/prompt_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

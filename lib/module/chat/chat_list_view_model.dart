@@ -1,7 +1,7 @@
-import 'package:ChatBot/base/db/chat_item.dart';
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/utils/hive_box.dart';
+import 'package:chat_bot/base/db/chat_item.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/utils/hive_box.dart';
 
 import '../../base.dart';
 

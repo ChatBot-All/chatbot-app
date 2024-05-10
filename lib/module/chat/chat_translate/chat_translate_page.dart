@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/db/chat_item.dart';
-import 'package:ChatBot/base/theme.dart';
-import 'package:ChatBot/const.dart';
-import 'package:ChatBot/module/chat/chat_detail/chat_viewmodel.dart';
-import 'package:ChatBot/module/chat/chat_list_view_model.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/db/chat_item.dart';
+import 'package:chat_bot/base/theme.dart';
+import 'package:chat_bot/const.dart';
+import 'package:chat_bot/module/chat/chat_detail/chat_viewmodel.dart';
+import 'package:chat_bot/module/chat/chat_list_view_model.dart';
 import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:just_audio/just_audio.dart';

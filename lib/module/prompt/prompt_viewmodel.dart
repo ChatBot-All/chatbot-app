@@ -1,4 +1,4 @@
-import 'package:ChatBot/base/db/prompt_item.dart';
+import 'package:chat_bot/base/db/prompt_item.dart';
 
 import '../../base.dart';
 

@@ -1,5 +1,5 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/theme.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/theme.dart';
 import 'package:flutter/cupertino.dart';
 
 class CommonTextField extends ConsumerWidget {

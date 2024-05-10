@@ -1,9 +1,9 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/api_impl/ollama_impl.dart';
-import 'package:ChatBot/hive_bean/generate_content.dart';
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/api_impl/ollama_impl.dart';
+import 'package:chat_bot/hive_bean/generate_content.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
 import 'package:dart_openai/dart_openai.dart';
 
 import 'api_impl/api_impl.dart';

@@ -1,5 +1,5 @@
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/base/components/common_dialog.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/base/components/common_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';

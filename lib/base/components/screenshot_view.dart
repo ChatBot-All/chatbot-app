@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ChatBot/base.dart';
-import 'package:ChatBot/hive_bean/local_chat_history.dart';
+import 'package:chat_bot/base.dart';
+import 'package:chat_bot/hive_bean/local_chat_history.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -81,7 +81,7 @@ class ScreenShotChatPage extends ConsumerWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            "assets/images/logo.jpg",
+                            "assets/images/logo.png",
                             width: 50,
                             height: 50,
                           ),
@@ -194,7 +194,7 @@ class ScreenShotChatImagePage extends ConsumerWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            "assets/images/logo.jpg",
+                            "assets/images/logo.png",
                             width: 50,
                             height: 50,
                           ),

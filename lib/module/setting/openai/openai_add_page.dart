@@ -1,6 +1,6 @@
-import 'package:ChatBot/hive_bean/openai_bean.dart';
-import 'package:ChatBot/hive_bean/supported_models.dart';
-import 'package:ChatBot/module/setting/openai/openai_viewmodel.dart';
+import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/hive_bean/supported_models.dart';
+import 'package:chat_bot/module/setting/openai/openai_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../base.dart';
@@ -166,6 +166,10 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
                                             style: const TextStyle(color: Colors.white, fontSize: 16),
                                           ),
                                         ).click(() {
+                                          if (serverNameController.text.trim().isEmpty) {
+                                            ("API Server ${S.current.cannot_empty}").fail();
+                                            return;
+                                          }
                                           ref.read(apiServerHistoryProvider.notifier).add(serverNameController.text);
                                           F.pop();
                                         }),
