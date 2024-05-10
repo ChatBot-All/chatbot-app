@@ -75,17 +75,7 @@ Please do not download from other channels to prevent key theft.
 ## 警告
 请勿从其他渠道下载，防止 key 被盗
 
-## Roadmap
->* support more languages
->* support more models
->* share conversations as image,share to ShareGPT
->* Desktop APP
 
-## 开发计划
->* 国际化支持更多的语言
->* 支持更多的AI模型
->* 对话内容生成图片，分享对话到ShareGPT
->* 桌面端适配
 
 
 
