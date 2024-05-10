@@ -2,9 +2,9 @@
 
 <h1 align="center">CChatBot</h1>
 
-mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama (coming soon) models. [How to Use](./USAGE.md)
+mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT3, GPT4, Gemini Pro & Ollama (即将推出) 模型。 [如何使用](./USAGE.md)
+移动端私人 ChatGPT 应用, 支持 GPT3, GPT4, Gemini Pro & Ollama 模型。 [如何使用](./USAGE.md)
 
 </div>
 
