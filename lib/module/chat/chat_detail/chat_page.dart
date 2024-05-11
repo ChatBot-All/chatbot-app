@@ -526,6 +526,11 @@ class _ChatPageState extends ConsumerState<ChatPage> {
       chatItem.status = MessageStatus.success.index;
       ref.read(chatProvider(id).notifier).update(chatItem);
     }, onDone: () {
+      if (chatItem.status != MessageStatus.success.index) {
+        chatItem.content = result;
+        chatItem.status = MessageStatus.success.index;
+        ref.read(chatProvider(id).notifier).update(chatItem);
+      }
       ref.watch(isGeneratingContentProvider.notifier).state = false;
       _streamSubscription?.cancel();
       ref.watch(imagesProvider.notifier).update((state) => []);

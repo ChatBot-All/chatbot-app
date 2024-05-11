@@ -47,23 +47,42 @@ final class OpenAIChatCompletionChoiceMessageModel {
   ) {
     return OpenAIChatCompletionChoiceMessageModel(
       name: json['name'],
-      role: OpenAIChatMessageRole.values
-          .firstWhere((role) => role.name == json['role']),
+      role: OpenAIChatMessageRole.values.firstWhere((role) => role.name == json['role']),
       content: json['content'] != null
           ? OpenAIMessageDynamicContentFromFieldAdapter.dynamicContentFromField(
               json['content'],
             )
           : null,
       toolCalls: json['tool_calls'] != null
-          ? (json['tool_calls'] as List)
-              .map((toolCall) => OpenAIResponseToolCall.fromMap(toolCall))
-              .toList()
+          ? (json['tool_calls'] as List).map((toolCall) => OpenAIResponseToolCall.fromMap(toolCall)).toList()
           : null,
     );
   }
 
 // This method used to convert the [OpenAIChatCompletionChoiceMessageModel] to a [Map<String, dynamic>] object.
   Map<String, dynamic> toMap() {
+    //如果content里全是text，那么就返回一个text的list
+
+    bool isAllText = true;
+
+    if (content != null) {
+      for (var item in content ?? []) {
+        if (item.type != 'text') {
+          isAllText = false;
+          break;
+        }
+      }
+    }
+
+    if (isAllText) {
+      return {
+        "role": role.name,
+        "content": content?.map((contentItem) => contentItem.text).toList().join(","),
+        if (toolCalls != null && role == OpenAIChatMessageRole.assistant)
+          "tool_calls": toolCalls!.map((toolCall) => toolCall.toMap()).toList(),
+        if (name != null) "name": name,
+      };
+    }
     return {
       "role": role.name,
       "content": content?.map((contentItem) => contentItem.toMap()).toList(),
@@ -114,8 +133,7 @@ final class OpenAIChatCompletionChoiceMessageModel {
 /// {@template openai_chat_completion_function_choice_message_model}
 /// This represents the message of the [RequestFunctionMessage] model of the OpenAI API, which is used  while using the [OpenAIChat] methods, precisely to send a response function message as a request function message for next requests.
 /// {@endtemplate}
-base class RequestFunctionMessage
-    extends OpenAIChatCompletionChoiceMessageModel {
+base class RequestFunctionMessage extends OpenAIChatCompletionChoiceMessageModel {
   /// The [toolCallId] of the message.
   final String toolCallId;
 
@@ -135,5 +153,5 @@ base class RequestFunctionMessage
     };
   }
 
-  //! Does this needs fromMap method?
+//! Does this needs fromMap method?
 }
