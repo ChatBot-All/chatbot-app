@@ -11,3 +11,8 @@ apk:
 ipa:
 	fvm flutter build ipa --release
 	$(MAKE) open_ipa
+
+pub:
+	fvm flutter pub get
+	fvm flutter build ios
+	fvm flutter build macos
