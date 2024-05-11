@@ -44,6 +44,9 @@ class AllModelBean {
   int? time;
 
   @HiveField(6)
+  int? updateTime;
+
+  @HiveField(6)
   List<SupportedModels>? supportedModels;
 
   AllModelBean(
@@ -52,6 +55,7 @@ class AllModelBean {
       this.apiServer,
       this.defaultModelType,
       this.organization,
+        this.updateTime,
       this.alias,
       this.supportedModels,
       this.time});
@@ -61,6 +65,7 @@ class AllModelBean {
     int? model,
     String? apiServer,
     String? organization,
+    int? updateTime,
     String? alias,
     SupportedModels? defaultModelType,
     int? time,
@@ -72,10 +77,49 @@ class AllModelBean {
       apiServer: apiServer ?? this.apiServer,
       organization: organization ?? this.organization,
       alias: alias ?? this.alias,
+      updateTime: updateTime ?? this.updateTime,
       defaultModelType: defaultModelType ?? this.defaultModelType,
       time: time ?? this.time,
       supportedModels: supportedModels ?? this.supportedModels,
     );
+  }
+
+  //fromJson
+  factory AllModelBean.fromJson(Map<String, dynamic> json) {
+    return AllModelBean(
+      apiKey: json['apiKey'],
+      model: json['model'],
+      apiServer: json['apiServer'],
+      organization: json['organization'],
+      alias: json['alias'],
+      updateTime: json['updateTime'],
+      defaultModelType: json['defaultModelType'] != null
+          ? SupportedModels.fromJson(json['defaultModelType'])
+          : null,
+      time: json['time'],
+      supportedModels: json['supportedModels'] != null
+          ? (json['supportedModels'] as List).map((i) => SupportedModels.fromJson(i)).toList()
+          : null,
+    );
+  }
+
+  //toJson
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['apiKey'] = this.apiKey;
+    data['model'] = this.model;
+    data['apiServer'] = this.apiServer;
+    data['organization'] = this.organization;
+    data['alias'] = this.alias;
+    data['updateTime'] = this.updateTime;
+    if (this.defaultModelType != null) {
+      data['defaultModelType'] = this.defaultModelType!.toJson();
+    }
+    data['time'] = this.time;
+    if (this.supportedModels != null) {
+      data['supportedModels'] = this.supportedModels!.map((v) => v.toJson()).toList();
+    }
+    return data;
   }
 }
 

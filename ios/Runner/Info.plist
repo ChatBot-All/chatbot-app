@@ -57,5 +57,17 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+    <key>NSUbiquitousContainers</key>
+    <dict>
+    <key>iCloud.top.achatbot.models</key>
+    <dict>
+      <key>NSUbiquitousContainerIsDocumentScopePublic</key>
+      <true/>
+      <key>NSUbiquitousContainerName</key>
+      <string>CChatBotModel</string>
+      <key>NSUbiquitousContainerSupportedFolderLevels</key>
+      <string>ANY</string>
+    </dict>
+
 </dict>
 </plist>

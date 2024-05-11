@@ -118,5 +118,6 @@
   "primary_color": "기본 색상",
   "record_time_too_short": "녹음 시간이 너무 짧습니다",
   "set_default_models": "모델을 얻지 못했고 시스템 기본 모델이 추가되었습니다.",
-  "more": "더 보기"
+  "more": "더 보기",
+  "sync": "동기화"
 }

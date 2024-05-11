@@ -6,16 +6,19 @@ import 'base.dart';
 import 'base/riverpod/provider_log.dart';
 import 'base/theme.dart';
 import 'initial.dart';
-
+ProviderContainer? globalRef;
 void main() async {
   await Initial.init();
 
   S.load(getLocaleByCode(HiveBox().globalLanguageCode));
+  globalRef = ProviderContainer(
+    observers: [
+      ProviderLogger(),
+    ],
+  );
   runApp(
-    ProviderScope(
-      observers: [
-        ProviderLogger(),
-      ],
+    UncontrolledProviderScope(
+      container: globalRef!,
       child: const MyApp(),
     ),
   );

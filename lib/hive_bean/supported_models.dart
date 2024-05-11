@@ -21,4 +21,20 @@ class SupportedModels {
       ownedBy: json['owned_by'],
     );
   }
+
+  //fromJson
+  factory SupportedModels.fromJson(Map<String, dynamic> json) {
+    return SupportedModels(
+      id: json['id'],
+      ownedBy: json['owned_by'],
+    );
+  }
+
+  //toJson
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['owned_by'] = this.ownedBy;
+    return data;
+  }
 }

@@ -331,9 +331,9 @@ class _GeminiAddPageState extends ConsumerState<GeminiAddPage> {
                 }
                 bool result;
                 if (widget.openAi?.time != null) {
-                  result = ref.read(openAiListProvider(APIType.gemini).notifier).update(openAi);
+                  result =await ref.read(openAiListProvider(APIType.gemini).notifier).update(openAi);
                 } else {
-                  result = ref.read(openAiListProvider(APIType.gemini).notifier).add(openAi);
+                  result =await ref.read(openAiListProvider(APIType.gemini).notifier).add(openAi);
                 }
                 if (result) {
                   S.current.save_success.success();

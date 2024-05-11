@@ -149,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share_to": MessageLookupByLibrary.simpleMessage("공유"),
         "size": MessageLookupByLibrary.simpleMessage("크기"),
         "style": MessageLookupByLibrary.simpleMessage("스타일"),
+        "sync": MessageLookupByLibrary.simpleMessage("동기화"),
         "tempture": MessageLookupByLibrary.simpleMessage("온도 매개변수"),
         "text_parse_model":
             MessageLookupByLibrary.simpleMessage("텍스트 구문 분석 모델"),

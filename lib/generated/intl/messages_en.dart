@@ -156,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share_to": MessageLookupByLibrary.simpleMessage("Share to"),
         "size": MessageLookupByLibrary.simpleMessage("Size"),
         "style": MessageLookupByLibrary.simpleMessage("Style"),
+        "sync": MessageLookupByLibrary.simpleMessage("Sync"),
         "tempture": MessageLookupByLibrary.simpleMessage("Temperature"),
         "text_parse_model":
             MessageLookupByLibrary.simpleMessage("Text Parsing Model"),

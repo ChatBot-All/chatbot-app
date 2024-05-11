@@ -150,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "share_to": MessageLookupByLibrary.simpleMessage("共有先"),
         "size": MessageLookupByLibrary.simpleMessage("サイズ"),
         "style": MessageLookupByLibrary.simpleMessage("スタイル"),
+        "sync": MessageLookupByLibrary.simpleMessage("同期"),
         "tempture": MessageLookupByLibrary.simpleMessage("温度パラメーター"),
         "text_parse_model": MessageLookupByLibrary.simpleMessage("テキスト解析モデル"),
         "theme": MessageLookupByLibrary.simpleMessage("テーマ"),

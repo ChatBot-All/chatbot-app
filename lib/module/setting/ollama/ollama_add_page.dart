@@ -154,9 +154,9 @@ class _OllamaAddPageState extends ConsumerState<OllamaAddPage> {
 
                   bool result;
                   if (widget.openAi?.time != null) {
-                    result = ref.read(openAiListProvider(APIType.ollama).notifier).update(openAi);
+                    result =await ref.read(openAiListProvider(APIType.ollama).notifier).update(openAi);
                   } else {
-                    result = ref.read(openAiListProvider(APIType.ollama).notifier).add(openAi);
+                    result =await ref.read(openAiListProvider(APIType.ollama).notifier).add(openAi);
                   }
                   if (result) {
                     S.current.save_success.success();

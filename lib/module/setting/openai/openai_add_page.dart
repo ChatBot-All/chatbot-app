@@ -357,9 +357,9 @@ class _OpenAIAddPageState extends ConsumerState<OpenAIAddPage> {
 
                   bool result;
                   if (widget.openAi?.time != null) {
-                    result = ref.read(openAiListProvider(APIType.openAI).notifier).update(openAi);
+                    result =await ref.read(openAiListProvider(APIType.openAI).notifier).update(openAi);
                   } else {
-                    result = ref.read(openAiListProvider(APIType.openAI).notifier).add(openAi);
+                    result =await ref.read(openAiListProvider(APIType.openAI).notifier).add(openAi);
                   }
                   if (result) {
                     S.current.save_success.success();

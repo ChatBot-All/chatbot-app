@@ -1,5 +1,6 @@
 import '../base.dart';
 import '../utils/hive_box.dart';
+import '../utils/icloud_async.dart';
 
 final autoGenerateTitleProvider = StateNotifierProvider<AutoGenerateTitleNotify, bool>((ref) {
   return AutoGenerateTitleNotify(false);
@@ -14,10 +15,35 @@ class AutoGenerateTitleNotify extends StateNotifier<bool> {
 
   void change(bool v) {
     state = v;
+    HiveBox().appConfig.put(HiveBox.cAppConfigAutoGenerateTitle, v.toString());
   }
 
   void load() {
     state = bool.parse(HiveBox().appConfig.get(HiveBox.cAppConfigAutoGenerateTitle) ?? "true");
+  }
+}
+
+final openICloudProvider = StateNotifierProvider<OpenICloudNotify, bool>((ref) {
+  return OpenICloudNotify(false);
+});
+
+class OpenICloudNotify extends StateNotifier<bool> {
+  OpenICloudNotify(super.state) {
+    load();
+  }
+
+  bool get value => state;
+
+  void change(bool v) {
+    state = v;
+    HiveBox().appConfig.put(HiveBox.cAppConfigOpenICloud, v.toString());
+    if (v) {
+      ICloudAsync().startAsync();
+    }
+  }
+
+  void load() {
+    state = bool.parse(HiveBox().appConfig.get(HiveBox.cAppConfigOpenICloud) ?? "false");
   }
 }
 

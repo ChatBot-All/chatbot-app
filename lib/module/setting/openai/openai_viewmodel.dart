@@ -1,4 +1,5 @@
 import 'package:chat_bot/hive_bean/openai_bean.dart';
+import 'package:chat_bot/utils/icloud_async.dart';
 
 import '../../../base.dart';
 import '../../../hive_bean/local_chat_history.dart';
@@ -71,26 +72,26 @@ class ApiServerHistoryNotify extends StateNotifier<List<String>> {
 }
 
 final openAiListProvider =
-    StateNotifierProvider.family.autoDispose<OpenAIListNotify, AsyncValue<List<AllModelBean>>, APIType>((ref, apiType) {
+StateNotifierProvider.family<OpenAIListNotify, AsyncValue<List<AllModelBean>>, APIType>((ref, apiType) {
   return OpenAIListNotify(ref, apiType);
 });
 
 class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
-  final AutoDisposeStateNotifierProviderRef ref;
+  final StateNotifierProviderRef ref;
   final APIType apiType;
 
   OpenAIListNotify(this.ref, this.apiType) : super(const AsyncValue.loading()) {
     load();
   }
 
-  bool add(AllModelBean openAi) {
+  Future<bool> add(AllModelBean openAi, {bool needAsync = true, bool needReload = true}) async {
     //校验别名是否重复
-    if (state.value?.where((element) => element.alias == openAi.alias).isNotEmpty ?? false) {
+    if (HiveBox().openAIConfig.values.toList().where((element) => element.alias == openAi.alias).isNotEmpty) {
       S.current.alias_repeat.fail();
       return false;
     }
     //apiKey不能重复
-    if (state.value?.where((element) => element.apiKey == openAi.apiKey).isNotEmpty ?? false) {
+    if (HiveBox().openAIConfig.values.toList().where((element) => element.apiKey == openAi.apiKey).isNotEmpty) {
       S.current.apikey_repeat.fail();
       return false;
     }
@@ -98,13 +99,18 @@ class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
     if (defApiKey.isEmpty) {
       setDefaultApiKey(openAi.apiKey ?? "");
     }
-    HiveBox().openAIConfig.put(openAi.time.toString(), openAi);
-    load();
+    await HiveBox().openAIConfig.put(openAi.time.toString(), openAi);
+    if (needAsync) {
+      await ICloudAsync().startAsync();
+    }
+    if (needReload) {
+      load();
+    }
     return true;
   }
 
-  void remove(AllModelBean openAi) {
-    HiveBox().openAIConfig.delete(openAi.time.toString());
+  void remove(AllModelBean openAi) async {
+    await HiveBox().openAIConfig.delete(openAi.time.toString());
     var defApiKey = getDefaultApiKey();
     if (defApiKey == openAi.apiKey) {
       if (HiveBox().openAIConfig.values.isEmpty) {
@@ -113,12 +119,18 @@ class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
         setDefaultApiKey(HiveBox().openAIConfig.values.first.apiKey ?? "");
       }
     }
+    await ICloudAsync().uploadDirectly();
     load();
   }
 
-  bool update(AllModelBean openAi) {
-    HiveBox().openAIConfig.put(openAi.time.toString(), openAi);
-    load();
+  Future<bool> update(AllModelBean openAi, {bool needAsync = true, bool needReload = true}) async {
+    await HiveBox().openAIConfig.put(openAi.time.toString(), openAi);
+    if (needAsync) {
+      await ICloudAsync().startAsync();
+    }
+    if (needReload) {
+      await load();
+    }
     return true;
   }
 

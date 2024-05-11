@@ -118,5 +118,6 @@
   "primary_color": "主题色",
   "record_time_too_short": "录音时间太短",
   "set_default_models": "未获取到任何模型，已经为它添加系统默认模型。",
-  "more": "更多"
+  "more": "更多",
+  "sync": "同步"
 }

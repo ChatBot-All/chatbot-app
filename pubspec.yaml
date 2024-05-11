@@ -57,7 +57,7 @@ dependencies:
   lottie: ^3.1.0
   flutter_native_splash: ^2.4.0
   screenshot: ^2.3.0
-
+  icloud_storage: ^2.2.0
   synchronized: any
 dev_dependencies:
   flutter_lints: ^2.0.0

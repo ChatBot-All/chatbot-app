@@ -20,6 +20,8 @@ class HiveBox {
   static const String cGeminiApiServerHistory = 'geminiApiServerHistory'; //OPENAI 添加第三方服务器历史记录
   ///子key
   static const String cAppConfigAutoGenerateTitle = 'autoGenerateTitle'; //自动生成标题
+  static const String cAppConfigOpenICloud =
+      'openICloud'; //是否开启iCloud同步
   static const String cAppConfigFromLanguage = 'fromLanguage'; //翻译默认的语言
   static const String cAppConfigToLanguage = 'toLanguage'; //翻译默认的目标语言
   static const String cAppConfigPrimaryColor = 'primaryColor'; //默认主色调
