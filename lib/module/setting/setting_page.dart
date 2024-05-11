@@ -498,6 +498,115 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                   right: 16,
                   top: 15,
                 ),
+                child: Text(
+                  S.current.more,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 8,
+                  bottom: 8,
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Card(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/logo.png",
+                                width: 40,
+                                height: 40,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "CChatBot for macOS",
+                                    style: Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Private AI Application",
+                                    style: Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(
+                              CupertinoIcons.right_chevron,
+                              color: Theme.of(context).textTheme.titleSmall?.color,
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      ).click(() {
+                        launchUrl(Uri.parse("https://apps.apple.com/app/cchatbot/id6499505508"));
+                      }),
+                      if (!Platform.isAndroid)
+                        const Divider(endIndent: 16,),
+                      if (!Platform.isAndroid)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                          child: Row(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  "assets/images/logo.png",
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "CChatBot for Android",
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      "Private AI Application",
+                                      style: Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Icon(
+                                CupertinoIcons.right_chevron,
+                                color: Theme.of(context).textTheme.titleSmall?.color,
+                                size: 14,
+                              ),
+                            ],
+                          ),
+                        ).click(() {
+                          launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
+                        }),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  top: 15,
+                ),
                 child: Center(
                   child: Consumer(builder: (context, ref, _) {
                     return Text(

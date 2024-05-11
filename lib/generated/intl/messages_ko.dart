@@ -101,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("로딩 중..."),
         "main_language": MessageLookupByLibrary.simpleMessage("한국인"),
         "models": MessageLookupByLibrary.simpleMessage("모델"),
+        "more": MessageLookupByLibrary.simpleMessage("더 보기"),
         "name": MessageLookupByLibrary.simpleMessage("이름"),
         "natural": MessageLookupByLibrary.simpleMessage("현실적"),
         "new_chat": MessageLookupByLibrary.simpleMessage("아무거나 채팅"),

@@ -102,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("読み込み中..."),
         "main_language": MessageLookupByLibrary.simpleMessage("日本語"),
         "models": MessageLookupByLibrary.simpleMessage("モデル"),
+        "more": MessageLookupByLibrary.simpleMessage("もっと"),
         "name": MessageLookupByLibrary.simpleMessage("名前"),
         "natural": MessageLookupByLibrary.simpleMessage("現実的"),
         "new_chat": MessageLookupByLibrary.simpleMessage("雑談"),

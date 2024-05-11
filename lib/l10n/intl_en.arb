@@ -117,5 +117,6 @@
   "appearance": "Appearance",
   "primary_color": "Primary Color",
   "record_time_too_short": "Recording time is too short",
-  "set_default_models": "No model was obtained, and the system default model has been added to it."
+  "set_default_models": "No model was obtained, and the system default model has been added to it.",
+  "more": "More"
 }

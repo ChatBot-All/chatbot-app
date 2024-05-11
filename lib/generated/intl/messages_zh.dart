@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("加载中..."),
         "main_language": MessageLookupByLibrary.simpleMessage("简体中文"),
         "models": MessageLookupByLibrary.simpleMessage("模型"),
+        "more": MessageLookupByLibrary.simpleMessage("更多"),
         "name": MessageLookupByLibrary.simpleMessage("名称"),
         "natural": MessageLookupByLibrary.simpleMessage("现实的"),
         "new_chat": MessageLookupByLibrary.simpleMessage("随便聊聊"),

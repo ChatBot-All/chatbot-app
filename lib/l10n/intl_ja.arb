@@ -117,5 +117,6 @@
   "appearance": "外観",
   "primary_color": "プライマリカラー",
   "record_time_too_short": "録音時間が短すぎます。",
-  "set_default_models": "モデルが取得されなかったため、システムのデフォルト モデルが追加されました。"
+  "set_default_models": "モデルが取得されなかったため、システムのデフォルト モデルが追加されました。",
+  "more": "もっと"
 }

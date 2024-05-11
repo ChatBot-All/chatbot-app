@@ -107,6 +107,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "main_language": MessageLookupByLibrary.simpleMessage("English"),
         "models": MessageLookupByLibrary.simpleMessage("Model"),
+        "more": MessageLookupByLibrary.simpleMessage("More"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "natural": MessageLookupByLibrary.simpleMessage("Natural"),
         "new_chat": MessageLookupByLibrary.simpleMessage("New Chat"),
