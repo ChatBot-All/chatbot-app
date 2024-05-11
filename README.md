@@ -2,9 +2,9 @@
 
 <h1 align="center">CChatBot</h1>
 
-mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama (coming soon) models. [How to Use](./USAGE.md)
+mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT3, GPT4, Gemini Pro & Ollama (即将推出) 模型。 [如何使用](./USAGE.md)
+移动端私人 ChatGPT 应用, 支持 GPT3, GPT4, Gemini Pro & Ollama 模型。 [如何使用](./USAGE.md)
 
 </div>
 
@@ -75,17 +75,7 @@ Please do not download from other channels to prevent key theft.
 ## 警告
 请勿从其他渠道下载，防止 key 被盗
 
-## Roadmap
->* support more languages
->* support more models
->* share conversations as image,share to ShareGPT
->* Desktop APP
 
-## 开发计划
->* 国际化支持更多的语言
->* 支持更多的AI模型
->* 对话内容生成图片，分享对话到ShareGPT
->* 桌面端适配
 
 
 
