@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_highlighter/flutter_highlighter.dart';
+import 'package:flutter_highlighter/themes/atom-one-dark.dart';
+import 'package:flutter_highlighter/themes/atom-one-light.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../../base.dart';
+import 'package:markdown/markdown.dart' as md;
 
 class ChatMarkDown extends StatelessWidget {
   final String content;
@@ -18,15 +23,15 @@ class ChatMarkDown extends StatelessWidget {
       h5: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       h6: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       blockquote:
-          Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       code: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       em: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       strong: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       del: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       tableHead:
-          Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       tableBody:
-          Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
+      Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
       tableHeadAlign: TextAlign.center,
       tableBorder: TableBorder.all(
         color: Theme.of(context).textTheme.titleMedium?.color ?? Colors.black,
@@ -43,6 +48,9 @@ class ChatMarkDown extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       selectable: false,
       styleSheet: styleSheet,
+      builders: {
+        'code': CodeElementBuilder(context),
+      },
       styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
       data: content,
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -106,6 +114,74 @@ class Markdown2 extends MarkdownWidget {
       physics: physics,
       shrinkWrap: shrinkWrap,
       children: children!,
+    );
+  }
+}
+
+class CodeElementBuilder extends MarkdownElementBuilder {
+  final BuildContext context;
+
+  CodeElementBuilder(this.context);
+
+  @override
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    //如果代码没超过一行，就直接显示
+    if (!element.textContent.contains('\n')) {
+      return Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: element.textContent,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: Theme.of(context).textTheme.titleMedium?.color),
+            ),
+          ],
+        ),
+      );
+    }
+    var language = '';
+
+    if (element.attributes['class'] != null) {
+      String lg = element.attributes['class'] as String;
+      language = lg.substring(9);
+    }
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        width: F.width,
+        color: Theme.of(context).brightness == Brightness.light
+            ? atomOneLightTheme['root']?.backgroundColor
+            : atomOneDarkTheme['root']?.backgroundColor,
+        child: Stack(
+          children: [
+            HighlightView(
+              element.textContent,
+              language: language,
+              theme: Theme.of(context).brightness == Brightness.light ? atomOneLightTheme : atomOneDarkTheme,
+              padding: const EdgeInsets.all(8),
+              // Specify text style
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, top: 10),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    CupertinoIcons.doc_on_doc,
+                    size: 16,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
+                ).click(() {
+                  element.textContent.toClipboard();
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
