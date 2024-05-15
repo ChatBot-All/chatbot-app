@@ -16,6 +16,7 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama m
 >* Support voice conversation
 >* Support generating pictures
 >* support long conversations
+>* support ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
 ## 主要功能
@@ -26,6 +27,7 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama m
 >* 支持语音对话
 >* 支持生成图片
 >* 支持长时间对话
+>* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
 ## Download
