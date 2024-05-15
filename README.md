@@ -70,6 +70,8 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 </tr>
 </table>
 
+## Donation
+[Buy Me a Coffee](https://www.buymeacoffee.com/jyuesong)
 
 ## Warning
 Please do not download from other channels to prevent key theft.
