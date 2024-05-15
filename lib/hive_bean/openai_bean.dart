@@ -164,7 +164,7 @@ AllModelBean getModelByApiKey(String apiKey) {
   }
   //如果不存在就返回null
   var model =
-      HiveBox().openAIConfig.values.firstWhere((element) => element.apiKey == key, orElse: () => AllModelBean());
+      HiveBox().openAIConfig.values.firstWhere((element) => element.apiKey == key, orElse: () => HiveBox().openAIConfig.values.first);
   return model;
 }
 

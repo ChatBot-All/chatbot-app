@@ -261,14 +261,14 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                   children: [
                     ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxWidth: F.width * 0.5,
+                        maxWidth: F.width * 0.8,
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ConstrainedBox(
                             constraints: BoxConstraints(
-                              maxWidth: F.width * 0.5,
+                              maxWidth: F.width * 0.8,
                             ),
                             child: Text(
                               result.title ?? "",
