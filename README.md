@@ -33,14 +33,14 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama m
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS TestFlight: [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
->* iOS AppStore[($0.99 Why)](./WHY.md): [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS AppStore($0.99): [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
 
 ## 下载
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS TestFlight: [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
->* iOS AppStore[($0.99 Why)](./WHY.md): [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS AppStore($0.99): [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
 
 <table>
 
