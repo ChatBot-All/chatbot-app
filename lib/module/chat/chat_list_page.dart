@@ -560,11 +560,20 @@ class ChatListItem extends ConsumerWidget {
                             : Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      child: Icon(
-                        CupertinoIcons.chat_bubble,
-                        color: Theme.of(context).primaryColor,
-                        size: 24,
-                      ),
+                      alignment: Alignment.center,
+                      child: (item.title == null || item.title!.isEmpty)
+                          ? Icon(
+                              CupertinoIcons.chat_bubble,
+                              color: Theme.of(context).primaryColor,
+                              size: 24,
+                            )
+                          : Text(
+                              item.title?.substring(0, 1) ?? "",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18,
+                              ),
+                            ),
                     );
                   }),
                   const SizedBox(width: 15),

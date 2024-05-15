@@ -148,7 +148,7 @@ class OpenAIListItem extends ConsumerWidget {
                   },
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
-                  icon: Icons.edit_note,
+                  icon: CupertinoIcons.pencil_outline,
                 ),
                 SlidableAction(
                   onPressed: (context) {
@@ -176,25 +176,25 @@ class OpenAIListItem extends ConsumerWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 15),
-                  Consumer(builder: (context, ref, _) {
-                    bool officer = (item.apiServer?.endsWith(apiType.host)) == true;
-                    return Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        officer ? S.current.official : S.current.third_party,
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: officer ? 14 : 12,
-                        ),
-                      ),
-                    );
-                  }),
+                  // Consumer(builder: (context, ref, _) {
+                  //   bool officer = (item.apiServer?.endsWith(apiType.host)) == true;
+                  //   return Container(
+                  //     width: 50,
+                  //     height: 50,
+                  //     decoration: BoxDecoration(
+                  //       color: Theme.of(context).scaffoldBackgroundColor,
+                  //       borderRadius: BorderRadius.circular(25),
+                  //     ),
+                  //     alignment: Alignment.center,
+                  //     child: Text(
+                  //       officer ? S.current.official : S.current.third_party,
+                  //       style: TextStyle(
+                  //         color: Theme.of(context).primaryColor,
+                  //         fontSize: officer ? 14 : 12,
+                  //       ),
+                  //     ),
+                  //   );
+                  // }),
                   const SizedBox(width: 15),
                   Expanded(
                     child: Column(
