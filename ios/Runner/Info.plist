@@ -18,12 +18,12 @@
 	<string>CChatBot</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -57,6 +57,11 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
     <key>NSUbiquitousContainers</key>
     <dict>
     <key>iCloud.top.achatbot.models</key>
@@ -68,6 +73,6 @@
       <key>NSUbiquitousContainerSupportedFolderLevels</key>
       <string>ANY</string>
     </dict>
-
+  </dict>
 </dict>
 </plist>

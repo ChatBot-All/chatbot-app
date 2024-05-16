@@ -543,14 +543,18 @@ class ChatPanel extends ConsumerStatefulWidget {
   final VoidCallback scrollToTop;
   final bool supportAudio;
   final bool supportImage;
+  final bool supportFile;
   final SendMessageCall sendMessage;
   final CancelSendCall cancelSend;
+  final bool imageBase64;
 
   const ChatPanel({
     super.key,
     required this.focusNode,
+    this.imageBase64 = true,
     required this.supportAudio,
     required this.supportImage,
+    this.supportFile = false,
     required this.scrollToTop,
     required this.sendMessage,
     required this.cancelSend,
@@ -620,7 +624,9 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
       var content = await API().tts2Text(bean, path);
       if (content != null && content.isNotEmpty) {
         _controller.text = content;
-        sendMessage();
+        ref.watch(isGeneratingContentProvider.notifier).state = false;
+        ref.watch(inputModeProvider.notifier).state = true;
+        // sendMessage();
       } else {
         ref.watch(isGeneratingContentProvider.notifier).state = false;
       }
@@ -633,7 +639,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, right: 15),
+      padding: const EdgeInsets.only(top: 10, right: 10),
       decoration: BoxDecoration(
         color: ref.watch(themeProvider).xffF6F6F6(),
       ),
@@ -668,13 +674,21 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               alignment: Alignment.bottomLeft,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                child: Image.memory(
-                                  base64Decode(images[index]),
-                                  width: c.maxWidth - 10,
-                                  height: c.maxHeight - 10,
-                                  fit: BoxFit.cover,
-                                  gaplessPlayback: true,
-                                ),
+                                child: widget.imageBase64
+                                    ? Image.memory(
+                                        base64Decode(images[index]),
+                                        width: c.maxWidth - 10,
+                                        height: c.maxHeight - 10,
+                                        fit: BoxFit.cover,
+                                        gaplessPlayback: true,
+                                      )
+                                    : Image.file(
+                                        File(images[index]),
+                                        width: c.maxWidth - 10,
+                                        height: c.maxHeight - 10,
+                                        fit: BoxFit.cover,
+                                        gaplessPlayback: true,
+                                      ),
                               ),
                             ),
                             Positioned(
@@ -699,29 +713,33 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                 ],
               );
             }),
-            SizedBox(
-              height: kBottomNavigationBarHeight,
-              child: Consumer(builder: (context, ref, _) {
-                var inputMode = ref.watch(inputModeProvider);
-                var disableMode = ref.watch(isGeneratingContentProvider);
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //选择图片
+            Consumer(builder: (context, ref, _) {
+              var inputMode = ref.watch(inputModeProvider);
+              var disableMode = ref.watch(isGeneratingContentProvider);
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  //选择图片
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  // addImage(),
+                  if (widget.supportAudio)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 3),
+                      child: audioButton(inputMode),
+                    ),
+                  if (widget.supportAudio)
                     const SizedBox(
                       width: 15,
                     ),
-                    // addImage(),
-                    if (widget.supportAudio) audioButton(inputMode),
-                    if (widget.supportAudio)
-                      const SizedBox(
-                        width: 15,
-                      ),
-                    Expanded(
-                      child: AnimatedCrossFade(
-                        duration: const Duration(milliseconds: 100),
-                        firstChild: IgnorePointer(
-                          ignoring: disableMode,
+                  Expanded(
+                    child: AnimatedCrossFade(
+                      duration: const Duration(milliseconds: 100),
+                      firstChild: IgnorePointer(
+                        ignoring: disableMode,
+                        child: Opacity(
+                          opacity: disableMode ? 0.5 : 1,
                           child: Listener(
                             onPointerDown: (event) async {
                               ref.watch(audioRecordingStateProvider.notifier).state = AudioRecordingState.recording;
@@ -755,11 +773,11 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                               audioOverlay.removeAudio();
                             },
                             child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
                               decoration: BoxDecoration(
                                 color: ref.watch(themeProvider).inputPanelBg(),
                                 borderRadius: BorderRadius.circular(5),
                               ),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
                               alignment: Alignment.center,
                               child: Text(
                                 S.current.hold_talk,
@@ -768,39 +786,43 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
                             ),
                           ),
                         ),
-                        secondChild: CupertinoTextField(
-                          focusNode: widget.focusNode,
-                          enabled: !disableMode,
-                          placeholder: S.current.input_text,
-                          controller: _controller,
-                          maxLines: 5,
-                          minLines: 1,
-                          cursorColor: Theme.of(context).primaryColor,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: ref.watch(themeProvider).inputPanelBg(),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        crossFadeState: !inputMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                       ),
+                      secondChild: CupertinoTextField(
+                        focusNode: widget.focusNode,
+                        enabled: !disableMode,
+                        placeholder: S.current.input_text,
+                        controller: _controller,
+                        maxLines: 5,
+                        minLines: 1,
+                        cursorColor: Theme.of(context).primaryColor,
+                        style: Theme.of(context).textTheme.titleMedium,
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: ref.watch(themeProvider).inputPanelBg(),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      crossFadeState: !inputMode ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                     ),
-                    const SizedBox(width: 15),
-                    Consumer(builder: (context, ref, _) {
-                      return AnimatedCrossFade(
+                  ),
+                  const SizedBox(width: 10),
+                  Consumer(builder: (context, ref, _) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 3),
+                      child: AnimatedCrossFade(
                         duration: const Duration(milliseconds: 100),
                         firstChild: sendButton(disableMode),
                         secondChild: addImage(widget.supportImage),
                         crossFadeState: (ref.watch(sendButtonVisibleProvider) == true || disableMode == true)
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
-                      );
-                    }),
-                  ],
-                );
-              }),
-            ),
+                      ),
+                    );
+                  }),
+                ],
+              );
+            }),
+            const SizedBox(height: 10),
           ],
         ),
       ),
@@ -825,7 +847,7 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
 
   Widget sendButton(bool isGenerateContent) {
     return SizedBox(
-      width: 60,
+      width: isGenerateContent ? 30 : 60,
       height: 30,
       child: Builder(builder: (context) {
         if (isGenerateContent) {
@@ -871,21 +893,27 @@ class _ChatPanelState extends ConsumerState<ChatPanel> {
             //压缩图片，然后把图片转换成base64
 
             List<Uint8List> images = [];
+            List<String> paths = [];
 
             for (int i = 0; i < value.length; i++) {
-              var result = await FlutterImageCompress.compressWithFile(
-                value[i].path,
-                minWidth: 200,
-                minHeight: 200,
-                quality: 94,
-              );
-              images.add(result ?? Uint8List.fromList([]));
+              if (widget.imageBase64) {
+                var result = await FlutterImageCompress.compressWithFile(
+                  value[i].path,
+                  minWidth: 200,
+                  minHeight: 200,
+                  quality: 94,
+                );
+                images.add(result ?? Uint8List.fromList([]));
+              } else {
+                paths.add(value[i].path);
+              }
             }
 
             ref.read(imagesProvider.notifier).update((state) {
               return [
                 ...state,
-                ...images.map((e) => base64Encode(e)).toList(),
+                if (widget.imageBase64) ...images.map((e) => base64Encode(e)).toList(),
+                if (!widget.imageBase64) ...paths.map((e) => e).toList(),
               ];
             });
           },

@@ -85,6 +85,24 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                 );
               }),
               const SizedBox(
+                height: 15,
+              ),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', "通义千问"),
+                  widget: SettingItem(
+                    iconUrl: 'assets/images/qianwen.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', "通义千问"),
+                    count: ref.watch(specialModelCountProvider(APIType.qianwen)),
+                    subTitle: S.current.ollama_setting_desc.replaceAll('Ollama', "通义千问"),
+                  ).click(() {
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.qianwen,
+                    ));
+                  }),
+                );
+              }),
+              const SizedBox(
                 height: 25,
               ),
             ],

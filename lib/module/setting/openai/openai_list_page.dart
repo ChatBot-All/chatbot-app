@@ -13,6 +13,7 @@ import '../../../base.dart';
 import '../../../base/components/common_loading.dart';
 import '../../../base/components/multi_state_widget.dart';
 import '../../../base/theme.dart';
+import '../qianwen/qianwen_add_page.dart';
 import 'openai_add_page.dart';
 import 'openai_viewmodel.dart';
 
@@ -56,8 +57,10 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
               F.push(const OpenAIAddPage());
             } else if (widget.apiType == APIType.gemini) {
               F.push(const GeminiAddPage());
-            } else {
+            } else if (widget.apiType == APIType.ollama) {
               F.push(const OllamaAddPage());
+            } else {
+              F.push(const QianWenAddPage());
             }
           }),
         ],
@@ -109,8 +112,10 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
       return S.current.openai_setting;
     } else if (apiType == APIType.gemini) {
       return S.current.gemini_setting;
-    } else {
+    } else if (apiType == APIType.ollama) {
       return S.current.ollama_setting;
+    } else {
+      return S.current.ollama_setting.replaceAll("Ollama", "通义千问");
     }
   }
 }
