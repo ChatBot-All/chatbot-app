@@ -2,30 +2,34 @@
 
 <h1 align="center">CChatBot</h1>
 
-mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
+mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT3, GPT4, Gemini Pro & Ollama 模型。 [如何使用](./USAGE.md)
+移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro & Ollama 模型。 [如何使用](./USAGE.md)
+
+支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
 </div>
 
 ## Feature
 
-> * Support GPT3, GPT4, Gemini Pro & Ollama models
+> * Support GPT, Gemini Pro & Ollama models
 >* Privacy first, all data is stored locally
 >* Responsive design, dark mode
 >* Support voice conversation
 >* Support generating pictures
 >* support long conversations
+>* support ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
 ## 主要功能
 
-> * 支持 GPT3, GPT4, Gemini Pro & Ollama 模型
+> * 支持 GPT, Gemini Pro & Ollama 模型
 >* 隐私优先, 所有数据都存储在本地
 >* 响应式设计, 暗黑模式
 >* 支持语音对话
 >* 支持生成图片
 >* 支持长时间对话
+>* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
 ## Download
@@ -68,6 +72,22 @@ mobile private ChatGPT application, supporting GPT3, GPT4, Gemini Pro & Ollama m
 </tr>
 </table>
 
+## Donation
+[Buy Me a Coffee](https://www.buymeacoffee.com/jyuesong)
+
+
+## 支持我
+
+<table>
+
+<tr>
+
+<td><center><img src="https://github.com/jiang111/jiang111/blob/master/images/part1/alipay.jpg" width="200"  /></center></td>
+<td><center><img src="https://github.com/jiang111/jiang111/blob/master/images/part1/wechat.jpg" width="200"  /></center></td>
+
+</tr>
+
+</table>
 
 ## Warning
 Please do not download from other channels to prevent key theft.
