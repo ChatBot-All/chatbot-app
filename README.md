@@ -9,7 +9,7 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
 
-<center> <a href="https://apps.apple.com/app/cchatbot/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/cchatbot/id6499505508" >mac OS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/cchatbot/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/cchatbot/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
 ## Feature
@@ -38,16 +38,15 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS TestFlight: [TestFlight](https://testflight.apple.com/join/Znpyd2IF)
->* iOS AppStore($0.99): [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
-
+>* iOS AppStore: [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
+>* macOS AppStore: [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
+>* 
 ## 下载
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS TestFlight: [TestFlight下载](https://testflight.apple.com/join/Znpyd2IF)
->* iOS AppStore($0.99): [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
-
+>* iOS AppStore: [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
+>* macOS AppStore: [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
 <table>
 
 <tr>
