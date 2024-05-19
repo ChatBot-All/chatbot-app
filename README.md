@@ -4,7 +4,7 @@
 
 mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问 & Ollama 模型。 [如何使用](./USAGE.md)
+移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱 & Ollama 模型。 [如何使用](./USAGE.md)
 
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
@@ -14,7 +14,7 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 
 ## Feature
 
-> * Support GPT, Gemini Pro, 通义千问 & Ollama models
+> * Support GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱 & Ollama models
 >* Privacy first, all data is stored locally
 >* Responsive design, dark mode
 >* Support voice conversation
@@ -25,7 +25,7 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 
 ## 主要功能
 
-> * 支持 GPT, Gemini Pro, 通义千问 & Ollama 模型
+> * 支持 GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱 & Ollama 模型
 >* 隐私优先, 所有数据都存储在本地
 >* 响应式设计, 暗黑模式
 >* 支持语音对话
