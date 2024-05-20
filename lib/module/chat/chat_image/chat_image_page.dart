@@ -23,6 +23,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../base/api.dart';
 import '../../../base/components/screenshot_view.dart';
 import '../../../base/db/chat_item.dart';
+import '../../../hive_bean/supported_models.dart';
 
 class ChatImagePage extends ConsumerStatefulWidget {
   final bool showKeyboard;
@@ -69,7 +70,18 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
         }
       }
     });
-    supportedModels = HiveBox().openAIConfig.values.where((element) => (element.getDallModels.isNotEmpty)).toList();
+    var canPaintList = HiveBox().openAIConfig.values.where((element) => (element.getPaintModels.isNotEmpty)).toList();
+    supportedModels.clear();
+    for (var item in canPaintList) {
+      if (item.getPaintModels.isNotEmpty) {
+        for (var paintModel in item.getPaintModels) {
+          var temp = item.copyWith(
+            supportedModels: [SupportedModels(id: paintModel.id ?? "", ownedBy: item.organization)],
+          );
+          supportedModels.add(temp);
+        }
+      }
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ///查找出所有支持"dall-e-3"的模型

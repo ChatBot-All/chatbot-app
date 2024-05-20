@@ -37,6 +37,7 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                 return SettingWithTitle(
                   label: S.current.openai_setting,
                   widget: SettingItem(
+                    apiType: APIType.openAI,
                     iconUrl: 'assets/images/openai.png',
                     title: S.current.openai_setting,
                     count: ref.watch(specialModelCountProvider(APIType.openAI)),
@@ -48,57 +49,100 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                   }),
                 );
               }),
-              const SizedBox(
-                height: 15,
-              ),
               Consumer(builder: (context, ref, _) {
                 return SettingWithTitle(
                   label: S.current.gemini_setting,
                   widget: SettingItem(
+                    apiType: APIType.gemini,
                     iconUrl: 'assets/images/gemini.png',
                     title: S.current.gemini_setting,
                     count: ref.watch(specialModelCountProvider(APIType.gemini)),
                     subTitle: S.current.gemini_setting_desc,
                   ).click(() {
-                    F.push(const OpenAIListPage(
-                      apiType: APIType.gemini,
-                    ));
+
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.gemini,
+                      ));
                   }),
                 );
               }),
-              const SizedBox(
-                height: 15,
-              ),
               Consumer(builder: (context, ref, _) {
                 return SettingWithTitle(
                   label: S.current.ollama_setting,
                   widget: SettingItem(
+                    apiType: APIType.ollama,
                     iconUrl: 'assets/images/ollama.png',
                     title: S.current.ollama_setting,
                     count: ref.watch(specialModelCountProvider(APIType.ollama)),
                     subTitle: S.current.ollama_setting_desc,
                   ).click(() {
-                    F.push(const OpenAIListPage(
-                      apiType: APIType.ollama,
-                    ));
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.ollama,
+                      ));
                   }),
                 );
               }),
-              const SizedBox(
-                height: 15,
-              ),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', APIType.deepSeek.name),
+                  widget: SettingItem(
+                    apiType: APIType.deepSeek,
+                    iconUrl: 'assets/images/deepseek.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', APIType.deepSeek.name),
+                    count: ref.watch(specialModelCountProvider(APIType.deepSeek)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.deepSeek.name),
+                  ).click(() {
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.deepSeek,
+                      ));
+                  }),
+                );
+              }),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', APIType.kimi.name),
+                  widget: SettingItem(
+                    apiType: APIType.kimi,
+                    iconUrl: 'assets/images/kimi.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', APIType.kimi.name),
+                    count: ref.watch(specialModelCountProvider(APIType.kimi)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.kimi.name),
+                  ).click(() {
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.kimi,
+                      ));
+                  }),
+                );
+              }),
               Consumer(builder: (context, ref, _) {
                 return SettingWithTitle(
                   label: S.current.ollama_setting.replaceAll('Ollama', "通义千问"),
                   widget: SettingItem(
+                    apiType: APIType.qianwen,
                     iconUrl: 'assets/images/qianwen.png',
                     title: S.current.ollama_setting.replaceAll('Ollama', "通义千问"),
                     count: ref.watch(specialModelCountProvider(APIType.qianwen)),
-                    subTitle: S.current.ollama_setting_desc.replaceAll('Ollama', "通义千问"),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', "通义千问"),
                   ).click(() {
-                    F.push(const OpenAIListPage(
-                      apiType: APIType.qianwen,
-                    ));
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.qianwen,
+                      ));
+                  }),
+                );
+              }),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', "智谱"),
+                  widget: SettingItem(
+                    apiType: APIType.zhipu,
+                    iconUrl: 'assets/images/kimi.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', "智谱"),
+                    count: ref.watch(specialModelCountProvider(APIType.zhipu)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', "智谱"),
+                  ).click(() {
+                      F.push(const OpenAIListPage(
+                        apiType: APIType.zhipu,
+                      ));
                   }),
                 );
               }),

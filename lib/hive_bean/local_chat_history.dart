@@ -6,19 +6,22 @@ part 'local_chat_history.g.dart';
 
 ///moduleName 1是OPENAI， 2是gemini
 enum APIType {
-  openAI(1, "ChatGPT","api.openai.com"),
-  gemini(2, "Gemini","generativelanguage.googleapis.com"),
-  ollama(3, "Ollama","/"),
-  qianwen(4, "通义千问", "dashscope.aliyuncs.com");
+  openAI(1, "ChatGPT", "api.openai.com"),
+  gemini(2, "Gemini", "generativelanguage.googleapis.com"),
+  ollama(3, "Ollama", "/"),
+  qianwen(4, "通义千问", "https://dashscope.aliyuncs.com"),
+  zhipu(5, "智谱", "https://open.bigmodel.cn"),
+  deepSeek(6, "DeepSeek", "https://api.deepseek.com"),
+  kimi(7, "MoonShot", "https://api.moonshot.cn");
 
   final int code;
   final String name;
   final String host;
 
-  const APIType(this.code, this.name,this.host);
+  const APIType(this.code, this.name, this.host);
 
   static APIType fromCode(int code) {
-    return APIType.values.firstWhere((element) => element.code == code,orElse: () => APIType.openAI);
+    return APIType.values.firstWhere((element) => element.code == code, orElse: () => APIType.openAI);
   }
 }
 

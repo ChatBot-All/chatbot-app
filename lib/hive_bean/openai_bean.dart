@@ -25,11 +25,11 @@ class AllModelBean {
   List<SupportedModels> get getTextModels =>
       supportedModels
           ?.where((element) =>
-              element.id?.contains(ttsModelKey) == false &&
-              element.id?.contains(whisperModelKey) == false &&
-              element.id?.contains(dallModelKey) == false)
+      element.id?.contains(ttsModelKey) == false &&
+          element.id?.contains(whisperModelKey) == false &&
+          paintModelKeys.contains(element.id) == false)
           .toList() ??
-      [];
+          [];
 
   List<SupportedModels> get getTTSModels =>
       supportedModels?.where((element) => element.id?.contains(ttsModelKey) == true).toList() ?? [];
@@ -37,13 +37,13 @@ class AllModelBean {
   List<SupportedModels> get getWhisperModels =>
       supportedModels?.where((element) => element.id?.contains(whisperModelKey) == true).toList() ?? [];
 
-  List<SupportedModels> get getDallModels =>
-      supportedModels?.where((element) => element.id?.contains(dallModelKey) == true).toList() ?? [];
+  List<SupportedModels> get getPaintModels =>
+      supportedModels?.where((element) => paintModelKeys.contains(element.id) == true).toList() ?? [];
 
   @HiveField(5)
   int? time;
 
-  @HiveField(6)
+  @HiveField(8)
   int? updateTime;
 
   @HiveField(6)
@@ -51,25 +51,26 @@ class AllModelBean {
 
   AllModelBean(
       {this.apiKey,
-      this.model,
-      this.apiServer,
-      this.defaultModelType,
-      this.organization,
+        this.model,
+        this.apiServer,
+        this.defaultModelType,
+        this.organization,
         this.updateTime,
-      this.alias,
-      this.supportedModels,
-      this.time});
+        this.alias,
+        this.supportedModels,
+        this.time});
 
+  //copyWith
   AllModelBean copyWith({
     String? apiKey,
     int? model,
     String? apiServer,
     String? organization,
-    int? updateTime,
     String? alias,
+    int? updateTime,
     SupportedModels? defaultModelType,
-    int? time,
     List<SupportedModels>? supportedModels,
+    int? time,
   }) {
     return AllModelBean(
       apiKey: apiKey ?? this.apiKey,
@@ -79,8 +80,8 @@ class AllModelBean {
       alias: alias ?? this.alias,
       updateTime: updateTime ?? this.updateTime,
       defaultModelType: defaultModelType ?? this.defaultModelType,
-      time: time ?? this.time,
       supportedModels: supportedModels ?? this.supportedModels,
+      time: time ?? this.time,
     );
   }
 
@@ -93,32 +94,26 @@ class AllModelBean {
       organization: json['organization'],
       alias: json['alias'],
       updateTime: json['updateTime'],
-      defaultModelType: json['defaultModelType'] != null
-          ? SupportedModels.fromJson(json['defaultModelType'])
+      defaultModelType: json['defaultModelType'] != null ? SupportedModels.fromJson(json['defaultModelType']) : null,
+      supportedModels: json['supportedModels'] != null
+          ? (json['supportedModels'] as List).map((e) => SupportedModels.fromJson(e)).toList()
           : null,
       time: json['time'],
-      supportedModels: json['supportedModels'] != null
-          ? (json['supportedModels'] as List).map((i) => SupportedModels.fromJson(i)).toList()
-          : null,
     );
   }
 
   //toJson
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['apiKey'] = this.apiKey;
-    data['model'] = this.model;
-    data['apiServer'] = this.apiServer;
-    data['organization'] = this.organization;
-    data['alias'] = this.alias;
-    data['updateTime'] = this.updateTime;
-    if (this.defaultModelType != null) {
-      data['defaultModelType'] = this.defaultModelType!.toJson();
-    }
-    data['time'] = this.time;
-    if (this.supportedModels != null) {
-      data['supportedModels'] = this.supportedModels!.map((v) => v.toJson()).toList();
-    }
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['apiKey'] = apiKey;
+    data['model'] = model;
+    data['apiServer'] = apiServer;
+    data['updateTime'] = updateTime;
+    data['organization'] = organization;
+    data['alias'] = alias;
+    data['defaultModelType'] = defaultModelType?.toJson();
+    data['supportedModels'] = supportedModels?.map((e) => e.toJson()).toList();
+    data['time'] = time;
     return data;
   }
 }
@@ -163,8 +158,10 @@ AllModelBean getModelByApiKey(String apiKey) {
     key = getDefaultApiKey();
   }
   //如果不存在就返回null
-  var model =
-      HiveBox().openAIConfig.values.firstWhere((element) => element.apiKey == key, orElse: () => HiveBox().openAIConfig.values.first);
+  var model = HiveBox()
+      .openAIConfig
+      .values
+      .firstWhere((element) => element.apiKey == key, orElse: () => HiveBox().openAIConfig.values.first);
   return model;
 }
 
@@ -174,7 +171,7 @@ String getSupportedModelByApiKey(String apiKey, {String? preModelType}) {
     key = getDefaultApiKey();
   }
   var model =
-      HiveBox().openAIConfig.values.firstWhere((element) => element.apiKey == key, orElse: () => AllModelBean());
+  HiveBox().openAIConfig.values.firstWhere((element) => element.apiKey == key, orElse: () => AllModelBean());
 
   if (model.supportedModels == null || model.supportedModels!.isEmpty) {
     return "gpt-4";

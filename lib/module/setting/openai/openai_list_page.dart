@@ -13,7 +13,10 @@ import '../../../base.dart';
 import '../../../base/components/common_loading.dart';
 import '../../../base/components/multi_state_widget.dart';
 import '../../../base/theme.dart';
+import '../deepseek/deepseek_add_page.dart';
+import '../kimi/kimi_add_page.dart';
 import '../qianwen/qianwen_add_page.dart';
+import '../zhipu/zhipu_add_page.dart';
 import 'openai_add_page.dart';
 import 'openai_viewmodel.dart';
 
@@ -59,8 +62,14 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
               F.push(const GeminiAddPage());
             } else if (widget.apiType == APIType.ollama) {
               F.push(const OllamaAddPage());
-            } else {
+            } else if (widget.apiType == APIType.qianwen) {
               F.push(const QianWenAddPage());
+            } else if (widget.apiType == APIType.zhipu) {
+              F.push(const ZhiPuAddPage());
+            } else if (widget.apiType == APIType.deepSeek) {
+              F.push(const DeepSeekAddPage());
+            } else if (widget.apiType == APIType.kimi) {
+              F.push(const KimiAddPage());
             }
           }),
         ],
@@ -114,9 +123,16 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
       return S.current.gemini_setting;
     } else if (apiType == APIType.ollama) {
       return S.current.ollama_setting;
-    } else {
+    } else if (apiType == APIType.qianwen) {
       return S.current.ollama_setting.replaceAll("Ollama", "通义千问");
+    } else if (apiType == APIType.zhipu) {
+      return S.current.ollama_setting.replaceAll("Ollama", "智谱");
+    } else if (apiType == APIType.deepSeek) {
+      return S.current.ollama_setting.replaceAll("Ollama", "DeepSeek");
+    } else if (apiType == APIType.kimi) {
+      return S.current.ollama_setting.replaceAll("Ollama", "MoonShot");
     }
+    return "";
   }
 }
 
@@ -147,8 +163,16 @@ class OpenAIListItem extends ConsumerWidget {
                       F.push(OpenAIAddPage(openAi: item));
                     } else if (apiType == APIType.gemini) {
                       F.push(GeminiAddPage(openAi: item));
-                    } else {
+                    } else if (apiType == APIType.ollama) {
                       F.push(OllamaAddPage(openAi: item));
+                    } else if (apiType == APIType.qianwen) {
+                      F.push(QianWenAddPage(openAi: item));
+                    } else if (apiType == APIType.zhipu) {
+                      F.push(ZhiPuAddPage(openAi: item));
+                    } else if (apiType == APIType.deepSeek) {
+                      F.push(DeepSeekAddPage(openAi: item));
+                    } else if (apiType == APIType.kimi) {
+                      F.push(KimiAddPage(openAi: item));
                     }
                   },
                   backgroundColor: Theme.of(context).primaryColor,
@@ -336,7 +360,7 @@ class OpenAIListItem extends ConsumerWidget {
     if (item.getWhisperModels.isNotEmpty) {
       functions.add(S.current.canTalk);
     }
-    if (item.getDallModels.isNotEmpty) {
+    if (item.getPaintModels.isNotEmpty) {
       functions.add(S.current.canPaint);
     }
 

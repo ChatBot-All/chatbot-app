@@ -1,5 +1,6 @@
 import 'package:chat_bot/base.dart';
 import 'package:chat_bot/base/api_impl/ollama_impl.dart';
+import 'package:chat_bot/base/api_impl/zhipu_impl.dart';
 import 'package:chat_bot/hive_bean/generate_content.dart';
 import 'package:chat_bot/hive_bean/local_chat_history.dart';
 import 'package:chat_bot/hive_bean/openai_bean.dart';
@@ -36,6 +37,9 @@ class API extends APIImpl {
     APIType.openAI.code: ChatGPTImpl(),
     APIType.gemini.code: GeminiImpl(),
     APIType.ollama.code: OllamaImpl(),
+    APIType.zhipu.code: ZhiPuImpl(),
+    APIType.deepSeek.code: ChatGPTImpl(),
+    APIType.kimi.code: ChatGPTImpl(),
   };
 
   @override

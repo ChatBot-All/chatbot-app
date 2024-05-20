@@ -7,10 +7,14 @@ bool productMode = false;
 
 const ttsModelKey = "tts-";
 const whisperModelKey = "whisper-";
-const dallModelKey = "dall-e-";
+const paintModelKeys = [
+  "dall-e-3",
+  "cogview-3",
+  "wanx-v1",
+];
 const spLightTheme = "lightTheme";
 
-Map<String,String> supportedLanguages = <String,String>{
+Map<String, String> supportedLanguages = <String, String>{
   'zh-Hans': '中文简体',
   'zh-Hant': '中文繁体',
   'yue': '粤语',
@@ -136,8 +140,7 @@ Map<String,String> supportedLanguages = <String,String>{
   'zu': '祖鲁语'
 };
 
-
-Map<String,String> supportedEnglishLanguages = <String,String>{
+Map<String, String> supportedEnglishLanguages = <String, String>{
   'zh-Hans': 'Simplified Chinese',
   'zh-Hant': 'Traditional Chinese',
   'yue': 'Cantonese',
@@ -263,7 +266,7 @@ Map<String,String> supportedEnglishLanguages = <String,String>{
   'zu': 'Zulu'
 };
 
-Map<String,String> supportedJapaneseLanguages = <String,String>{
+Map<String, String> supportedJapaneseLanguages = <String, String>{
   'zh-Hans': '簡体字中国語',
   'zh-Hant': '繁体字中国語',
   'yue': '広東語',
@@ -389,7 +392,7 @@ Map<String,String> supportedJapaneseLanguages = <String,String>{
   'zu': 'ズールー語'
 };
 
-Map<String,String> supportedKoLanguages = <String,String>{
+Map<String, String> supportedKoLanguages = <String, String>{
   'zh-Hans': '중국어 간체',
   'zh-Hant': '중국어 번체',
   'yue': '광둥어',
@@ -514,4 +517,3 @@ Map<String,String> supportedKoLanguages = <String,String>{
   'yua': '유카테크 마야어',
   'zu': '줄루어'
 };
-

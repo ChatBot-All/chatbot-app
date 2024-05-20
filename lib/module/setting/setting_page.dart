@@ -8,6 +8,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../hive_bean/local_chat_history.dart';
+
 class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
 
@@ -612,18 +614,26 @@ class SettingWithTitle extends StatelessWidget {
   }
 }
 
-class SettingItem extends StatelessWidget {
+class SettingItem extends ConsumerWidget {
   final String iconUrl;
   final String title;
   final String subTitle;
   final int count;
+  final APIType apiType;
 
-  const SettingItem({super.key, required this.iconUrl, required this.title, required this.subTitle, this.count = 0});
+  const SettingItem({
+    super.key,
+    required this.iconUrl,
+    required this.title,
+    required this.subTitle,
+    this.count = 0,
+    required this.apiType,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     return Card(
-      color: Theme.of(context).cardColor,
+      color: ref.watch(themeProvider).unPinedBgColor(),
       child: Padding(
         padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
         child: Row(
