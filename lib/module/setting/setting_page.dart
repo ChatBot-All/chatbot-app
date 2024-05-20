@@ -9,6 +9,7 @@ import 'package:pull_down_button/pull_down_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../hive_bean/local_chat_history.dart';
+import '../photoview_page.dart';
 
 class SettingPage extends ConsumerStatefulWidget {
   const SettingPage({super.key});
@@ -504,22 +505,25 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                       ).click(() {
                         launchUrl(Uri.parse("https://apps.apple.com/app/cchatbot/id6499505508"));
                       }),
-                      if (!Platform.isAndroid)
+                      if (Platform.isAndroid)
                         const Divider(
-                          endIndent: 16,
+                          indent: 15,
+                          endIndent: 15,
                         ),
-                      if (!Platform.isAndroid)
+                      if (Platform.isAndroid)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                           child: Row(
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/images/logo.png",
-                                  width: 40,
-                                  height: 40,
-                                  fit: BoxFit.cover,
+                              Hero(
+                                tag: "assets/images/ali.jpg",
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Icon(
+                                    Icons.coffee_outlined,
+                                    size: 40,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 15),
@@ -528,12 +532,12 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "CChatBot for Android",
+                                      "捐赠",
                                       style: Theme.of(context).textTheme.titleMedium,
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      "Private AI Application",
+                                      "支持作者后续开发",
                                       style: Theme.of(context).textTheme.bodySmall,
                                     ),
                                   ],
@@ -547,7 +551,9 @@ class _SettingPageState extends ConsumerState<SettingPage> {
                             ],
                           ),
                         ).click(() {
-                          launchUrl(Uri.parse("https://github.com/ChatBot-All/chatbot-app"));
+                          F.pushTransparent(const SlidePage(
+                            url: "assets/images/ali.jpg",
+                          ));
                         }),
                     ],
                   ),

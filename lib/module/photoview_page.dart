@@ -3,9 +3,10 @@ import 'package:extended_image/extended_image.dart';
 import '../base.dart';
 
 class SlidePage extends StatefulWidget {
-  const SlidePage({super.key, this.url});
+  const SlidePage({super.key, this.url, this.headers = const <String, String>{}});
 
   final String? url;
+  final Map<String, String> headers;
 
   @override
   State createState() => _SlidePageState();
@@ -35,41 +36,48 @@ class _SlidePageState extends State<SlidePage> {
         child: GestureDetector(
           child: widget.url == 'This is an video'
               ? ExtendedImageSlidePageHandler(
-                  child: Material(
-                    child: Container(
-                      alignment: Alignment.center,
-                      color: Colors.yellow,
-                      child: const Text('This is an video'),
-                    ),
-                  ),
-                  heroBuilderForSlidingPage: (Widget result) {
-                    return Hero(
-                      tag: widget.url!,
-                      child: result,
-                      flightShuttleBuilder: (BuildContext flightContext,
-                          Animation<double> animation,
-                          HeroFlightDirection flightDirection,
-                          BuildContext fromHeroContext,
-                          BuildContext toHeroContext) {
-                        final Hero hero = (flightDirection == HeroFlightDirection.pop
-                            ? fromHeroContext.widget
-                            : toHeroContext.widget) as Hero;
+            child: Material(
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.yellow,
+                child: const Text('This is an video'),
+              ),
+            ),
+            heroBuilderForSlidingPage: (Widget result) {
+              return Hero(
+                tag: widget.url!,
+                child: result,
+                flightShuttleBuilder: (BuildContext flightContext,
+                    Animation<double> animation,
+                    HeroFlightDirection flightDirection,
+                    BuildContext fromHeroContext,
+                    BuildContext toHeroContext) {
+                  final Hero hero = (flightDirection == HeroFlightDirection.pop
+                      ? fromHeroContext.widget
+                      : toHeroContext.widget) as Hero;
 
-                        return hero.child;
-                      },
-                    );
-                  },
-                )
+                  return hero.child;
+                },
+              );
+            },
+          )
               : HeroWidget(
-                  tag: widget.url!,
-                  slideType: SlideType.onlyImage,
-                  slidePagekey: slidePagekey,
-                  child: ExtendedImage.network(
-                    widget.url!,
-                    enableSlideOutPage: true,
-                    mode: ExtendedImageMode.gesture,
-                  ),
-                ),
+            tag: widget.url!,
+            slideType: SlideType.onlyImage,
+            slidePagekey: slidePagekey,
+            child: widget.url!.startsWith("assets/")
+                ? ExtendedImage.asset(
+              widget.url!,
+              enableSlideOutPage: true,
+              mode: ExtendedImageMode.gesture,
+            )
+                : ExtendedImage.network(
+              widget.url!,
+              headers: widget.headers,
+              enableSlideOutPage: true,
+              mode: ExtendedImageMode.gesture,
+            ),
+          ),
           onTap: () {
             slidePagekey.currentState!.popPage();
             Navigator.pop(context);
@@ -115,7 +123,7 @@ class _HeroWidgetState extends State<HeroWidget> {
           HeroFlightDirection flightDirection, BuildContext fromHeroContext, BuildContext toHeroContext) {
         // make hero more smoothly
         final Hero hero =
-            (flightDirection == HeroFlightDirection.pop ? fromHeroContext.widget : toHeroContext.widget) as Hero;
+        (flightDirection == HeroFlightDirection.pop ? fromHeroContext.widget : toHeroContext.widget) as Hero;
         if (_rectTween == null) {
           return hero;
         }
@@ -156,10 +164,10 @@ class _HeroWidgetState extends State<HeroWidget> {
               // fix transform when slide out
               if (fixTransform) {
                 final Tween<Offset> offsetTween =
-                    Tween<Offset>(begin: Offset.zero, end: widget.slidePagekey.currentState!.offset);
+                Tween<Offset>(begin: Offset.zero, end: widget.slidePagekey.currentState!.offset);
 
                 final Tween<double> scaleTween =
-                    Tween<double>(begin: 1.0, end: widget.slidePagekey.currentState!.scale);
+                Tween<double>(begin: 1.0, end: widget.slidePagekey.currentState!.scale);
                 animatedBuilderChild = Transform.translate(
                   offset: offsetTween.evaluate(animation),
                   child: Transform.scale(
