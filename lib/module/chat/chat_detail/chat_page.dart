@@ -249,6 +249,22 @@ class _ChatPageState extends ConsumerState<ChatPage> {
                             );
                           }
                         }),
+                    PullDownMenuItem(
+                        title: S.current.clear_context,
+                        onTap: () async {
+                          showCommonDialog(
+                            context,
+                            title: S.current.reminder,
+                            content: "${S.current.confirm} ${S.current.clear_context} ?",
+                            confirmText: S.current.confirm,
+                            confirmCallback: () {
+                              ref.watch(chatProvider(result.id ?? 0).notifier).clear();
+                              ref
+                                  .watch(currentChatParentItemProvider.notifier)
+                                  .update((state) => result.copyWith(title: S.current.new_chat));
+                            },
+                          );
+                        }),
                   ];
                 },
               ),

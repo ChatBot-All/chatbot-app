@@ -118,6 +118,16 @@
   "primary_color": "Primary Color",
   "record_time_too_short": "Recording time is too short",
   "set_default_models": "No model was obtained, and the system default model has been added to it.",
+  "pin": "Pin",
+  "unpin": "Unpin",
+  "download": "Download",
+  "download_fail": "Download failed",
+  "download_success": "Download success",
   "more": "More",
-  "sync": "Sync"
+  "sync": "Sync",
+  "model": "Model",
+  "please_input": "Please type",
+  "custom": "Custom",
+  "has_exist": "Already Exists",
+  "clear_context": "Clear Context"
 }

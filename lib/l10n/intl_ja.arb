@@ -118,6 +118,16 @@
   "primary_color": "プライマリカラー",
   "record_time_too_short": "録音時間が短すぎます。",
   "set_default_models": "モデルが取得されなかったため、システムのデフォルト モデルが追加されました。",
+  "pin": "ピン留め",
+  "unpin": "ピン留め解除",
+  "download": "ダウンロード",
+  "download_fail": "ダウンロードに失敗しました。  ",
+  "download_success": "ダウンロードに成功しました。",
   "more": "もっと",
-  "sync": "同期"
+  "sync": "同期",
+  "model": "モデル",
+  "please_input": "入力してください",
+  "custom": "カスタム",
+  "has_exist": "既に存在します。",
+  "clear_context": "コンテキストをクリア"
 }

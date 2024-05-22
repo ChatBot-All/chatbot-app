@@ -11,6 +11,7 @@ import 'package:pull_down_button/pull_down_button.dart';
 
 import '../../../base.dart';
 import '../../../base/components/common_loading.dart';
+import '../../../base/components/common_text_field.dart';
 import '../../../base/components/multi_state_widget.dart';
 import '../../../base/theme.dart';
 import '../deepseek/deepseek_add_page.dart';
@@ -142,6 +143,55 @@ class OpenAIListItem extends ConsumerWidget {
   final APIType apiType;
 
   const OpenAIListItem(this.item, this.onTap, this.apiType, {super.key});
+  void addCustomModel(BuildContext context, WidgetRef ref) {
+    TextEditingController controller = TextEditingController();
+    //弹出文本输入对话框
+    showCupertinoDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text("${S.current.model} ${S.current.name}"),
+          content: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+            child: CommonTextField(
+              controller: controller,
+              hintText: "${S.current.please_input} ${S.current.model} ${S.current.name}",
+              maxLength: 10,
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                S.current.cancel,
+                style: const TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: false,
+              onPressed: () {
+                if (controller.text.isEmpty) {
+                  (S.current.please_input + S.current.model + S.current.name).fail();
+                  return;
+                }
+
+                Navigator.of(context).pop();
+                ref.watch(openAiListProvider(apiType).notifier).updateModelType(item.time!, controller.text);
+              },
+              child: Text(
+                S.current.confirm,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context, ref) {
@@ -157,6 +207,14 @@ class OpenAIListItem extends ConsumerWidget {
               motion: const BehindMotion(),
               extentRatio: 0.4,
               children: [
+                SlidableAction(
+                  onPressed: (context) {
+                    addCustomModel(context, ref);
+                  },
+                  backgroundColor: Theme.of(context).hintColor,
+                  foregroundColor: Colors.white,
+                  icon: CupertinoIcons.add_circled,
+                ),
                 SlidableAction(
                   onPressed: (context) {
                     if (apiType == APIType.openAI) {

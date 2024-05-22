@@ -1230,6 +1230,56 @@ class S {
     );
   }
 
+  /// `Pin`
+  String get pin {
+    return Intl.message(
+      'Pin',
+      name: 'pin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpin`
+  String get unpin {
+    return Intl.message(
+      'Unpin',
+      name: 'unpin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download`
+  String get download {
+    return Intl.message(
+      'Download',
+      name: 'download',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download failed`
+  String get download_fail {
+    return Intl.message(
+      'Download failed',
+      name: 'download_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download success`
+  String get download_success {
+    return Intl.message(
+      'Download success',
+      name: 'download_success',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `More`
   String get more {
     return Intl.message(
@@ -1245,6 +1295,56 @@ class S {
     return Intl.message(
       'Sync',
       name: 'sync',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Model`
+  String get model {
+    return Intl.message(
+      'Model',
+      name: 'model',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please type`
+  String get please_input {
+    return Intl.message(
+      'Please type',
+      name: 'please_input',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom`
+  String get custom {
+    return Intl.message(
+      'Custom',
+      name: 'custom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already Exists`
+  String get has_exist {
+    return Intl.message(
+      'Already Exists',
+      name: 'has_exist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear Context`
+  String get clear_context {
+    return Intl.message(
+      'Clear Context',
+      name: 'clear_context',
       desc: '',
       args: [],
     );

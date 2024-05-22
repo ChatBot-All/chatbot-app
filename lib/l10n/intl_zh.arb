@@ -118,6 +118,16 @@
   "primary_color": "主题色",
   "record_time_too_short": "录音时间太短",
   "set_default_models": "未获取到任何模型，已经为它添加系统默认模型。",
+  "pin": "置顶",
+  "unpin": "取消置顶",
+  "download": "下载",
+  "download_fail": "下载失败",
+  "download_success": "下载成功",
   "more": "更多",
-  "sync": "同步"
+  "sync": "同步",
+  "model": "模型",
+  "please_input": "请输入",
+  "custom": "自定义",
+  "has_exist": "已存在",
+  "clear_context": "清空上下文"
 }

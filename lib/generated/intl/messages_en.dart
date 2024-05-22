@@ -52,17 +52,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "canceling": MessageLookupByLibrary.simpleMessage("canceling..."),
         "cannot_empty": MessageLookupByLibrary.simpleMessage("Cannot be empty"),
         "chat_setting": MessageLookupByLibrary.simpleMessage("Chat Setting"),
+        "clear_context": MessageLookupByLibrary.simpleMessage("Clear Context"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "conform_resend": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to resend this message?"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copy_success": MessageLookupByLibrary.simpleMessage("Copy success"),
+        "custom": MessageLookupByLibrary.simpleMessage("Custom"),
         "default1": MessageLookupByLibrary.simpleMessage("Default"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "delete_config_reminder": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this configuration?"),
         "delete_reminder": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this message?"),
+        "download": MessageLookupByLibrary.simpleMessage("Download"),
+        "download_fail":
+            MessageLookupByLibrary.simpleMessage("Download failed"),
+        "download_success":
+            MessageLookupByLibrary.simpleMessage("Download success"),
         "downloading": MessageLookupByLibrary.simpleMessage("Downloading..."),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "empty_content_need_add": MessageLookupByLibrary.simpleMessage(
@@ -83,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Generate image fail"),
         "getmodules_fail": MessageLookupByLibrary.simpleMessage(
             "Failed to obtain the model. If you are sure that your Key can be used, please click Save directly."),
+        "has_exist": MessageLookupByLibrary.simpleMessage("Already Exists"),
         "has_reduce": MessageLookupByLibrary.simpleMessage("Has been reduced"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("Type server address"),
@@ -106,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "library": MessageLookupByLibrary.simpleMessage("Library"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "main_language": MessageLookupByLibrary.simpleMessage("English"),
+        "model": MessageLookupByLibrary.simpleMessage("Model"),
         "models": MessageLookupByLibrary.simpleMessage("Model"),
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
@@ -133,6 +142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "org_notrequired":
             MessageLookupByLibrary.simpleMessage("Organization(optional)"),
         "other_set": MessageLookupByLibrary.simpleMessage("Other Settings"),
+        "pin": MessageLookupByLibrary.simpleMessage("Pin"),
+        "please_input": MessageLookupByLibrary.simpleMessage("Please type"),
         "primary_color": MessageLookupByLibrary.simpleMessage("Primary Color"),
         "record_time_too_short":
             MessageLookupByLibrary.simpleMessage("Recording time is too short"),
@@ -171,6 +182,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Use four to five words to directly return to the brief topic of this sentence. No explanations, no punctuation, no modal particles, no redundant text, and no bolding. If there is no topic, please directly return to \"small talk\""),
         "translate": MessageLookupByLibrary.simpleMessage("Translate"),
         "tts": MessageLookupByLibrary.simpleMessage("Deacon"),
+        "unpin": MessageLookupByLibrary.simpleMessage("Unpin"),
         "update_now": MessageLookupByLibrary.simpleMessage("Update now"),
         "validate": MessageLookupByLibrary.simpleMessage("Validate"),
         "validate_fail":

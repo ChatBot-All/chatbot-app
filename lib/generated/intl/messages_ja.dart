@@ -49,17 +49,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "canceling": MessageLookupByLibrary.simpleMessage("キャンセル中..."),
         "cannot_empty": MessageLookupByLibrary.simpleMessage("空にすることはできません。"),
         "chat_setting": MessageLookupByLibrary.simpleMessage("チャット設定"),
+        "clear_context": MessageLookupByLibrary.simpleMessage("コンテキストをクリア"),
         "confirm": MessageLookupByLibrary.simpleMessage("確定"),
         "conform_resend":
             MessageLookupByLibrary.simpleMessage("メッセージを再送信してもよろしいですか？"),
         "copy": MessageLookupByLibrary.simpleMessage("コピー"),
         "copy_success": MessageLookupByLibrary.simpleMessage("コピーに成功しました。"),
+        "custom": MessageLookupByLibrary.simpleMessage("カスタム"),
         "default1": MessageLookupByLibrary.simpleMessage("既定"),
         "delete": MessageLookupByLibrary.simpleMessage("削除"),
         "delete_config_reminder":
             MessageLookupByLibrary.simpleMessage("現在の設定を削除してもよろしいですか？"),
         "delete_reminder":
             MessageLookupByLibrary.simpleMessage("このメッセージを削除してもよろしいですか？"),
+        "download": MessageLookupByLibrary.simpleMessage("ダウンロード"),
+        "download_fail":
+            MessageLookupByLibrary.simpleMessage("ダウンロードに失敗しました。  "),
+        "download_success":
+            MessageLookupByLibrary.simpleMessage("ダウンロードに成功しました。"),
         "downloading": MessageLookupByLibrary.simpleMessage("ダウンロード中..."),
         "edit": MessageLookupByLibrary.simpleMessage("編集"),
         "empty_content_need_add": MessageLookupByLibrary.simpleMessage(
@@ -79,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("画像の生成に失敗しました。"),
         "getmodules_fail": MessageLookupByLibrary.simpleMessage(
             "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요."),
+        "has_exist": MessageLookupByLibrary.simpleMessage("既に存在します。"),
         "has_reduce": MessageLookupByLibrary.simpleMessage("オンにすると一部が損失します。"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("サーバーアドレスを入力してください。"),
@@ -101,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "library": MessageLookupByLibrary.simpleMessage("工房"),
         "loading": MessageLookupByLibrary.simpleMessage("読み込み中..."),
         "main_language": MessageLookupByLibrary.simpleMessage("日本語"),
+        "model": MessageLookupByLibrary.simpleMessage("モデル"),
         "models": MessageLookupByLibrary.simpleMessage("モデル"),
         "more": MessageLookupByLibrary.simpleMessage("もっと"),
         "name": MessageLookupByLibrary.simpleMessage("名前"),
@@ -128,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ChatGPT の API キーと API サーバーを設定します。"),
         "org_notrequired": MessageLookupByLibrary.simpleMessage("組織（任意）"),
         "other_set": MessageLookupByLibrary.simpleMessage("その他の設定"),
+        "pin": MessageLookupByLibrary.simpleMessage("ピン留め"),
+        "please_input": MessageLookupByLibrary.simpleMessage("入力してください"),
         "primary_color": MessageLookupByLibrary.simpleMessage("プライマリカラー"),
         "record_time_too_short":
             MessageLookupByLibrary.simpleMessage("録音時間が短すぎます。"),
@@ -164,6 +175,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "4 ～ 5 文字を使用して、この文の簡潔なテーマを直接返します。説明、句読点、あいまい語、余分なテキスト、太字は使用しないでください。テーマがない場合は、「雑談」を直接返してください。"),
         "translate": MessageLookupByLibrary.simpleMessage("翻訳"),
         "tts": MessageLookupByLibrary.simpleMessage("読む"),
+        "unpin": MessageLookupByLibrary.simpleMessage("ピン留め解除"),
         "update_now": MessageLookupByLibrary.simpleMessage("更新する"),
         "validate": MessageLookupByLibrary.simpleMessage("検証"),
         "validate_fail": MessageLookupByLibrary.simpleMessage("検証に失敗しました。"),

@@ -3,6 +3,7 @@ import 'package:chat_bot/utils/icloud_async.dart';
 
 import '../../../base.dart';
 import '../../../hive_bean/local_chat_history.dart';
+import '../../../hive_bean/supported_models.dart';
 import '../../../utils/hive_box.dart';
 import '../gemini/gemini_viewmodel.dart';
 
@@ -72,7 +73,7 @@ class ApiServerHistoryNotify extends StateNotifier<List<String>> {
 }
 
 final openAiListProvider =
-StateNotifierProvider.family<OpenAIListNotify, AsyncValue<List<AllModelBean>>, APIType>((ref, apiType) {
+    StateNotifierProvider.family<OpenAIListNotify, AsyncValue<List<AllModelBean>>, APIType>((ref, apiType) {
   return OpenAIListNotify(ref, apiType);
 });
 
@@ -81,6 +82,24 @@ class OpenAIListNotify extends StateNotifier<AsyncValue<List<AllModelBean>>> {
   final APIType apiType;
 
   OpenAIListNotify(this.ref, this.apiType) : super(const AsyncValue.loading()) {
+    load();
+  }
+
+  Future updateModelType(int time, String modelTypeName) async {
+    var openAi = HiveBox().openAIConfig.get(time.toString());
+    if (openAi == null) {
+      return;
+    }
+    openAi.supportedModels ??= [];
+    //查看模型是否存在
+    var exist = openAi.supportedModels?.any((element) => element.id == modelTypeName) ?? false;
+    if (exist) {
+      "${S.current.model} ${S.current.has_exist}".fail();
+      return;
+    }
+    openAi.supportedModels?.add(SupportedModels(id: modelTypeName, ownedBy: "user"));
+    await HiveBox().openAIConfig.put(time.toString(), openAi);
+    await ICloudAsync().startAsync();
     load();
   }
 

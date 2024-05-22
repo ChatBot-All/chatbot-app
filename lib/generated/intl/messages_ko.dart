@@ -48,17 +48,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "canceling": MessageLookupByLibrary.simpleMessage("취소 중..."),
         "cannot_empty": MessageLookupByLibrary.simpleMessage("비워둘 수 없습니다"),
         "chat_setting": MessageLookupByLibrary.simpleMessage("채팅 설정"),
+        "clear_context": MessageLookupByLibrary.simpleMessage("컨텍스트 지우기"),
         "confirm": MessageLookupByLibrary.simpleMessage("확인"),
         "conform_resend":
             MessageLookupByLibrary.simpleMessage("메시지를 다시 보내시겠습니까?"),
         "copy": MessageLookupByLibrary.simpleMessage("복사"),
         "copy_success": MessageLookupByLibrary.simpleMessage("복사 성공"),
+        "custom": MessageLookupByLibrary.simpleMessage("사용자 정의"),
         "default1": MessageLookupByLibrary.simpleMessage("기본값"),
         "delete": MessageLookupByLibrary.simpleMessage("삭제"),
         "delete_config_reminder":
             MessageLookupByLibrary.simpleMessage("현재 구성을 삭제하시겠습니까?"),
         "delete_reminder":
             MessageLookupByLibrary.simpleMessage("이 메시지를 삭제하시겠습니까?"),
+        "download": MessageLookupByLibrary.simpleMessage("다운로드"),
+        "download_fail": MessageLookupByLibrary.simpleMessage("다운로드 실패"),
+        "download_success": MessageLookupByLibrary.simpleMessage("다운로드 성공"),
         "downloading": MessageLookupByLibrary.simpleMessage("다운로드 중..."),
         "edit": MessageLookupByLibrary.simpleMessage("편집"),
         "empty_content_need_add":
@@ -79,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("이미지 생성 실패"),
         "getmodules_fail": MessageLookupByLibrary.simpleMessage(
             "모델을 가져오지 못했습니다. 키를 사용할 수 있다고 확신하는 경우 직접 저장을 클릭하세요."),
+        "has_exist": MessageLookupByLibrary.simpleMessage("이미 존재합니다"),
         "has_reduce": MessageLookupByLibrary.simpleMessage("켜면 일부 손실이 발생합니다"),
         "hint_addServerDesc":
             MessageLookupByLibrary.simpleMessage("서버 주소를 입력하세요"),
@@ -100,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "library": MessageLookupByLibrary.simpleMessage("공방"),
         "loading": MessageLookupByLibrary.simpleMessage("로딩 중..."),
         "main_language": MessageLookupByLibrary.simpleMessage("한국인"),
+        "model": MessageLookupByLibrary.simpleMessage("모델"),
         "models": MessageLookupByLibrary.simpleMessage("모델"),
         "more": MessageLookupByLibrary.simpleMessage("더 보기"),
         "name": MessageLookupByLibrary.simpleMessage("이름"),
@@ -127,6 +134,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ChatGPT의 API 키와 API 서버 설정"),
         "org_notrequired": MessageLookupByLibrary.simpleMessage("조직(선택 사항)"),
         "other_set": MessageLookupByLibrary.simpleMessage("기타 설정"),
+        "pin": MessageLookupByLibrary.simpleMessage("고정"),
+        "please_input": MessageLookupByLibrary.simpleMessage("입력하세요"),
         "primary_color": MessageLookupByLibrary.simpleMessage("기본 색상"),
         "record_time_too_short":
             MessageLookupByLibrary.simpleMessage("녹음 시간이 너무 짧습니다"),
@@ -164,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "4~5자로 이 문장의 간략한 주제를 바로 반환하고, 설명하지 말고, 구두점을 사용하지 말고, 어조사를 사용하지 말고, 불필요한 텍스트를 추가하지 말고, 굵게 표시하지 말고, 주제가 없으면 \"잡담\"을 바로 반환하세요"),
         "translate": MessageLookupByLibrary.simpleMessage("번역"),
         "tts": MessageLookupByLibrary.simpleMessage("읽다"),
+        "unpin": MessageLookupByLibrary.simpleMessage("고정 해제"),
         "update_now": MessageLookupByLibrary.simpleMessage("업데이트"),
         "validate": MessageLookupByLibrary.simpleMessage("검증"),
         "validate_fail": MessageLookupByLibrary.simpleMessage("검증 실패"),

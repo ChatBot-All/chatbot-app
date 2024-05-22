@@ -223,6 +223,19 @@ class _ChatImagePageState extends ConsumerState<ChatImagePage> {
                         });
                       },
                     ),
+                    PullDownMenuItem(
+                        title: S.current.clear_context,
+                        onTap: () async {
+                          showCommonDialog(
+                            context,
+                            title: S.current.reminder,
+                            content: "${S.current.confirm} ${S.current.clear_context} ?",
+                            confirmText: S.current.confirm,
+                            confirmCallback: () {
+                              ref.watch(chatProvider(specialGenerateImageChatParentItemTime).notifier).clear();
+                            },
+                          );
+                        }),
                   ];
                 },
                 buttonBuilder: (_, showMenu) => Padding(

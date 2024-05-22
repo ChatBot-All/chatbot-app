@@ -118,6 +118,16 @@
   "primary_color": "기본 색상",
   "record_time_too_short": "녹음 시간이 너무 짧습니다",
   "set_default_models": "모델을 얻지 못했고 시스템 기본 모델이 추가되었습니다.",
+  "pin": "고정",
+  "unpin": "고정 해제",
+  "download": "다운로드",
+  "download_fail": "다운로드 실패",
+  "download_success": "다운로드 성공",
   "more": "더 보기",
-  "sync": "동기화"
+  "sync": "동기화",
+  "model": "모델",
+  "please_input": "입력하세요",
+  "custom": "사용자 정의",
+  "has_exist": "이미 존재합니다",
+  "clear_context": "컨텍스트 지우기"
 }
