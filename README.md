@@ -65,16 +65,16 @@ models. [How to Use](./USAGE.md)
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG" width="200" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG" width="200" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG" width="300" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG" width="300" /></center></td>
 
 </tr>
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" width="200" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG" width="200" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" width="300" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG" width="300" /></center></td>
 
 </tr>
 </table>
@@ -85,16 +85,16 @@ models. [How to Use](./USAGE.md)
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png" width="500"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png" width="500"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png"   /></center></td>
 </tr>
 <tr>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png" width="500"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" width="500"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" /></center></td>
 
 </tr>
 <tr>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png" width="500"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png"  /></center></td>
 
 </tr>
 
