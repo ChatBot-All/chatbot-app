@@ -2,9 +2,11 @@
 
 <h1 align="center">ChatBot</h1>
 
-mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
+mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama
+models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱 & Ollama 模型。 [如何使用](./USAGE.md)
+移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱 & Ollama
+模型。 [如何使用](./USAGE.md)
 
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
@@ -40,7 +42,8 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
 >* macOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
->* 
+>*
+
 ## 下载
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
@@ -48,8 +51,8 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 >* iOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
 >* macOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
 
-
 ## For iOS & Android
+
 <table>
 
 <tr>
@@ -77,23 +80,29 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 </table>
 
 ## For macOS  (Not currently open source)
+
 <table>
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png" width="500"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png" width="500"  /></center></td>
+</tr>
+<tr>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png" width="500"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" width="500"  /></center></td>
+
+</tr>
+<tr>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png" width="500"  /></center></td>
 
 </tr>
 
 </table>
 
 ## Donation
-[Buy Me a Coffee](https://www.buymeacoffee.com/jyuesong)
 
+[Buy Me a Coffee](https://www.buymeacoffee.com/jyuesong)
 
 ## 支持我
 
@@ -109,9 +118,11 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 </table>
 
 ## Warning
+
 Please do not download from other channels to prevent key theft.
 
 ## 警告
+
 请勿从其他渠道下载，防止 key 被盗
 
 
