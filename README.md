@@ -57,24 +57,24 @@ models. [How to Use](./USAGE.md)
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.PNG" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.PNG" width="200"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.PNG" width="200"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.PNG"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.PNG"   /></center></td>
 
 </tr>
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG" width="300" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG" width="300" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG"  /></center></td>
 
 </tr>
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" width="300" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG" width="300"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG" width="300" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG"  /></center></td>
 
 </tr>
 </table>
