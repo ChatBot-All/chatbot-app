@@ -76,7 +76,7 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 </tr>
 </table>
 
-## For macOS
+## For macOS  (Not currently open source)
 <table>
 
 <tr>
