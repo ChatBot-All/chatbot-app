@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">CChatBot</h1>
+<h1 align="center">ChatBot</h1>
 
 mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama models. [How to Use](./USAGE.md)
 
@@ -38,15 +38,15 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
->* macOS AppStore: [AppStore](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
+>* macOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
 >* 
 ## 下载
 
 > * Telegram : [CChatBot](https://t.me/chatbot_all)
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
->* macOS AppStore: [AppStore下载](https://apps.apple.com/app/cchatbot/id6499505508)
+>* iOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
+>* macOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
 <table>
 
 <tr>
