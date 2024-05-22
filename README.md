@@ -47,6 +47,9 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 >* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
 >* iOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
 >* macOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
+
+
+## For iOS & Android
 <table>
 
 <tr>
@@ -71,6 +74,21 @@ mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro
 <td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG" width="200" /></center></td>
 
 </tr>
+</table>
+
+## For macOS
+<table>
+
+<tr>
+
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" width="300"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png" width="300"  /></center></td>
+
+</tr>
+
 </table>
 
 ## Donation
