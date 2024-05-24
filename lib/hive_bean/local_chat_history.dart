@@ -12,7 +12,11 @@ enum APIType {
   qianwen(4, "通义千问", "https://dashscope.aliyuncs.com"),
   zhipu(5, "智谱", "https://open.bigmodel.cn"),
   deepSeek(6, "DeepSeek", "https://api.deepseek.com"),
-  kimi(7, "MoonShot", "https://api.moonshot.cn");
+  kimi(7, "MoonShot", "https://api.moonshot.cn"),
+  zeroOne(8, "零一万物", "https://api.lingyiwanwu.com"),
+  miniMax(9, "MiniMax", "https://api.minimax.chat"),
+  coHere(10, "Cohere", "https://api.cohere.com");
+
 
   final int code;
   final String name;
@@ -21,7 +25,8 @@ enum APIType {
   const APIType(this.code, this.name, this.host);
 
   static APIType fromCode(int code) {
-    return APIType.values.firstWhere((element) => element.code == code, orElse: () => APIType.openAI);
+    return APIType.values.firstWhere((element) => element.code == code,
+        orElse: () => APIType.openAI);
   }
 }
 

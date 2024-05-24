@@ -59,10 +59,25 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.gemini)),
                     subTitle: S.current.gemini_setting_desc,
                   ).click(() {
-
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.gemini,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.gemini,
+                    ));
+                  }),
+                );
+              }),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', APIType.coHere.name),
+                  widget: SettingItem(
+                    apiType: APIType.coHere,
+                    iconUrl: 'assets/images/cohere.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', APIType.coHere.name),
+                    count: ref.watch(specialModelCountProvider(APIType.coHere)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.coHere.name),
+                  ).click(() {
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.coHere,
+                    ));
                   }),
                 );
               }),
@@ -76,9 +91,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.ollama)),
                     subTitle: S.current.ollama_setting_desc,
                   ).click(() {
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.ollama,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.ollama,
+                    ));
                   }),
                 );
               }),
@@ -92,9 +107,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.deepSeek)),
                     subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.deepSeek.name),
                   ).click(() {
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.deepSeek,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.deepSeek,
+                    ));
                   }),
                 );
               }),
@@ -108,9 +123,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.kimi)),
                     subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.kimi.name),
                   ).click(() {
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.kimi,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.kimi,
+                    ));
                   }),
                 );
               }),
@@ -124,9 +139,9 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.qianwen)),
                     subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', "通义千问"),
                   ).click(() {
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.qianwen,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.qianwen,
+                    ));
                   }),
                 );
               }),
@@ -140,9 +155,41 @@ class _ServicesPageState extends ConsumerState<ServicesPage> {
                     count: ref.watch(specialModelCountProvider(APIType.zhipu)),
                     subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', "智谱"),
                   ).click(() {
-                      F.push(const OpenAIListPage(
-                        apiType: APIType.zhipu,
-                      ));
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.zhipu,
+                    ));
+                  }),
+                );
+              }),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', APIType.zeroOne.name),
+                  widget: SettingItem(
+                    apiType: APIType.zeroOne,
+                    iconUrl: 'assets/images/01.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', APIType.zeroOne.name),
+                    count: ref.watch(specialModelCountProvider(APIType.zeroOne)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.zeroOne.name),
+                  ).click(() {
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.zeroOne,
+                    ));
+                  }),
+                );
+              }),
+              Consumer(builder: (context, ref, _) {
+                return SettingWithTitle(
+                  label: S.current.ollama_setting.replaceAll('Ollama', APIType.miniMax.name),
+                  widget: SettingItem(
+                    apiType: APIType.miniMax,
+                    iconUrl: 'assets/images/minimax.png',
+                    title: S.current.ollama_setting.replaceAll('Ollama', APIType.miniMax.name),
+                    count: ref.watch(specialModelCountProvider(APIType.miniMax)),
+                    subTitle: S.current.gemini_setting_desc.replaceAll('Gemini', APIType.miniMax.name),
+                  ).click(() {
+                    F.push(const OpenAIListPage(
+                      apiType: APIType.miniMax,
+                    ));
                   }),
                 );
               }),

@@ -14,9 +14,12 @@ import '../../../base/components/common_loading.dart';
 import '../../../base/components/common_text_field.dart';
 import '../../../base/components/multi_state_widget.dart';
 import '../../../base/theme.dart';
+import '../cohere/cohere_add_page.dart';
 import '../deepseek/deepseek_add_page.dart';
 import '../kimi/kimi_add_page.dart';
+import '../minimax/minimax_add_page.dart';
 import '../qianwen/qianwen_add_page.dart';
+import '../zeroone/zeroone_add_page.dart';
 import '../zhipu/zhipu_add_page.dart';
 import 'openai_add_page.dart';
 import 'openai_viewmodel.dart';
@@ -118,22 +121,7 @@ class _OpenAIListPageState extends ConsumerState<OpenAIListPage> with TickerProv
   }
 
   String getTitle(APIType apiType) {
-    if (apiType == APIType.openAI) {
-      return S.current.openai_setting;
-    } else if (apiType == APIType.gemini) {
-      return S.current.gemini_setting;
-    } else if (apiType == APIType.ollama) {
-      return S.current.ollama_setting;
-    } else if (apiType == APIType.qianwen) {
-      return S.current.ollama_setting.replaceAll("Ollama", "通义千问");
-    } else if (apiType == APIType.zhipu) {
-      return S.current.ollama_setting.replaceAll("Ollama", "智谱");
-    } else if (apiType == APIType.deepSeek) {
-      return S.current.ollama_setting.replaceAll("Ollama", "DeepSeek");
-    } else if (apiType == APIType.kimi) {
-      return S.current.ollama_setting.replaceAll("Ollama", "MoonShot");
-    }
-    return "";
+    return "${apiType.name} ${S.current.servers}";
   }
 }
 
@@ -231,6 +219,12 @@ class OpenAIListItem extends ConsumerWidget {
                       F.push(DeepSeekAddPage(openAi: item));
                     } else if (apiType == APIType.kimi) {
                       F.push(KimiAddPage(openAi: item));
+                    } else if (apiType == APIType.zeroOne) {
+                      F.push(ZeroOneAddPage(openAi: item));
+                    } else if (apiType == APIType.miniMax) {
+                      F.push(MiniMaxAddPage(openAi: item));
+                    } else if (apiType == APIType.coHere) {
+                      F.push(CohereAddPage(openAi: item));
                     }
                   },
                   backgroundColor: Theme.of(context).primaryColor,
