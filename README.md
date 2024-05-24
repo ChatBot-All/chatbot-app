@@ -5,13 +5,13 @@
 mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro & Ollama
 models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱 & Ollama
+移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱 & Ollama 等等
 模型。 [如何使用](./USAGE.md)
 
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
 
-<center> <a href="https://apps.apple.com/app/cchatbot/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/cchatbot/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
 ## Feature
@@ -35,21 +35,6 @@ models. [How to Use](./USAGE.md)
 >* 支持长时间对话
 >* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
-
-## Download
-
-> * Telegram : [CChatBot](https://t.me/chatbot_all)
->* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
->* macOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
->*
-
-## 下载
-
-> * Telegram : [CChatBot](https://t.me/chatbot_all)
->* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
->* macOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
 
 ## For iOS & Android
 
