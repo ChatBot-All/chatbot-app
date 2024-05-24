@@ -2,10 +2,10 @@
 
 <h1 align="center">ChatBot</h1>
 
-mobile private ChatGPT application, supporting GPT, Code interpreter, Gemini Pro, Cohere & Ollama
+mobile private ChatGPT application, supporting GPT, Gemini Pro, Cohere & Ollama
 models. [How to Use](./USAGE.md)
 
-移动端私人 ChatGPT 应用, 支持 GPT, Code interpreter, Gemini Pro, 通义千问, 智谱, 零一万物, MiniMax, Cohere  & Ollama 等等
+移动端私人 ChatGPT 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一万物, MiniMax, Cohere  & Ollama 等等
 模型。 [如何使用](./USAGE.md)
 
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
@@ -16,7 +16,7 @@ models. [How to Use](./USAGE.md)
 
 ## Feature
 
-> * Support GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱, 零一万物, MiniMax, Cohere & Ollama models
+> * Support GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱, DeepSeek, Kimi, 零一万物, MiniMax, Cohere & Ollama models
 >* Privacy first, all data is stored locally
 >* Responsive design, dark mode
 >* Support voice conversation
@@ -27,7 +27,7 @@ models. [How to Use](./USAGE.md)
 
 ## 主要功能
 
-> * 支持 GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱, 零一万物, MiniMax, Cohere & Ollama 模型
+> * 支持 GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱, DeepSeek, Kimi, 零一万物, MiniMax, Cohere & Ollama 模型
 >* 隐私优先, 所有数据都存储在本地
 >* 响应式设计, 暗黑模式
 >* 支持语音对话
