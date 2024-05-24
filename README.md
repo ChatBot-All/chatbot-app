@@ -36,21 +36,6 @@ models. [How to Use](./USAGE.md)
 >* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
-## Download
-
-> * Telegram : [CChatBot](https://t.me/chatbot_all)
->* Android : [Click me](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
->* macOS AppStore: [AppStore](https://apps.apple.com/app/id6499505508)
->*
-
-## 下载
-
-> * Telegram : [CChatBot](https://t.me/chatbot_all)
->* Android : [点我下载](https://github.com/ChatBot-All/chatbot-app/releases)
->* iOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
->* macOS AppStore: [AppStore下载](https://apps.apple.com/app/id6499505508)
-
 ## For iOS & Android
 
 <table>
