@@ -11,7 +11,7 @@ models. [How to Use](./USAGE.md)
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 
 
-<center> <a href="https://apps.apple.com/app/cchatbot/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/cchatbot/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
 ## Feature
