@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">ChatBot</h1>
+<h1 align="center">ChatBot - Suppoort More Models</h1>
 
 mobile private ChatGPT application, supporting GPT, Gemini Pro, Cohere & Ollama
 models. [How to Use](./USAGE.md)
