@@ -1,6 +1,6 @@
 <div align="center">
 
-<h1 align="center">ChatBot - Suppoort More Models</h1>
+<h1 align="center"><a href="https://apps.apple.com/app/id6499505508">ChatBot - Suppoort More Models<a/></h1>
 
 AI application, supporting GPT, Gemini Pro, Cohere & Ollama
 models. [How to Use](./USAGE.md)
