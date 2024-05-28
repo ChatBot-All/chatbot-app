@@ -13,7 +13,7 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 <br />
 源码请切换到 main 分支查看
 <br />
-<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
 ## Feature
@@ -38,7 +38,7 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 >* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
-## For iOS & Android
+## For iOS
 
 <table>
 
@@ -66,7 +66,7 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 </tr>
 </table>
 
-## For macOS  (Not currently open source)
+## For macOS
 
 <table>
 
