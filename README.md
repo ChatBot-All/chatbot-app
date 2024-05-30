@@ -13,7 +13,7 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 <br />
 源码请切换到 main 分支查看(只开源了1.2.0之前的版本)
 <br />
-<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> <a href="https://x.com/ChatBotAIApp"> Twitter </a></center>
 </div>
 
 ## Feature
