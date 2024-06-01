@@ -44,24 +44,24 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/1.PNG"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/2.PNG"   /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/3.PNG"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/1.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/2.PNG"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/3.PNG"   /></center></td>
 
 </tr>
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/4.PNG"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/5.PNG" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/6.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/4.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/5.PNG" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/6.PNG"  /></center></td>
 
 </tr>
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/7.PNG" /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/8.PNG"   /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/9.PNG"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/7.PNG" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/8.PNG"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/9.PNG"  /></center></td>
 
 </tr>
 </table>
@@ -72,16 +72,16 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 
 <tr>
 
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_1.png"   /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_2.png"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/mac_1.png"   /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/mac_2.png"   /></center></td>
 </tr>
 <tr>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_3.png"  /></center></td>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_4.png" /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/mac_3.png"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/mac_4.png" /></center></td>
 
 </tr>
 <tr>
-<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/main/art/mac_5.png"  /></center></td>
+<td><center><img src="https://github.com/ChatBot-All/chatbot-app/blob/README/art/mac_5.png"  /></center></td>
 
 </tr>
 
