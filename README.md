@@ -2,16 +2,10 @@
 
 <h1 align="center"><a href="https://apps.apple.com/app/id6499505508">ChatBot - Suppoort More Models<a/></h1>
 
+<center>English | <a href="https://github.com/ChatBot-All/chatbot-app/blob/README/Chinese.md">简体中文</a></center>
+<br /><br />
 AI application, supporting GPT, Gemini Pro, Cohere & Ollama
-models. [How to Use](./USAGE.md)
-
-AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一万物, MiniMax, Cohere, 文心一言  & Ollama 等等
-模型。 [如何使用](./USAGE.md)
-
-支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
-<br />
-<br />
-源码请切换到 main 分支查看(只开源了1.2.0之前的版本)
+models.[How to Use](./USAGE.md)
 <br />
 <center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://testflight.apple.com/join/Znpyd2IF">iOS TestFlight</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
@@ -25,17 +19,6 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 >* Support generating pictures
 >* support long conversations
 >* support ChatGPT Code interpreter
->* I18n: English, 简体中文, 日本語, 한국어
-
-## 主要功能
-
-> * 支持 GPT, Gemini Pro, DeepSeek, Kimi, 通义千问, 智谱, DeepSeek, Kimi, 零一万物, MiniMax, Cohere, 文心一言 & Ollama 模型
->* 隐私优先, 所有数据都存储在本地
->* 响应式设计, 暗黑模式
->* 支持语音对话
->* 支持生成图片
->* 支持长时间对话
->* 支持 ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
 ## For iOS
@@ -90,12 +73,3 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 ## Warning
 
 Please do not download from other channels to prevent key theft.
-
-## 警告
-
-请勿从其他渠道下载，防止 key 被盗
-
-
-
-
-
