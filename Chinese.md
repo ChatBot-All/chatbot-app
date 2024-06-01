@@ -9,8 +9,6 @@ AI 应用, 支持 GPT, Gemini Pro, 通义千问, 智谱, DeepSeek, Kimi, 零一�
 支持所有兼容 ChatGPT API 的第三方模型，比如 DeepSeek, Kimi等等国产模型。
 <br />
 <br />
-源码请切换到 main 分支查看(只开源了1.2.0之前的版本)
-<br />
 <center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://testflight.apple.com/join/Znpyd2IF">iOS TestFlight</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
