@@ -5,8 +5,8 @@
 <center>English | <a href="https://github.com/ChatBot-All/chatbot-app/blob/README/Chinese.md">简体中文</a></center>
 <br /><br />
 AI application, supporting GPT, Gemini Pro, Cohere & Ollama
-models.[How to Use](./USAGE.md)
-<br />
+models.
+<br /><br />
 <center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://testflight.apple.com/join/Znpyd2IF">iOS TestFlight</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
