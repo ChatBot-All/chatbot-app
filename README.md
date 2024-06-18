@@ -7,7 +7,7 @@
 AI application, supporting GPT, Gemini Pro, Cohere & Ollama
 models.
 <br /><br />
-<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://testflight.apple.com/join/Znpyd2IF">iOS TestFlight</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://testflight.apple.com/join/beLFVk2q" >macOS TestFlight</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
+<center> <a href="https://apps.apple.com/app/id6499505508">iOS</a> / <a href="https://github.com/ChatBot-All/chatbot-app/releases">Android</a> / <a href="https://apps.apple.com/app/id6499505508" >macOS</a> / <a href="https://t.me/chatbot_all" >Telegram</a> </center>
 </div>
 
 ## Feature
