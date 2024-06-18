@@ -21,7 +21,7 @@ models.
 >* support ChatGPT Code interpreter
 >* I18n: English, 简体中文, 日本語, 한국어
 
-## For iOS
+## For Android & iOS
 
 <table>
 
